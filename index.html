@@ -1,397 +1,835 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Addu Dive Hub — Visual Showcase</title>
-  <meta name="description" content="Curated dive adventures in the South Maldives — hero, gallery, carousel, and lightbox demo." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Addu Dive Hub | Professional Travel Landing Page</title>
+  <meta name="description" content="Premium dive and island experiences in the South Maldives." />
   <style>
-    /* ---------- BASE / THEME ---------- */
     :root{
-      --bg:#f6feff;
-      --teal:#0fb3a8;
-      --dark:#06383a;
-      --muted:rgba(2,20,20,0.06);
-      --max-width:1200px;
-      --radius:12px;
-      --glass: rgba(255,255,255,0.72);
+      --bg: #f5f7f8;
+      --panel: #ffffff;
+      --ink: #12272c;
+      --muted: #5a7377;
+      --line: rgba(18,39,44,0.08);
+      --gold: #b48a45;
+      --gold-deep: #a27d3a;
+      --charcoal: #111d21;
+      --charcoal-2: #172a2f;
+      --soft: #eef4f5;
+      --shadow: 0 16px 42px rgba(3, 18, 22, 0.08);
+      --radius: 12px;
+      --max: 1200px;
       --ease: cubic-bezier(.2,.9,.25,1);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body{
       margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:linear-gradient(180deg,#f7feff 0%, #eef9fb 100%);
-      color:var(--dark);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
+      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, #f6f9fa 0%, #edf4f4 100%);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:var(--max-width);margin:0 auto;padding:24px;}
 
-    /* ---------- HERO (parallax, overlay, CTAs) ---------- */
-    header.hero{
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .container{
+      max-width: var(--max);
+      margin:0 auto;
+      padding: 0 22px;
+    }
+
+    /* Top nav */
+    .topbar{
+      background: rgba(17,29,33,0.95);
+      color:#fff;
+      position: sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-wrap{
+      max-width: var(--max);
+      margin:0 auto;
+      padding: 18px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size: 14px;
+      letter-spacing: .02em;
+      font-weight:600;
+    }
+
+    .brand-mark{
+      width:24px;height:24px;border-radius:6px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.06));
+      border:1px solid rgba(255,255,255,0.12);
       position:relative;
-      min-height:66vh;
+      overflow:hidden;
+    }
+    .brand-mark:before{
+      content:"";
+      position:absolute;
+      inset:5px;
+      border-radius:4px;
+      background:linear-gradient(135deg,#f5f5f5,#c6d4d5);
+      clip-path: polygon(0 100%, 0 45%, 48% 0, 100% 0, 100% 100%);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:30px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.84);
+    }
+
+    .nav-links a{
+      transition: color .15s ease;
+    }
+    .nav-links a:hover{ color:#fff; }
+
+    .nav-cta{
+      background: #f3f7f7;
+      color: var(--ink);
+      padding: 10px 18px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+    }
+
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height: 680px;
       display:flex;
       align-items:center;
       overflow:hidden;
-      border-bottom-left-radius:36px;
-      border-bottom-right-radius:36px;
+      background: #0e1d20;
     }
-    .hero__bg{
-      position:absolute;inset:0;background-position:center;background-size:cover;transform-origin:center center;
-      will-change:transform;transition:transform 0.15s linear;
-    }
-    .hero__overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(2,20,20,0.18) 0%, rgba(2,20,20,0.08) 45%, rgba(255,255,255,0.06) 100%);
-      mix-blend-mode: multiply;
-      pointer-events:none;
-    }
-    .hero__wave{
-      position:absolute;left:-10%;right:-10%;bottom:-6%;
-      height:220px; background:
-        radial-gradient(60% 40% at 10% 20%, rgba(255,255,255,0.08), transparent 20%),
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
-      transform:translateY(6px);
-      filter:blur(8px);
-      border-radius:50%;
-      opacity:0.95;
-      pointer-events:none;
-      animation:float 5s ease-in-out infinite;
-    }
-    @keyframes float{ 0% { transform: translateY(8px);} 50%{transform:translateY(-8px);} 100%{transform:translateY:8px;} }
 
-    .hero__content{
-      position:relative;z-index:3;display:flex;gap:28px;align-items:center;width:100%;
-      padding:48px; padding-top:64px; padding-bottom:96px;
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80');
+      background-size:cover;
+      background-position: center center;
+      transform: scale(1.04);
+      filter: saturate(0.9) contrast(1.04);
     }
-    .hero__left{flex:1;max-width:640px}
-    .eyebrow{font-size:12px;color:rgba(255,255,255,0.95);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
-    h1{margin:0;color:white;font-size:44px;line-height:1.02;text-shadow:0 6px 26px rgba(2,20,20,0.28)}
-    p.lead{color:rgba(255,255,255,0.95);margin-top:12px;max-width:44ch}
-    .cta{
-      margin-top:20px;display:flex;gap:12px;align-items:center;
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(11,18,20,0.86) 0%, rgba(11,18,20,0.68) 28%, rgba(11,18,20,0.22) 60%, rgba(11,18,20,0.18) 100%),
+        linear-gradient(180deg, rgba(6,18,20,0.1) 0%, rgba(6,18,20,0.38) 100%);
     }
+
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      max-width: var(--max);
+      margin:0 auto;
+      width:100%;
+      padding: 72px 22px 96px;
+      display:grid;
+      grid-template-columns: 1.2fr 350px;
+      gap:50px;
+      align-items:end;
+    }
+
+    .eyebrow{
+      font-size:11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 18px;
+      font-weight:600;
+    }
+
+    h1{
+      margin:0;
+      color:#fff;
+      font-size: clamp(3rem, 5vw, 5.2rem);
+      line-height: 0.92;
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      max-width: 700px;
+    }
+
+    .lead{
+      margin-top:20px;
+      max-width: 620px;
+      color: rgba(255,255,255,0.84);
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+      line-height: 1.7;
+    }
+
+    .hero-actions{
+      margin-top:26px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
     .btn{
-      padding:12px 18px;border-radius:999px;font-weight:700;border:0;cursor:pointer;box-shadow:0 10px 30px rgba(8,54,52,0.12);
-      transition:transform .15s var(--ease), box-shadow .15s var(--ease);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 15px 24px;
+      border-radius: 8px;
+      font-weight:700;
+      cursor:pointer;
+      transition: transform .12s var(--ease), box-shadow .12s var(--ease), border .12s var(--ease);
+      border: 1px solid transparent;
+      letter-spacing: 0.01em;
     }
-    .btn:active{transform:translateY(1px)}
-    .btn--primary{background:var(--teal); color:#fff}
-    .btn--ghost{background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.14)}
-    .hero__right{width:360px;display:flex;flex-direction:column;gap:12px;margin-left:auto}
 
-    .stat-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      padding:12px 14px;border-radius:12px;color:white;backdrop-filter: blur(6px);
-      display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-primary{
+      background: var(--gold);
+      color:#111c20;
+      box-shadow: 0 18px 30px rgba(180,138,69,0.18);
     }
-    .stat-card .num{font-size:20px;font-weight:800}
-    .stat-card .label{font-size:12px;opacity:.95}
 
-    /* ---------- SECTIONS ---------- */
-    section{padding:48px 24px}
-    .grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
-    .card{background:white;border-radius:14px;padding:18px;box-shadow:0 8px 30px var(--muted);}
+    .btn-primary:hover{
+      background: var(--gold-deep);
+    }
 
-    /* ---------- CAROUSEL ---------- */
-    .carousel{position:relative;border-radius:14px;overflow:hidden}
-    .carousel-track{display:flex;transition:transform 0.5s var(--ease);will-change:transform}
-    .carousel-item{min-width:100%;flex-shrink:0}
-    .carousel-item img{width:100%;height:320px;object-fit:cover;display:block}
-    .carousel-controls{position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
-    .carousel-controls button{pointer-events:auto;background:rgba(255,255,255,0.9);border:0;padding:10px;border-radius:999px;cursor:pointer;box-shadow:0 8px 18px rgba(2,20,20,0.12)}
-    .carousel-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.7);border:0}
-    .dot.active{background:var(--teal)}
+    .btn-secondary{
+      background: rgba(255,255,255,0.02);
+      color:#fff;
+      border-color: rgba(255,255,255,0.18);
+    }
 
-    /* ---------- MASONRY GALLERY ---------- */
-    .masonry{column-count:3;column-gap:12px;max-width:var(--max-width);margin:0 auto}
-    .masonry-item{break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;transition:transform .22s var(--ease)}
-    .masonry-item img{width:100%;height:auto;display:block;transform-origin:center center}
-    .masonry-item:hover{transform:translateY(-6px)}
-    @media (max-width:1000px){ .masonry{column-count:2} }
-    @media (max-width:600px){ .grid{grid-template-columns:1fr} .carousel-item img{height:220px} .hero__content{padding:28px} .masonry{column-count:1} h1{font-size:28px} }
+    .hero-aside{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-self: center;
+      justify-self: end;
+      width:100%;
+    }
 
-    /* ---------- LIGHTBOX (simple) ---------- */
-    .lb{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
-    .lb__img{max-width:92%;max-height:86vh;border-radius:8px;box-shadow:0 20px 40px rgba(0,0,0,0.6)}
-    .lb__close{position:fixed;top:18px;right:18px;background:rgba(255,255,255,0.08);border:0;color:white;padding:10px;border-radius:8px;cursor:pointer}
-    .lb__nav{position:fixed;left:18px;right:18px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
-    .lb__nav button{pointer-events:auto;background:rgba(255,255,255,0.06);border:0;color:white;padding:12px;border-radius:999px;cursor:pointer}
+    .stat{
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px 18px;
+      backdrop-filter: blur(4px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
 
-    /* ---------- SMALL UTIL ---------- */
-    .muted{color:#526a6a}
-    .large{font-size:22px;font-weight:700}
-    .gap{height:18px}
-    footer{padding:28px;text-align:center;color:#376;opacity:0.85}
+    .stat .num{
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      line-height:1;
+      font-weight:700;
+      color:#fff;
+      letter-spacing:-0.05em;
+    }
+
+    .stat .label{
+      margin-top:8px;
+      color: rgba(255,255,255,0.8);
+      font-size: 15px;
+    }
+
+    /* sections */
+    section{
+      padding: 72px 0;
+    }
+
+    .section-intro{
+      margin-bottom: 26px;
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:20px;
+    }
+
+    h2{
+      margin:0;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: .98;
+      letter-spacing: -0.06em;
+      color: var(--ink);
+    }
+
+    .section-copy{
+      max-width: 630px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height:1.7;
+    }
+
+    /* Layout blocks */
+    .features-layout{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .feature-card{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      background:#fafcfc;
+      border:1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .feature-card img{
+      width: 90px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink:0;
+    }
+
+    .feature-card h3{
+      margin:0 0 6px;
+      font-size:1rem;
+      letter-spacing:-0.03em;
+    }
+
+    .feature-card p{
+      margin:0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height:1.5;
+    }
+
+    .side-panel{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .side-panel .mini{
+      background:#fafcfc;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding: 20px;
+    }
+
+    .mini h4{
+      margin:0 0 12px;
+      font-size:1.1rem;
+      letter-spacing:-0.04em;
+    }
+
+    .mini ul{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .mini .btn{
+      margin-top:18px;
+      width:100%;
+    }
+
+    /* Carousel */
+    .carousel-wrap{
+      position:relative;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      background:#fff;
+      box-shadow: var(--shadow);
+      margin-top:18px;
+    }
+
+    .carousel-track{
+      display:flex;
+      transition: transform .5s var(--ease);
+      will-change: transform;
+    }
+
+    .carousel-slide{
+      min-width:100%;
+      flex-shrink:0;
+    }
+
+    .carousel-slide img{
+      width:100%;
+      height: 310px;
+      object-fit: cover;
+      display:block;
+    }
+
+    .carousel-controls{
+      position:absolute;
+      right:16px;
+      top:16px;
+      display:flex;
+      gap:8px;
+      z-index:2;
+    }
+
+    .circle-btn{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      border:1px solid rgba(17,29,33,0.08);
+      background: rgba(255,255,255,0.9);
+      color: var(--ink);
+      font-size: 25px;
+      line-height:1;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(17,29,33,0.08);
+    }
+
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      cursor:pointer;
+      background:#fff;
+      box-shadow: 0 10px 28px rgba(17,29,33,0.04);
+      transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+    }
+
+    .gallery-item:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(17,29,33,0.06);
+    }
+
+    .gallery-item img{
+      width:100%;
+      height: 220px;
+      object-fit: cover;
+      display:block;
+      transition: transform .25s var(--ease);
+    }
+
+    .gallery-item:hover img{
+      transform: scale(1.04);
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background: rgba(7,16,18,0.86);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 9999;
+    }
+
+    .lightbox img{
+      max-width: 90%;
+      max-height: 88vh;
+      border-radius: 8px;
+      box-shadow: 0 24px 56px rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .lb-close{
+      position:fixed;
+      top:18px;
+      right:18px;
+      background: rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.16);
+      color:#fff;
+      width:40px; height:40px; border-radius:8px; cursor:pointer;
+    }
+
+    .lb-nav{
+      position:fixed;
+      top:50%;
+      left:18px; right:18px;
+      transform:translateY(-50%);
+      display:flex;
+      justify-content:space-between;
+      pointer-events:none;
+    }
+
+    .lb-nav button{
+      pointer-events:auto;
+      width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08); color:#fff; cursor:pointer;
+      font-size:26px;
+    }
+
+    /* footer */
+    footer{
+      padding: 26px 0 50px;
+      color: var(--muted);
+      text-align:center;
+      font-size:0.92rem;
+    }
+
+    @media (max-width: 980px){
+      .hero-inner{
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-top: 52px;
+      }
+      .hero-aside{
+        justify-self:start;
+        width: min(320px, 100%);
+      }
+      .features-layout{
+        grid-template-columns: 1fr;
+      }
+      .feature-grid{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px){
+      .nav-links{
+        display:none;
+      }
+      .gallery{
+        grid-template-columns: 1fr;
+      }
+      .section-intro{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .hero{
+        min-height: 560px;
+      }
+      .btn{
+        width:100%;
+      }
+      .hero-actions{
+        flex-direction:column;
+      }
+      .carousel-slide img{
+        height:220px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <header class="hero" id="hero">
-    <div class="hero__bg" id="heroBg" aria-hidden="true"
-      style="background-image: url('https://source.unsplash.com/2000x1200/?diving,coral');">
-    </div>
-    <div class="hero__overlay"></div>
-    <div class="hero__wave" aria-hidden="true"></div>
-
-    <div class="container hero__content" role="banner">
-      <div class="hero__left">
-        <div class="eyebrow">About</div>
-        <h1>Curated dive adventures in the South Maldives.</h1>
-        <p class="lead">We connect travelers with world-class diving, island hopping, and reef exploration across the most vibrant parts of Addu Atoll. Comfort, safety, and unforgettable underwater moments.</p>
-
-        <div class="cta">
-          <button class="btn btn--primary" onclick="location.href='#book'">Book a dive</button>
-          <button class="btn btn--ghost" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">See gallery</button>
-        </div>
+  <header class="topbar">
+    <div class="nav-wrap">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <span>Addu Dive Hub</span>
       </div>
 
-      <aside class="hero__right" aria-hidden="false">
-        <div class="stat-card"><div class="num">12+</div><div class="label">Years experience</div></div>
-        <div class="stat-card"><div class="num">24/7</div><div class="label">Support</div></div>
-        <div class="stat-card"><div class="num">5★</div><div class="label">Guest reviews</div></div>
-      </aside>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="#book" class="nav-cta">Book now</a>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
+  <section class="hero" id="about">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">About</div>
+        <h1>Luxury diving experiences in the South Maldives.</h1>
+        <p class="lead">
+          Discover a refined way to explore Addu Atoll — from vibrant reefs and island hopping to comfort-led diving itineraries built for travelers who want both adventure and ease.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#book" class="btn btn-primary">Book a trip</a>
+          <a href="#gallery" class="btn btn-secondary">View gallery</a>
+        </div>
+      </div>
+
+      <aside class="hero-aside" aria-label="Highlights">
+        <div class="stat">
+          <div class="num">12+</div>
+          <div class="label">Years experience</div>
+        </div>
+        <div class="stat">
+          <div class="num">24/7</div>
+          <div class="label">Support</div>
+        </div>
+        <div class="stat">
+          <div class="num">5★</div>
+          <div class="label">Guest reviews</div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
   <main>
-    <section class="container">
-      <div class="grid">
-        <div class="card">
-          <h3 class="large">Featured dives</h3>
-          <p class="muted">Quick look at some of our top experiences. Tap or click images to view larger.</p>
-
-          <!-- CAROUSEL -->
-          <div class="gap"></div>
-          <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Featured dives carousel">
-            <div class="carousel-track" id="track">
-              <div class="carousel-item">
-                <!-- responsive srcset example (Unsplash query) -->
-                <img
-                  src="https://source.unsplash.com/1200x700/?diver,reef"
-                  srcset="https://source.unsplash.com/600x350/?diver,reef 600w, https://source.unsplash.com/900x530/?diver,reef 900w, https://source.unsplash.com/1200x700/?diver,reef 1200w"
-                  sizes="(max-width:600px) 100vw, 60vw"
-                  alt="Diver exploring a colorful reef"
-                  loading="lazy" width="1200" height="700">
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://source.unsplash.com/1200x700/?boat,sunset"
-                  srcset="https://source.unsplash.com/600x350/?boat,sunset 600w, https://source.unsplash.com/900x530/?boat,sunset 900w, https://source.unsplash.com/1200x700/?boat,sunset 1200w"
-                  sizes="(max-width:600px) 100vw, 60vw"
-                  alt="Boat at sunset, silhouette on the water"
-                  loading="lazy" width="1200" height="700">
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://source.unsplash.com/1200x700/?school,fish,underwater"
-                  srcset="https://source.unsplash.com/600x350/?school,fish,underwater 600w, https://source.unsplash.com/900x530/?school,fish,underwater 900w, https://source.unsplash.com/1200x700/?school,fish,underwater 1200w"
-                  sizes="(max-width:600px) 100vw, 60vw"
-                  alt="A dense school of tropical fish"
-                  loading="lazy" width="1200" height="700">
-              </div>
-            </div>
-
-            <div class="carousel-controls" aria-hidden="false">
-              <button id="prev" aria-label="Previous slide">‹</button>
-              <button id="next" aria-label="Next slide">›</button>
-            </div>
-            <div class="carousel-dots" id="dots" role="tablist" aria-label="Carousel navigation"></div>
+    <section id="experience">
+      <div class="container">
+        <div class="section-intro">
+          <h2>Featured experiences</h2>
+          <div class="section-copy">
+            Carefully curated diving adventures and island journeys designed for comfort, safety, and unforgettable memories.
           </div>
         </div>
 
-        <aside class="card">
-          <h4>Why dive with us?</h4>
-          <ul>
-            <li>Local guides with decades of experience</li>
-            <li>Small group sizes & safety-focused trips</li>
-            <li>Custom packages & island-hopping itineraries</li>
-          </ul>
-          <div style="height:14px"></div>
-          <button class="btn btn--primary" style="width:100%" onclick="location.href='#book'">View packages</button>
-        </aside>
+        <div class="features-layout">
+          <div class="panel">
+            <div class="feature-grid">
+              <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=80" alt="Coral reef dive" />
+                <div>
+                  <h3>Reef dives</h3>
+                  <p>Vibrant coral gardens and clear-water encounters across Addu Atoll.</p>
+                </div>
+              </div>
+
+              <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80" alt="Boat experience" />
+                <div>
+                  <h3>Boat days</h3>
+                  <p>Private charters and seamless island transfers for a relaxed journey.</p>
+                </div>
+              </div>
+
+              <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Island escape" />
+                <div>
+                  <h3>Island escape</h3>
+                  <p>Serene retreats with flexible travel plans and premium support.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-wrap" aria-label="Featured dive carousel">
+              <div class="carousel-controls">
+                <button class="circle-btn" id="prevBtn" aria-label="Previous image">‹</button>
+                <button class="circle-btn" id="nextBtn" aria-label="Next image">›</button>
+              </div>
+
+              <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide">
+                  <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1600&q=80" alt="Diver exploring a reef" loading="lazy" />
+                </div>
+                <div class="carousel-slide">
+                  <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80" alt="Boat over turquoise water" loading="lazy" />
+                </div>
+                <div class="carousel-slide">
+                  <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1600&q=80" alt="Underwater school of fish" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel side-panel">
+            <div class="mini">
+              <h4>Why choose us</h4>
+              <ul>
+                <li>Tailored itineraries</li>
+                <li>Small group expertise</li>
+                <li>Safety-first planning</li>
+                <li>Seamless travel support</li>
+              </ul>
+            </div>
+
+            <div class="mini">
+              <h4>Ready to travel?</h4>
+              <a href="#book" class="btn btn-primary">Plan your trip</a>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
 
-    <!-- GALLERY -->
-    <section id="gallery" class="container">
-      <h3 class="large">Gallery</h3>
-      <p class="muted">Tap any image to open a full-size lightbox. Images optimized for mobile with srcset.</p>
+    <section id="gallery">
+      <div class="container">
+        <div class="section-intro">
+          <h2>Gallery</h2>
+        </div>
 
-      <div class="masonry" id="masonry">
-        <!-- each item uses a query-based Unsplash source (replace later with your own optimized images) -->
-        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?underwater,reef" data-alt="Colorful coral close-up">
-          <img src="https://source.unsplash.com/800x600/?underwater,reef" alt="Colorful coral close-up" loading="lazy" width="800" height="600">
-        </div>
-        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?diver,close" data-alt="Diver close-up smiling">
-          <img src="https://source.unsplash.com/800x900/?diver,close" alt="Diver close-up smiling" loading="lazy" width="800" height="900">
-        </div>
-        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?island,drone" data-alt="Aerial island shot">
-          <img src="https://source.unsplash.com/800x700/?island,drone" alt="Aerial island shot" loading="lazy" width="800" height="700">
-        </div>
-        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?boat,passengers,sunset" data-alt="Boat ride at sunset">
-          <img src="https://source.unsplash.com/800x600/?boat,passengers,sunset" alt="Boat ride at sunset" loading="lazy" width="800" height="600">
-        </div>
-        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?school,fish" data-alt="School of fish">
-          <img src="https://source.unsplash.com/800x600/?school,fish" alt="School of fish" loading="lazy" width="800" height="600">
-        </div>
-        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?reef,coral" data-alt="Plate corals">
-          <img src="https://source.unsplash.com/800x600/?reef,coral" alt="Plate corals" loading="lazy" width="800" height="600">
+        <div class="gallery" aria-label="Image gallery">
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=80" data-alt="Reef diving">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=80" alt="Reef diving" loading="lazy" />
+          </div>
+
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=80" data-alt="Island getaway">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Island getaway" loading="lazy" />
+          </div>
+
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1800&q=80" data-alt="School of fish">
+            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80" alt="School of fish" loading="lazy" />
+          </div>
+
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1800&q=80" data-alt="Ocean horizon">
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=80" alt="Ocean horizon" loading="lazy" />
+          </div>
+
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=80" data-alt="Beach boat day">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Beach boat day" loading="lazy" />
+          </div>
+
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=80" data-alt="Underwater coral">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=80" alt="Underwater coral" loading="lazy" />
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- LIGHTBOX -->
-  <div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
-    <button class="lb__close" id="lbClose" aria-label="Close viewer">✕</button>
-    <div class="lb__nav">
-      <button id="lbPrev" aria-label="Previous image">‹</button>
-      <button id="lbNext" aria-label="Next image">›</button>
-    </div>
-    <img class="lb__img" id="lbImg" src="" alt="">
-  </div>
-
-  <footer>
-    © Addu Dive Hub — demo showcase. Images from Unsplash (free to use).
+  <footer id="contact">
+    © 2026 Addu Dive Hub — Premium travel experiences in the South Maldives.
   </footer>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="lb-close" id="closeLB" aria-label="Close">✕</button>
+    <div class="lb-nav">
+      <button id="prevLB" aria-label="Previous image">‹</button>
+      <button id="nextLB" aria-label="Next image">›</button>
+    </div>
+    <img id="lightboxImage" src="" alt="" />
+  </div>
+
   <script>
-    /* ---------- PARALLAX HERO ---------- */
+    // Carousel
     (function(){
-      const bg = document.getElementById('heroBg');
-      function onScroll(){
-        const scrolled = window.scrollY;
-        // subtle scale and translate for parallax
-        const scale = 1 + Math.min(scrolled / 2000, 0.06);
-        const y = Math.min(scrolled / 6, 60);
-        bg.style.transform = `translateY(${y}px) scale(${scale})`;
-      }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
-    })();
-
-    /* ---------- SIMPLE CAROUSEL (accessible) ---------- */
-    (function(){
-      const track = document.getElementById('track');
+      const track = document.getElementById('carouselTrack');
       const slides = Array.from(track.children);
-      const prev = document.getElementById('prev');
-      const next = document.getElementById('next');
-      const dotsRoot = document.getElementById('dots');
-      let idx = 0, autoplayInterval = 4500, timer;
+      let index = 0;
 
-      function createDots(){
-        slides.forEach((_, i) => {
-          const d = document.createElement('button');
-          d.className = 'dot';
-          d.setAttribute('aria-label','Slide '+(i+1));
-          d.addEventListener('click', ()=>goTo(i));
-          dotsRoot.appendChild(d);
-        });
-        updateDots();
-      }
-      function updateDots(){
-        Array.from(dotsRoot.children).forEach((d,i)=> d.classList.toggle('active', i===idx));
-      }
       function goTo(i){
-        idx = (i + slides.length) % slides.length;
-        track.style.transform = `translateX(-${idx*100}%)`;
-        updateDots();
-        resetTimer();
+        index = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
       }
-      prev.addEventListener('click', ()=>goTo(idx-1));
-      next.addEventListener('click', ()=>goTo(idx+1));
-      document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') prev.click(); if(e.key==='ArrowRight') next.click(); });
 
-      function startTimer(){ timer = setInterval(()=>goTo(idx+1), autoplayInterval); }
-      function resetTimer(){ clearInterval(timer); startTimer(); }
-      createDots(); startTimer();
-      // pause on hover
-      const carousel = document.getElementById('carousel');
-      carousel.addEventListener('mouseenter', ()=> clearInterval(timer));
-      carousel.addEventListener('mouseleave', ()=> startTimer());
+      document.getElementById('prevBtn').addEventListener('click', ()=> goTo(index - 1));
+      document.getElementById('nextBtn').addEventListener('click', ()=> goTo(index + 1));
+
+      setInterval(() => goTo(index + 1), 4200);
     })();
 
-    /* ---------- MASONRY GALLERY + LIGHTBOX ---------- */
+    // Lightbox
     (function(){
-      const masonry = document.getElementById('masonry');
-      const items = Array.from(masonry.querySelectorAll('.masonry-item'));
+      const items = Array.from(document.querySelectorAll('.gallery-item'));
       const lb = document.getElementById('lightbox');
-      const lbImg = document.getElementById('lbImg');
-      const lbClose = document.getElementById('lbClose');
-      const lbPrev = document.getElementById('lbPrev');
-      const lbNext = document.getElementById('lbNext');
+      const img = document.getElementById('lightboxImage');
+      const closeBtn = document.getElementById('closeLB');
+      const prevBtn = document.getElementById('prevLB');
+      const nextBtn = document.getElementById('nextLB');
+      let current = 0;
 
-      let currentIndex = -1;
-
-      function openLightbox(index){
-        const it = items[index];
-        if(!it) return;
-        currentIndex = index;
-        const full = it.dataset.full || it.querySelector('img').src;
-        const alt = it.dataset.alt || it.querySelector('img').alt || '';
-        lbImg.src = full;
-        lbImg.alt = alt;
+      function open(i){
+        current = (i + items.length) % items.length;
+        const item = items[current];
+        img.src = item.dataset.full || item.querySelector('img').src;
+        img.alt = item.dataset.alt || item.querySelector('img').alt || '';
         lb.style.display = 'flex';
-        lb.setAttribute('aria-hidden','false');
+        lb.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       }
 
-      function closeLightbox(){
+      function close(){
         lb.style.display = 'none';
-        lb.setAttribute('aria-hidden','true');
-        lbImg.src = '';
+        lb.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       }
 
-      function showNext(offset){
-        const nextIndex = (currentIndex + offset + items.length) % items.length;
-        openLightbox(nextIndex);
+      function next(){
+        open(current + 1);
+      }
+      function prev(){
+        open(current - 1);
       }
 
-      items.forEach((it, i) => {
-        it.addEventListener('click', ()=> openLightbox(i));
-        // also keyboard focus
-        it.setAttribute('tabindex','0');
-        it.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); openLightbox(i); } });
+      items.forEach((item, i) => {
+        item.addEventListener('click', () => open(i));
+        item.setAttribute('tabindex', '0');
+        item.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            open(i);
+          }
+        });
       });
 
-      lbClose.addEventListener('click', closeLightbox);
-      lbPrev.addEventListener('click', ()=> showNext(-1));
-      lbNext.addEventListener('click', ()=> showNext(1));
+      closeBtn.addEventListener('click', close);
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
 
-      // keyboard and click outside
-      lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
       document.addEventListener('keydown', (e) => {
-        if(lb.style.display !== 'flex') return;
-        if(e.key === 'Escape') closeLightbox();
-        if(e.key === 'ArrowLeft') showNext(-1);
-        if(e.key === 'ArrowRight') showNext(1);
+        if (lb.style.display !== 'flex') return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'ArrowRight') next();
       });
 
-      // basic touch support for swipe
-      let startX = 0;
-      lbImg.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
-      lbImg.addEventListener('touchend', (e) => {
-        const dx = (e.changedTouches[0].clientX - startX);
-        if(Math.abs(dx) > 40){
-          if(dx < 0) showNext(1); else showNext(-1);
+      lb.addEventListener('click', (e) => {
+        if (e.target === lb) close();
+      });
+
+      // touch swipe
+      let touchStartX = 0;
+      img.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+
+      img.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(diff) > 40) {
+          diff < 0 ? next() : prev();
         }
       });
     })();
-
-    /* ---------- NOTES ----------
-      - This demo uses Unsplash query endpoints (source.unsplash.com). Replace each "source.unsplash.com/..." URL with your own optimized images when ready.
-      - For production, pre-generate responsive WebP + JPEG files (400/800/1200/2000px) and replace src/srcset accordingly.
-    */
   </script>
 </body>
 </html>
