@@ -1,94 +1,397 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Accessible Carousel</title>
+  <title>Addu Dive Hub — Visual Showcase</title>
+  <meta name="description" content="Curated dive adventures in the South Maldives — hero, gallery, carousel, and lightbox demo." />
   <style>
-    :root{--controls:#0faea6}
-    body{font-family:system-ui,Arial;margin:0;background:#f6fcfc;color:#033;}
-    .carousel{max-width:980px;margin:36px auto;position:relative;overflow:hidden;border-radius:12px}
-    .track{display:flex;transition:transform .45s ease;will-change:transform}
-    .slide{min-width:100%;box-sizing:border-box;flex-shrink:0;position:relative}
-    .slide img{display:block;width:100%;height:420px;object-fit:cover}
-    .controls{position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
-    .controls button{pointer-events:auto;background:rgba(255,255,255,0.9);border:0;padding:10px;border-radius:999px;box-shadow:0 4px 14px rgba(2,20,20,0.12);cursor:pointer}
-    .dots{display:flex;gap:8px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.6);border:0}
-    .dot[aria-current="true"]{background:var(--controls)}
-    @media (max-width:600px){ .slide img{height:260px} }
+    /* ---------- BASE / THEME ---------- */
+    :root{
+      --bg:#f6feff;
+      --teal:#0fb3a8;
+      --dark:#06383a;
+      --muted:rgba(2,20,20,0.06);
+      --max-width:1200px;
+      --radius:12px;
+      --glass: rgba(255,255,255,0.72);
+      --ease: cubic-bezier(.2,.9,.25,1);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,#f7feff 0%, #eef9fb 100%);
+      color:var(--dark);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max-width);margin:0 auto;padding:24px;}
+
+    /* ---------- HERO (parallax, overlay, CTAs) ---------- */
+    header.hero{
+      position:relative;
+      min-height:66vh;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      border-bottom-left-radius:36px;
+      border-bottom-right-radius:36px;
+    }
+    .hero__bg{
+      position:absolute;inset:0;background-position:center;background-size:cover;transform-origin:center center;
+      will-change:transform;transition:transform 0.15s linear;
+    }
+    .hero__overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(2,20,20,0.18) 0%, rgba(2,20,20,0.08) 45%, rgba(255,255,255,0.06) 100%);
+      mix-blend-mode: multiply;
+      pointer-events:none;
+    }
+    .hero__wave{
+      position:absolute;left:-10%;right:-10%;bottom:-6%;
+      height:220px; background:
+        radial-gradient(60% 40% at 10% 20%, rgba(255,255,255,0.08), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
+      transform:translateY(6px);
+      filter:blur(8px);
+      border-radius:50%;
+      opacity:0.95;
+      pointer-events:none;
+      animation:float 5s ease-in-out infinite;
+    }
+    @keyframes float{ 0% { transform: translateY(8px);} 50%{transform:translateY(-8px);} 100%{transform:translateY:8px;} }
+
+    .hero__content{
+      position:relative;z-index:3;display:flex;gap:28px;align-items:center;width:100%;
+      padding:48px; padding-top:64px; padding-bottom:96px;
+    }
+    .hero__left{flex:1;max-width:640px}
+    .eyebrow{font-size:12px;color:rgba(255,255,255,0.95);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+    h1{margin:0;color:white;font-size:44px;line-height:1.02;text-shadow:0 6px 26px rgba(2,20,20,0.28)}
+    p.lead{color:rgba(255,255,255,0.95);margin-top:12px;max-width:44ch}
+    .cta{
+      margin-top:20px;display:flex;gap:12px;align-items:center;
+    }
+    .btn{
+      padding:12px 18px;border-radius:999px;font-weight:700;border:0;cursor:pointer;box-shadow:0 10px 30px rgba(8,54,52,0.12);
+      transition:transform .15s var(--ease), box-shadow .15s var(--ease);
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn--primary{background:var(--teal); color:#fff}
+    .btn--ghost{background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.14)}
+    .hero__right{width:360px;display:flex;flex-direction:column;gap:12px;margin-left:auto}
+
+    .stat-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      padding:12px 14px;border-radius:12px;color:white;backdrop-filter: blur(6px);
+      display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+    }
+    .stat-card .num{font-size:20px;font-weight:800}
+    .stat-card .label{font-size:12px;opacity:.95}
+
+    /* ---------- SECTIONS ---------- */
+    section{padding:48px 24px}
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+    .card{background:white;border-radius:14px;padding:18px;box-shadow:0 8px 30px var(--muted);}
+
+    /* ---------- CAROUSEL ---------- */
+    .carousel{position:relative;border-radius:14px;overflow:hidden}
+    .carousel-track{display:flex;transition:transform 0.5s var(--ease);will-change:transform}
+    .carousel-item{min-width:100%;flex-shrink:0}
+    .carousel-item img{width:100%;height:320px;object-fit:cover;display:block}
+    .carousel-controls{position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
+    .carousel-controls button{pointer-events:auto;background:rgba(255,255,255,0.9);border:0;padding:10px;border-radius:999px;cursor:pointer;box-shadow:0 8px 18px rgba(2,20,20,0.12)}
+    .carousel-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.7);border:0}
+    .dot.active{background:var(--teal)}
+
+    /* ---------- MASONRY GALLERY ---------- */
+    .masonry{column-count:3;column-gap:12px;max-width:var(--max-width);margin:0 auto}
+    .masonry-item{break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;transition:transform .22s var(--ease)}
+    .masonry-item img{width:100%;height:auto;display:block;transform-origin:center center}
+    .masonry-item:hover{transform:translateY(-6px)}
+    @media (max-width:1000px){ .masonry{column-count:2} }
+    @media (max-width:600px){ .grid{grid-template-columns:1fr} .carousel-item img{height:220px} .hero__content{padding:28px} .masonry{column-count:1} h1{font-size:28px} }
+
+    /* ---------- LIGHTBOX (simple) ---------- */
+    .lb{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
+    .lb__img{max-width:92%;max-height:86vh;border-radius:8px;box-shadow:0 20px 40px rgba(0,0,0,0.6)}
+    .lb__close{position:fixed;top:18px;right:18px;background:rgba(255,255,255,0.08);border:0;color:white;padding:10px;border-radius:8px;cursor:pointer}
+    .lb__nav{position:fixed;left:18px;right:18px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
+    .lb__nav button{pointer-events:auto;background:rgba(255,255,255,0.06);border:0;color:white;padding:12px;border-radius:999px;cursor:pointer}
+
+    /* ---------- SMALL UTIL ---------- */
+    .muted{color:#526a6a}
+    .large{font-size:22px;font-weight:700}
+    .gap{height:18px}
+    footer{padding:28px;text-align:center;color:#376;opacity:0.85}
   </style>
 </head>
 <body>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero__bg" id="heroBg" aria-hidden="true"
+      style="background-image: url('https://source.unsplash.com/2000x1200/?diving,coral');">
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__wave" aria-hidden="true"></div>
+
+    <div class="container hero__content" role="banner">
+      <div class="hero__left">
+        <div class="eyebrow">About</div>
+        <h1>Curated dive adventures in the South Maldives.</h1>
+        <p class="lead">We connect travelers with world-class diving, island hopping, and reef exploration across the most vibrant parts of Addu Atoll. Comfort, safety, and unforgettable underwater moments.</p>
+
+        <div class="cta">
+          <button class="btn btn--primary" onclick="location.href='#book'">Book a dive</button>
+          <button class="btn btn--ghost" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">See gallery</button>
+        </div>
+      </div>
+
+      <aside class="hero__right" aria-hidden="false">
+        <div class="stat-card"><div class="num">12+</div><div class="label">Years experience</div></div>
+        <div class="stat-card"><div class="num">24/7</div><div class="label">Support</div></div>
+        <div class="stat-card"><div class="num">5★</div><div class="label">Guest reviews</div></div>
+      </aside>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
   <main>
-    <section class="carousel" aria-roledescription="carousel" aria-label="Featured dives">
-      <div class="track" id="track">
-        <div class="slide" data-index="0">
-          <img src="images/gallery-1.jpg" alt="Diver near coral reef" loading="lazy" width="1600" height="900">
+    <section class="container">
+      <div class="grid">
+        <div class="card">
+          <h3 class="large">Featured dives</h3>
+          <p class="muted">Quick look at some of our top experiences. Tap or click images to view larger.</p>
+
+          <!-- CAROUSEL -->
+          <div class="gap"></div>
+          <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Featured dives carousel">
+            <div class="carousel-track" id="track">
+              <div class="carousel-item">
+                <!-- responsive srcset example (Unsplash query) -->
+                <img
+                  src="https://source.unsplash.com/1200x700/?diver,reef"
+                  srcset="https://source.unsplash.com/600x350/?diver,reef 600w, https://source.unsplash.com/900x530/?diver,reef 900w, https://source.unsplash.com/1200x700/?diver,reef 1200w"
+                  sizes="(max-width:600px) 100vw, 60vw"
+                  alt="Diver exploring a colorful reef"
+                  loading="lazy" width="1200" height="700">
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="https://source.unsplash.com/1200x700/?boat,sunset"
+                  srcset="https://source.unsplash.com/600x350/?boat,sunset 600w, https://source.unsplash.com/900x530/?boat,sunset 900w, https://source.unsplash.com/1200x700/?boat,sunset 1200w"
+                  sizes="(max-width:600px) 100vw, 60vw"
+                  alt="Boat at sunset, silhouette on the water"
+                  loading="lazy" width="1200" height="700">
+              </div>
+              <div class="carousel-item">
+                <img
+                  src="https://source.unsplash.com/1200x700/?school,fish,underwater"
+                  srcset="https://source.unsplash.com/600x350/?school,fish,underwater 600w, https://source.unsplash.com/900x530/?school,fish,underwater 900w, https://source.unsplash.com/1200x700/?school,fish,underwater 1200w"
+                  sizes="(max-width:600px) 100vw, 60vw"
+                  alt="A dense school of tropical fish"
+                  loading="lazy" width="1200" height="700">
+              </div>
+            </div>
+
+            <div class="carousel-controls" aria-hidden="false">
+              <button id="prev" aria-label="Previous slide">‹</button>
+              <button id="next" aria-label="Next slide">›</button>
+            </div>
+            <div class="carousel-dots" id="dots" role="tablist" aria-label="Carousel navigation"></div>
+          </div>
         </div>
-        <div class="slide" data-index="1">
-          <img src="images/gallery-2.jpg" alt="Boat at sunset" loading="lazy" width="1600" height="900">
+
+        <aside class="card">
+          <h4>Why dive with us?</h4>
+          <ul>
+            <li>Local guides with decades of experience</li>
+            <li>Small group sizes & safety-focused trips</li>
+            <li>Custom packages & island-hopping itineraries</li>
+          </ul>
+          <div style="height:14px"></div>
+          <button class="btn btn--primary" style="width:100%" onclick="location.href='#book'">View packages</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="container">
+      <h3 class="large">Gallery</h3>
+      <p class="muted">Tap any image to open a full-size lightbox. Images optimized for mobile with srcset.</p>
+
+      <div class="masonry" id="masonry">
+        <!-- each item uses a query-based Unsplash source (replace later with your own optimized images) -->
+        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?underwater,reef" data-alt="Colorful coral close-up">
+          <img src="https://source.unsplash.com/800x600/?underwater,reef" alt="Colorful coral close-up" loading="lazy" width="800" height="600">
         </div>
-        <div class="slide" data-index="2">
-          <img src="images/gallery-3.jpg" alt="School of fish underwater" loading="lazy" width="1600" height="900">
+        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?diver,close" data-alt="Diver close-up smiling">
+          <img src="https://source.unsplash.com/800x900/?diver,close" alt="Diver close-up smiling" loading="lazy" width="800" height="900">
+        </div>
+        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?island,drone" data-alt="Aerial island shot">
+          <img src="https://source.unsplash.com/800x700/?island,drone" alt="Aerial island shot" loading="lazy" width="800" height="700">
+        </div>
+        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?boat,passengers,sunset" data-alt="Boat ride at sunset">
+          <img src="https://source.unsplash.com/800x600/?boat,passengers,sunset" alt="Boat ride at sunset" loading="lazy" width="800" height="600">
+        </div>
+        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?school,fish" data-alt="School of fish">
+          <img src="https://source.unsplash.com/800x600/?school,fish" alt="School of fish" loading="lazy" width="800" height="600">
+        </div>
+        <div class="masonry-item" data-full="https://source.unsplash.com/2000x1333/?reef,coral" data-alt="Plate corals">
+          <img src="https://source.unsplash.com/800x600/?reef,coral" alt="Plate corals" loading="lazy" width="800" height="600">
         </div>
       </div>
-
-      <div class="controls" aria-hidden="false">
-        <button id="prev" aria-label="Previous slide">‹</button>
-        <button id="next" aria-label="Next slide">›</button>
-      </div>
-
-      <div class="dots" role="tablist" aria-label="Slide dots" id="dots"></div>
     </section>
   </main>
 
+  <!-- LIGHTBOX -->
+  <div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="lb__close" id="lbClose" aria-label="Close viewer">✕</button>
+    <div class="lb__nav">
+      <button id="lbPrev" aria-label="Previous image">‹</button>
+      <button id="lbNext" aria-label="Next image">›</button>
+    </div>
+    <img class="lb__img" id="lbImg" src="" alt="">
+  </div>
+
+  <footer>
+    © Addu Dive Hub — demo showcase. Images from Unsplash (free to use).
+  </footer>
+
   <script>
+    /* ---------- PARALLAX HERO ---------- */
+    (function(){
+      const bg = document.getElementById('heroBg');
+      function onScroll(){
+        const scrolled = window.scrollY;
+        // subtle scale and translate for parallax
+        const scale = 1 + Math.min(scrolled / 2000, 0.06);
+        const y = Math.min(scrolled / 6, 60);
+        bg.style.transform = `translateY(${y}px) scale(${scale})`;
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+
+    /* ---------- SIMPLE CAROUSEL (accessible) ---------- */
     (function(){
       const track = document.getElementById('track');
-      const slides = [...track.children];
+      const slides = Array.from(track.children);
       const prev = document.getElementById('prev');
       const next = document.getElementById('next');
-      const dotsContainer = document.getElementById('dots');
-      let index = 0, autoplay = true, interval = 5000, timer;
+      const dotsRoot = document.getElementById('dots');
+      let idx = 0, autoplayInterval = 4500, timer;
 
-      function renderDots(){
-        slides.forEach((s,i)=>{
-          const btn = document.createElement('button');
-          btn.className = 'dot';
-          btn.setAttribute('role','tab');
-          btn.setAttribute('aria-selected', i===0 ? 'true' : 'false');
-          btn.dataset.index = i;
-          btn.addEventListener('click', ()=>goTo(i));
-          dotsContainer.appendChild(btn);
+      function createDots(){
+        slides.forEach((_, i) => {
+          const d = document.createElement('button');
+          d.className = 'dot';
+          d.setAttribute('aria-label','Slide '+(i+1));
+          d.addEventListener('click', ()=>goTo(i));
+          dotsRoot.appendChild(d);
         });
         updateDots();
       }
-
       function updateDots(){
-        [...dotsContainer.children].forEach((d,i)=>{
-          d.setAttribute('aria-current', i===index ? 'true' : 'false');
-          d.setAttribute('aria-selected', i===index ? 'true' : 'false');
-        });
+        Array.from(dotsRoot.children).forEach((d,i)=> d.classList.toggle('active', i===idx));
       }
-
       function goTo(i){
-        index = (i + slides.length) % slides.length;
-        track.style.transform = `translateX(-${index * 100}%)`;
+        idx = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${idx*100}%)`;
         updateDots();
         resetTimer();
       }
+      prev.addEventListener('click', ()=>goTo(idx-1));
+      next.addEventListener('click', ()=>goTo(idx+1));
+      document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') prev.click(); if(e.key==='ArrowRight') next.click(); });
 
-      prev.addEventListener('click', ()=>goTo(index-1));
-      next.addEventListener('click', ()=>goTo(index+1));
-      document.addEventListener('keydown', e => { if(e.key === 'ArrowLeft') prev.click(); if(e.key === 'ArrowRight') next.click(); });
-
-      function startTimer(){ if(autoplay) timer = setInterval(()=>goTo(index+1), interval); }
+      function startTimer(){ timer = setInterval(()=>goTo(idx+1), autoplayInterval); }
       function resetTimer(){ clearInterval(timer); startTimer(); }
-
-      renderDots();
-      startTimer();
+      createDots(); startTimer();
+      // pause on hover
+      const carousel = document.getElementById('carousel');
+      carousel.addEventListener('mouseenter', ()=> clearInterval(timer));
+      carousel.addEventListener('mouseleave', ()=> startTimer());
     })();
+
+    /* ---------- MASONRY GALLERY + LIGHTBOX ---------- */
+    (function(){
+      const masonry = document.getElementById('masonry');
+      const items = Array.from(masonry.querySelectorAll('.masonry-item'));
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lbImg');
+      const lbClose = document.getElementById('lbClose');
+      const lbPrev = document.getElementById('lbPrev');
+      const lbNext = document.getElementById('lbNext');
+
+      let currentIndex = -1;
+
+      function openLightbox(index){
+        const it = items[index];
+        if(!it) return;
+        currentIndex = index;
+        const full = it.dataset.full || it.querySelector('img').src;
+        const alt = it.dataset.alt || it.querySelector('img').alt || '';
+        lbImg.src = full;
+        lbImg.alt = alt;
+        lb.style.display = 'flex';
+        lb.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        lb.style.display = 'none';
+        lb.setAttribute('aria-hidden','true');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      function showNext(offset){
+        const nextIndex = (currentIndex + offset + items.length) % items.length;
+        openLightbox(nextIndex);
+      }
+
+      items.forEach((it, i) => {
+        it.addEventListener('click', ()=> openLightbox(i));
+        // also keyboard focus
+        it.setAttribute('tabindex','0');
+        it.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); openLightbox(i); } });
+      });
+
+      lbClose.addEventListener('click', closeLightbox);
+      lbPrev.addEventListener('click', ()=> showNext(-1));
+      lbNext.addEventListener('click', ()=> showNext(1));
+
+      // keyboard and click outside
+      lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
+      document.addEventListener('keydown', (e) => {
+        if(lb.style.display !== 'flex') return;
+        if(e.key === 'Escape') closeLightbox();
+        if(e.key === 'ArrowLeft') showNext(-1);
+        if(e.key === 'ArrowRight') showNext(1);
+      });
+
+      // basic touch support for swipe
+      let startX = 0;
+      lbImg.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+      lbImg.addEventListener('touchend', (e) => {
+        const dx = (e.changedTouches[0].clientX - startX);
+        if(Math.abs(dx) > 40){
+          if(dx < 0) showNext(1); else showNext(-1);
+        }
+      });
+    })();
+
+    /* ---------- NOTES ----------
+      - This demo uses Unsplash query endpoints (source.unsplash.com). Replace each "source.unsplash.com/..." URL with your own optimized images when ready.
+      - For production, pre-generate responsive WebP + JPEG files (400/800/1200/2000px) and replace src/srcset accordingly.
+    */
   </script>
 </body>
 </html>
