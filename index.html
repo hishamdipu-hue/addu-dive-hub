@@ -7,109 +7,91 @@
   <meta name="description" content="Addu Dive Hub — premium dive & island experiences in the South Maldives."/>
   <style>
     :root{
-      --bg:#f5f7f8;
-      --panel:#ffffff;
-      --ink:#0f2a2a;
-      --muted:#5b7a7a;
-      --line:rgba(15,42,42,0.06);
-      --teal:#007a74;         /* primary brand color */
-      --teal-dark:#005b53;
-      --charcoal:#0f2a2a;
-      --soft:#eef6f6;
-      --shadow:0 16px 42px rgba(3, 18, 22, 0.06);
+      --bg:#041017;
+      --panel:#0c1a1d;
+      --text:#e8f6f5;
+      --muted:#9bb4b1;
+      --line:rgba(255,255,255,0.04);
+      --accent:#00a99e;
+      --accent-dark:#00877a;
+      --shadow:0 18px 48px rgba(0,0,0,0.6);
       --radius:12px;
       --max:1200px;
       --ease:cubic-bezier(.2,.9,.25,1);
+      --glass: rgba(255,255,255,0.03);
+      font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     }
-
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      background:linear-gradient(180deg,#f6fbfb 0%, #edf6f6 100%);
-      color:var(--ink);-webkit-font-smoothing:antialiased;
-    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg), #071821);color:var(--text);-webkit-font-smoothing:antialiased}
+    body{font-family:var(--font-sans);line-height:1.45}
     img{display:block;max-width:100%}
-    a{text-decoration:none;color:inherit}
-
+    a{color:inherit;text-decoration:none}
     .container{max-width:var(--max);margin:0 auto;padding:0 22px}
 
-    /* TOPBAR with clear brand name */
-    .topbar{
-      position:sticky;top:0;z-index:40;background:rgba(255,255,255,0.98);
-      border-bottom:1px solid rgba(6,30,30,0.04);backdrop-filter:blur(6px)
-    }
+    /* Topbar */
+    .topbar{position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(2,8,10,0.95), rgba(2,8,10,0.88));border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px)}
     .nav-wrap{max-width:var(--max);margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg, rgba(0,122,116,0.12), rgba(0,122,116,0.04));border:1px solid rgba(0,122,116,0.12);display:inline-block}
-    .brand-title{font-weight:800;font-size:18px;color:var(--teal-dark);letter-spacing:.01em}
+    .brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg, rgba(0,169,158,0.12), rgba(0,169,158,0.04));border:1px solid rgba(0,169,158,0.08)}
+    .brand-title{font-weight:800;font-size:18px;color:var(--text);letter-spacing:0.01em}
     .nav-links{display:flex;gap:18px;align-items:center;color:var(--muted);font-weight:600}
-    .nav-links a{padding:8px 6px;border-radius:6px}
-    .nav-links a:hover{background:var(--soft)}
-    .nav-cta{background:var(--teal);color:#fff;padding:10px 16px;border-radius:8px;font-weight:700;box-shadow:0 8px 24px rgba(0,122,116,0.12)}
+    .nav-links a{padding:8px 6px;border-radius:8px}
+    .nav-links a:hover{background:rgba(255,255,255,0.02)}
+    .nav-cta{background:var(--accent);color:#022;padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 30px rgba(0,169,158,0.12);border:0}
 
     /* HERO */
-    .hero{position:relative;min-height:64vh;display:flex;align-items:center;overflow:hidden;border-bottom-left-radius:20px;border-bottom-right-radius:20px}
-    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80');background-size:cover;background-position:center center;filter:contrast(.95) saturate(.96)}
-    /* dim overall so text stands out; but the key fix is the hero-copy box below */
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.12) 45%, rgba(255,255,255,0) 100%);}
-    .hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:72px 22px 84px;display:grid;grid-template-columns:1.2fr 340px;gap:40px;align-items:end}
+    .hero{position:relative;min-height:64vh;display:flex;align-items:center;overflow:hidden;border-bottom-left-radius:16px;border-bottom-right-radius:16px}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60');background-size:cover;background-position:center center;filter:brightness(.45) saturate(.9);will-change:transform}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,8,10,0.42), rgba(2,8,10,0.12))}
+    .hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:64px 22px 84px;display:grid;grid-template-columns:1.1fr 340px;gap:36px;align-items:end}
 
-    /* HERO COPY BOX (ensures contrast on light images) */
-    .hero-copy{
-      background: linear-gradient(180deg, rgba(2,18,18,0.82), rgba(2,18,18,0.62));
-      padding:22px 26px;
-      border-radius:10px;
-      box-shadow:0 12px 30px rgba(2,12,12,0.32);
-      display:inline-block;
-      max-width:720px;
-    }
-    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,0.92);font-weight:700;margin-bottom:8px}
-    h1{margin:0;color:#fff;font-size:clamp(2.1rem,4.6vw,4.2rem);line-height:0.98;font-weight:800;letter-spacing:-0.02em;text-shadow:0 6px 18px rgba(0,0,0,0.45)}
-    .lead{margin-top:12px;color:rgba(255,255,255,0.9);max-width:60ch;font-size:1.02rem}
-    .hero-actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform .12s var(--ease)}
+    .hero-copy{background: linear-gradient(180deg, rgba(2,8,10,0.86), rgba(2,8,10,0.72));padding:22px 26px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.55);max-width:760px}
+    .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
+    h1{margin:0;color:var(--text);font-size:clamp(2rem,4.2vw,3.8rem);line-height:0.98;font-weight:800;letter-spacing:-0.02em;text-shadow:0 6px 20px rgba(0,0,0,0.6)}
+    .lead{margin-top:12px;color:var(--muted);font-size:1.02rem;max-width:56ch}
+    .hero-actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform .12s var(--ease);border:0}
     .btn:active{transform:translateY(1px)}
-    .btn-primary{background:var(--teal);color:#fff;box-shadow:0 14px 36px rgba(0,122,116,0.12)}
-    .btn-primary:hover{background:var(--teal-dark)}
-    .btn-secondary{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.06)}
+    .btn-primary{background:var(--accent);color:#022;box-shadow:0 14px 36px rgba(0,169,158,0.12)}
+    .btn-primary:hover{background:var(--accent-dark)}
+    .btn-secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06)}
 
     .hero-aside{display:flex;flex-direction:column;gap:12px;align-self:center;justify-self:end;width:100%}
-    .stat{background:rgba(255,255,255,0.06);border-radius:10px;padding:16px 12px;border:1px solid rgba(255,255,255,0.04);color:#fff}
-    .stat .num{font-size:24px;font-weight:800}
-    .stat .label{font-size:13px;color:rgba(255,255,255,0.9);margin-top:6px}
+    .stat{background:rgba(255,255,255,0.03);border-radius:10px;padding:14px 12px;border:1px solid rgba(255,255,255,0.02);color:var(--text)}
+    .stat .num{font-size:22px;font-weight:800}
+    .stat .label{font-size:13px;color:var(--muted);margin-top:6px}
 
-    /* sections */
+    /* Sections */
     section{padding:64px 0}
     .section-intro{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
-    h2{margin:0;font-size:clamp(1.8rem,3.6vw,2.8rem);color:var(--charcoal)}
+    h2{margin:0;font-size:clamp(1.6rem,3.2vw,2.6rem);color:var(--text)}
     .section-copy{max-width:680px;color:var(--muted);font-size:1rem;line-height:1.7}
 
     .features-layout{display:grid;grid-template-columns:1.2fr 0.8fr;gap:24px}
-    .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
     .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
-    .feature-card{display:flex;gap:12px;background:#fbfdfc;border-radius:10px;padding:12px;border:1px solid rgba(6,30,30,0.03)}
+    .feature-card{display:flex;gap:12px;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.02)}
     .feature-card img{width:86px;height:64px;object-fit:cover;border-radius:8px;flex-shrink:0}
-    .feature-card h3{margin:0;font-size:1rem}
+    .feature-card h3{margin:0;color:var(--text);font-size:1rem}
     .feature-card p{margin:0;color:var(--muted);font-size:.95rem}
 
     .side-panel{display:flex;flex-direction:column;gap:16px}
-    .mini{background:#ffffff;border:1px solid var(--line);border-radius:10px;padding:18px}
+    .mini{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:10px;padding:18px}
 
-    /* carousel */
+    /* Carousel */
     .carousel-wrap{margin-top:16px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
     .carousel-track{display:flex;transition:transform .48s var(--ease);will-change:transform}
     .carousel-slide{min-width:100%;flex-shrink:0}
     .carousel-slide img{height:300px;object-fit:cover;width:100%}
     .carousel-controls{position:absolute;right:16px;top:16px;display:flex;gap:8px}
-    .circle-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(6,30,30,0.06);background:#fff;cursor:pointer;font-size:20px}
+    .circle-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.96);cursor:pointer;font-size:20px;color:#082022}
 
-    /* gallery */
+    /* Gallery */
     .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
     .gallery-item{overflow:hidden;border-radius:12px;border:1px solid var(--line);cursor:pointer;transition:transform .18s var(--ease)}
     .gallery-item img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .25s var(--ease)}
     .gallery-item:hover img{transform:scale(1.04)}
-    @media (max-width:980px){.features-layout{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr}}
+    @media (max-width:980px){ .features-layout{grid-template-columns:1fr} .feature-grid{grid-template-columns:1fr} }
     @media (max-width:720px){
       .hero-inner{grid-template-columns:1fr;padding:48px 18px 64px}
       .gallery{grid-template-columns:1fr}
@@ -117,21 +99,39 @@
       .brand-title{font-size:16px}
     }
 
-    /* lightbox */
-    .lightbox{position:fixed;inset:0;background:rgba(6,12,12,0.84);display:none;align-items:center;justify-content:center;z-index:9999}
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.86);display:none;align-items:center;justify-content:center;z-index:9999}
     .lightbox img{max-width:92%;max-height:88vh;border-radius:8px;box-shadow:0 20px 48px rgba(0,0,0,0.6)}
-    .lb-close{position:fixed;top:18px;right:18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;width:40px;height:40px;border-radius:8px}
+    .lb-close{position:fixed;top:18px;right:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text);width:40px;height:40px;border-radius:8px}
     .lb-nav{position:fixed;top:50%;left:18px;right:18px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
-    .lb-nav button{pointer-events:auto;width:44px;height:44px;border-radius:999px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff}
+    .lb-nav button{pointer-events:auto;width:44px;height:44px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text)}
 
+    /* Booking modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:12000;padding:24px}
+    .modal[aria-hidden="false"]{display:flex}
+    .modal-panel{background:linear-gradient(180deg,#071a1b,#0b2224);border-radius:12px;width:100%;max-width:760px;padding:22px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 28px 60px rgba(0,0,0,0.6)}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .modal h3{margin:0;color:var(--text)}
+    .modal .close{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px;border-radius:8px;cursor:pointer}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .form-row .full{grid-column:1/-1}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select, textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);
+      outline:none;font-size:14px;
+    }
+    textarea{min-height:100px;resize:vertical}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:8px;cursor:pointer}
+    .note{font-size:13px;color:var(--muted);margin-top:8px}
+    .success{background:linear-gradient(90deg,#004d49,#007a74);padding:14px;border-radius:10px;color:white;margin-top:12px;text-align:center}
     footer{padding:36px 0;text-align:center;color:var(--muted);font-size:14px}
   </style>
 </head>
 <body>
-
-  <!-- TOP NAV with brand name -->
+  <!-- Topbar -->
   <header class="topbar" role="banner">
-    <div class="nav-wrap">
+    <div class="nav-wrap container">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-title">Addu Dive Hub</span>
@@ -144,23 +144,25 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <a href="#book" class="nav-cta">Book now</a>
+      <!-- wired to open booking modal -->
+      <button class="nav-cta js-open-booking" type="button">Book now</button>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero" id="about">
+  <!-- Hero -->
+  <section class="hero" id="about" aria-labelledby="hero-title">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-inner container">
-      <div class="hero-copy" aria-labelledby="hero-title">
+      <div class="hero-copy">
         <div class="eyebrow">About</div>
         <h1 id="hero-title">Premium diving & island experiences in the South Maldives</h1>
-        <p class="lead">Tailored itineraries, expert local guides, and safe, comfortable journeys across the best sites of Addu Atoll. See the ocean the way it was meant to be experienced.</p>
+        <p class="lead">Tailored itineraries, expert local guides, and safe, comfortable journeys across the best sites of Addu Atoll. Explore vibrant reefs and pristine islands with confidence.</p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#book">Book a trip</a>
+          <!-- wired -->
+          <button class="btn btn-primary js-open-booking" type="button">Book a trip</button>
           <a class="btn btn-secondary" href="#gallery">View gallery</a>
         </div>
       </div>
@@ -174,7 +176,7 @@
   </section>
 
   <main>
-    <!-- EXPERIENCE / FEATURES -->
+    <!-- Features -->
     <section id="experience">
       <div class="container">
         <div class="section-intro">
@@ -186,31 +188,31 @@
           <div class="panel">
             <div class="feature-grid">
               <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=80" alt="Reef dive">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=60" alt="Reef dive" />
                 <div><h3>Reef dives</h3><p>Vibrant coral gardens and macro life.</p></div>
               </div>
 
               <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80" alt="Boat days">
+                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=60" alt="Boat days" />
                 <div><h3>Boat days</h3><p>Private charters and island transfers.</p></div>
               </div>
 
               <div class="feature-card">
-                <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Island escape">
+                <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Island escape" />
                 <div><h3>Island escape</h3><p>Serene retreats with premium support.</p></div>
               </div>
             </div>
 
             <div class="carousel-wrap" aria-label="Featured images">
               <div class="carousel-controls">
-                <button class="circle-btn" id="prevBtn">‹</button>
-                <button class="circle-btn" id="nextBtn">›</button>
+                <button class="circle-btn" id="prevBtn" aria-label="Previous">&#x2039;</button>
+                <button class="circle-btn" id="nextBtn" aria-label="Next">&#x203A;</button>
               </div>
 
               <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1600&q=80" alt="Diver exploring a reef" loading="lazy"/></div>
-                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80" alt="Boat on turquoise water" loading="lazy"/></div>
-                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1600&q=80" alt="School of fish underwater" loading="lazy"/></div>
+                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1600&q=60" alt="Diver exploring a reef" loading="lazy"/></div>
+                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=60" alt="Boat on turquoise water" loading="lazy"/></div>
+                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1600&q=60" alt="School of fish underwater" loading="lazy"/></div>
               </div>
             </div>
           </div>
@@ -228,43 +230,37 @@
 
             <div class="mini">
               <h4 style="margin:0 0 10px">Ready to travel?</h4>
-              <a class="btn btn-primary" href="#book" style="display:block;text-align:center">Plan your trip</a>
+              <!-- wired -->
+              <button class="btn btn-primary js-open-booking" type="button" style="width:100%">Plan your trip</button>
             </div>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- GALLERY -->
+    <!-- Gallery -->
     <section id="gallery">
       <div class="container">
-        <div class="section-intro">
-          <h2>Gallery</h2>
-        </div>
+        <div class="section-intro"><h2>Gallery</h2></div>
 
         <div class="gallery" aria-label="Image gallery">
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=80" data-alt="Reef diving">
-            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=80" alt="Reef diving" loading="lazy"/>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=60" data-alt="Reef diving">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=60" alt="Reef diving" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=80" data-alt="Island getaway">
-            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Island getaway" loading="lazy"/>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=60" data-alt="Island getaway">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Island getaway" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1800&q=80" data-alt="School of fish">
-            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=80" alt="School of fish" loading="lazy"/>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1800&q=60" data-alt="School of fish">
+            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=60" alt="School of fish" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1800&q=80" data-alt="Ocean horizon">
-            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=80" alt="Ocean horizon" loading="lazy"/>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1800&q=60" data-alt="Ocean horizon">
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=60" alt="Ocean horizon" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=80" data-alt="Beach boat day">
-            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Beach boat day" loading="lazy"/>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60" data-alt="Boat sunset">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=60" alt="Boat sunset" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=80" data-alt="Underwater coral">
-            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=80" alt="Underwater coral" loading="lazy"/>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=60" data-alt="Beach">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Beach" loading="lazy"/>
           </div>
         </div>
       </div>
@@ -277,7 +273,7 @@
     </div>
   </footer>
 
-  <!-- SIMPLE LIGHTBOX -->
+  <!-- Lightbox -->
   <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
     <button class="lb-close" id="closeLB" aria-label="Close">✕</button>
     <div class="lb-nav">
@@ -287,63 +283,258 @@
     <img id="lightboxImage" src="" alt=""/>
   </div>
 
+  <!-- Booking modal -->
+  <div class="modal" id="bookingModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <div class="modal-panel" role="document">
+      <div class="modal-header">
+        <h3 id="bookingTitle">Book your dive</h3>
+        <button class="close" id="closeBooking" aria-label="Close booking dialog">✕</button>
+      </div>
+
+      <form id="bookingForm" novalidate>
+        <div class="form-row" style="margin-top:12px">
+          <div>
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" required placeholder="Your name">
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+880..." >
+          </div>
+          <div>
+            <label for="date">Preferred date</label>
+            <input id="date" name="date" type="date" >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="full">
+            <label for="package">Package</label>
+            <select id="package" name="package">
+              <option value="intro">Intro dive</option>
+              <option value="day">Day trip</option>
+              <option value="package">3-day package</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="full">
+            <label for="message">Message or special requests</label>
+            <textarea id="message" name="message" placeholder="Dietary needs, mobility, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-ghost" id="cancelBooking">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitBooking">Submit booking</button>
+        </div>
+
+        <div id="bookingNote" class="note">We will respond by email within 24 hours. This demo uses a simulated submit.</div>
+        <div id="bookingSuccess" class="success" style="display:none">Thanks — we received your request. We'll email you confirmation shortly.</div>
+      </form>
+    </div>
+  </div>
+
   <script>
-    // Carousel logic (unchanged)
+    /* ------------------ Safe UI initializers ------------------ */
     (function(){
+      // Carousel (safe)
       const track = document.getElementById('carouselTrack');
-      if(!track) return;
-      const slides = Array.from(track.children);
-      let idx = 0;
-      function go(i){ idx = (i + slides.length) % slides.length; track.style.transform = `translateX(-${idx*100}%)`; }
-      document.getElementById('prevBtn').addEventListener('click', ()=>go(idx-1));
-      document.getElementById('nextBtn').addEventListener('click', ()=>go(idx+1));
-      setInterval(()=>go(idx+1), 4500);
-    })();
-
-    // Gallery lightbox (unchanged)
-    (function(){
-      const items = Array.from(document.querySelectorAll('.gallery-item'));
-      const lb = document.getElementById('lightbox');
-      const img = document.getElementById('lightboxImage');
-      const closeBtn = document.getElementById('closeLB');
-      const prevBtn = document.getElementById('prevLB');
-      const nextBtn = document.getElementById('nextLB');
-      let current = 0;
-
-      function open(i){
-        current = (i + items.length) % items.length;
-        const it = items[current];
-        img.src = it.dataset.full || it.querySelector('img').src;
-        img.alt = it.dataset.alt || it.querySelector('img').alt || '';
-        lb.style.display = 'flex'; lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      if (track) {
+        const slides = Array.from(track.children);
+        if (slides.length) {
+          let idx = 0;
+          function go(i){
+            idx = (i + slides.length) % slides.length;
+            track.style.transform = `translateX(-${idx * 100}%)`;
+          }
+          if (prevBtn) prevBtn.addEventListener('click', ()=> go(idx - 1));
+          if (nextBtn) nextBtn.addEventListener('click', ()=> go(idx + 1));
+          let timer = setInterval(()=> go(idx + 1), 4500);
+          const wrap = track.parentElement;
+          if (wrap) {
+            wrap.addEventListener('mouseenter', ()=> clearInterval(timer));
+            wrap.addEventListener('mouseleave', ()=> { timer = setInterval(()=> go(idx + 1), 4500); });
+          }
+        }
       }
-      function close(){ lb.style.display='none'; lb.setAttribute('aria-hidden','true'); img.src=''; document.body.style.overflow=''; }
-      function nav(offset){ open(current + offset); }
 
-      items.forEach((it,i)=>{
-        it.addEventListener('click', ()=> open(i));
-        it.setAttribute('tabindex','0');
-        it.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') { e.preventDefault(); open(i); }});
-      });
+      // Lightbox (safe)
+      (function(){
+        const items = Array.from(document.querySelectorAll('.gallery-item'));
+        if (!items.length) return;
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImage');
+        const closeBtn = document.getElementById('closeLB');
+        const prevBtn = document.getElementById('prevLB');
+        const nextBtn = document.getElementById('nextLB');
+        let current = 0;
+        function open(i){
+          current = (i + items.length) % items.length;
+          const it = items[current];
+          const src = it.dataset.full || (it.querySelector('img') && it.querySelector('img').src);
+          const alt = it.dataset.alt || (it.querySelector('img') && it.querySelector('img').alt) || '';
+          if (!src) return;
+          if (lbImg) { lbImg.src = src; lbImg.alt = alt; }
+          if (lb) { lb.style.display = 'flex'; lb.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
+        }
+        function close(){ if (!document.getElementById('lightbox')) return; const lb = document.getElementById('lightbox'); lb.style.display = 'none'; lb.setAttribute('aria-hidden','true'); if (lbImg) lbImg.src = ''; document.body.style.overflow = ''; }
+        function nav(offset){ open(current + offset); }
+        items.forEach((it,i)=> {
+          it.tabIndex = 0;
+          it.addEventListener('click', ()=> open(i));
+          it.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }});
+        });
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        if (prevBtn) prevBtn.addEventListener('click', ()=> nav(-1));
+        if (nextBtn) nextBtn.addEventListener('click', ()=> nav(1));
+        const lbWrap = document.getElementById('lightbox');
+        if (lbWrap) lbWrap.addEventListener('click', (e)=> { if (e.target === lbWrap) close(); });
+        document.addEventListener('keydown', e => {
+          const lbVisible = document.getElementById('lightbox') && document.getElementById('lightbox').style.display === 'flex';
+          if (!lbVisible) return;
+          if (e.key === 'Escape') close();
+          if (e.key === 'ArrowLeft') nav(-1);
+          if (e.key === 'ArrowRight') nav(1);
+        });
+      })();
 
-      closeBtn.addEventListener('click', close);
-      prevBtn.addEventListener('click', ()=> nav(-1));
-      nextBtn.addEventListener('click', ()=> nav(1));
-      lb.addEventListener('click', e => { if(e.target === lb) close(); });
-      document.addEventListener('keydown', e => {
-        if(lb.style.display !== 'flex') return;
-        if(e.key === 'Escape') close();
-        if(e.key === 'ArrowLeft') nav(-1);
-        if(e.key === 'ArrowRight') nav(1);
-      });
+      /* ------------------ Booking modal & form ------------------ */
+      const openButtons = Array.from(document.querySelectorAll('.js-open-booking'));
+      const bookingModal = document.getElementById('bookingModal');
+      const bookingForm = document.getElementById('bookingForm');
+      const closeBooking = document.getElementById('closeBooking');
+      const cancelBooking = document.getElementById('cancelBooking');
+      const submitBooking = document.getElementById('submitBooking');
+      const bookingSuccess = document.getElementById('bookingSuccess');
+      const bookingNote = document.getElementById('bookingNote');
 
-      // simple swipe for touch
-      let startX = 0;
-      img.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-      img.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - startX;
-        if(Math.abs(dx) > 50) dx < 0 ? nav(1) : nav(-1);
-      });
+      if (openButtons.length && bookingModal) {
+        let lastFocus = null;
+
+        function focusable(el) {
+          return el && (el.tabIndex >= 0) && !el.disabled;
+        }
+
+        function openModal() {
+          lastFocus = document.activeElement;
+          bookingModal.setAttribute('aria-hidden','false');
+          bookingModal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          // focus first input
+          const first = bookingForm.querySelector('input, select, textarea, button');
+          if (first) first.focus();
+          // simple focus trap
+          trapFocus(bookingModal);
+          // reset form state
+          bookingForm.reset();
+          bookingSuccess.style.display = 'none';
+          bookingNote.style.display = 'block';
+        }
+
+        function closeModal() {
+          bookingModal.setAttribute('aria-hidden','true');
+          bookingModal.style.display = 'none';
+          document.body.style.overflow = '';
+          if (lastFocus) lastFocus.focus();
+        }
+
+        openButtons.forEach(b => b.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        }));
+
+        if (closeBooking) closeBooking.addEventListener('click', closeModal);
+        if (cancelBooking) cancelBooking.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
+
+        // form submit (client-side validation + simulated submit)
+        if (bookingForm) {
+          bookingForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            // basic validation: name & email required
+            const name = bookingForm.fullName.value.trim();
+            const email = bookingForm.email.value.trim();
+            if (!name || !email) {
+              alert('Please enter your name and email.');
+              return;
+            }
+            // disable submit while "sending"
+            if (submitBooking) { submitBooking.disabled = true; submitBooking.textContent = 'Sending...'; }
+            bookingNote.style.display = 'none';
+
+            // Simulate server call (replace with real fetch to your API)
+            setTimeout(() => {
+              if (bookingSuccess) bookingSuccess.style.display = 'block';
+              if (submitBooking) { submitBooking.disabled = false; submitBooking.textContent = 'Submit booking'; }
+              // optionally close after a few seconds
+              setTimeout(() => { closeModal(); }, 1800);
+            }, 1100);
+          });
+        }
+
+        // close on Escape
+        document.addEventListener('keydown', (e) => {
+          if (!bookingModal) return;
+          if (bookingModal.getAttribute('aria-hidden') === 'false' && e.key === 'Escape') closeModal();
+        });
+
+        // focus trap implementation
+        function trapFocus(modal) {
+          const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+          const nodes = Array.from(modal.querySelectorAll(focusableSelectors)).filter(n => n.offsetParent !== null);
+          if (!nodes.length) return;
+          const first = nodes[0];
+          const last = nodes[nodes.length - 1];
+          function handle(e) {
+            if (e.key !== 'Tab') return;
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+          modal.addEventListener('keydown', handle);
+          // remove listener when modal closes
+          const observer = new MutationObserver(() => {
+            if (modal.getAttribute('aria-hidden') === 'true') {
+              modal.removeEventListener('keydown', handle);
+              observer.disconnect();
+            }
+          });
+          observer.observe(modal, { attributes: true, attributeFilter: ['aria-hidden'] });
+        }
+      }
+
+      /* Smooth scroll for anchor links (keep default behavior except for #book which opens modal) */
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a) return;
+        const href = a.getAttribute('href');
+        if (!href) return;
+        if (href === '#book') {
+          // if any booking opener exists, open modal instead of scrolling
+          const bookingOpeners = document.querySelectorAll('.js-open-booking');
+          if (bookingOpeners.length && document.getElementById('bookingModal')) {
+            e.preventDefault();
+            bookingOpeners[0].click();
+            return;
+          }
+        }
+        // otherwise allow default anchor behavior
+      }, { passive: false });
+
     })();
   </script>
 </body>
