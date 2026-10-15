@@ -1,120 +1,94 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Addu Dive Hub — Hero + Gallery Example</title>
+  <title>Accessible Carousel</title>
   <style>
-    :root{
-      --accent:#0faea6;
-      --dark:rgba(6,30,35,0.85);
-      --muted:#f4fcfd;
-      --max:1200px;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-    }
-    body{margin:0;color:#083640;background:linear-gradient(#f8feff,#eef9fb);}
-    .hero{
-      position:relative;
-      min-height:60vh;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      padding:48px;
-      background-size:cover;
-      background-position:center;
-      color:white;
-    }
-    .hero::after{
-      content:"";
-      position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(6,30,35,0.35), rgba(6,30,35,0.55));
-      pointer-events:none;
-    }
-    .hero-inner{position:relative; max-width:var(--max); z-index:1; display:flex; gap:32px; align-items:center;}
-    .hero-copy{max-width:520px;}
-    .eyebrow{letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.85); font-size:12px;}
-    h1{font-size:40px; margin:12px 0 16px; line-height:1.05;}
-    .cta-row{display:flex; gap:12px; margin-top:18px;}
-    .btn{padding:12px 20px; border-radius:28px; font-weight:600; border:0; cursor:pointer;}
-    .btn-primary{background:var(--accent); color:#002a28; box-shadow:0 6px 18px rgba(11,92,87,0.18);}
-    .btn-outline{background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.16);}
-    /* gallery */
-    .gallery{max-width:var(--max); margin:48px auto; padding:0 16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
-    .gallery img{width:100%; height:220px; object-fit:cover; border-radius:10px; cursor:pointer; display:block;}
-    /* lightbox */
-    .lightbox{position:fixed; inset:0; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; z-index:9999;}
-    .lightbox img{max-width:92%; max-height:92%; border-radius:6px;}
-    .lb-close{position:absolute; top:18px; right:18px; color:#fff; font-size:24px; background:transparent; border:0; cursor:pointer;}
-    @media (max-width:600px){ h1{font-size:28px;} .hero{padding:24px; min-height:56vh;} .gallery img{height:160px;} }
+    :root{--controls:#0faea6}
+    body{font-family:system-ui,Arial;margin:0;background:#f6fcfc;color:#033;}
+    .carousel{max-width:980px;margin:36px auto;position:relative;overflow:hidden;border-radius:12px}
+    .track{display:flex;transition:transform .45s ease;will-change:transform}
+    .slide{min-width:100%;box-sizing:border-box;flex-shrink:0;position:relative}
+    .slide img{display:block;width:100%;height:420px;object-fit:cover}
+    .controls{position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
+    .controls button{pointer-events:auto;background:rgba(255,255,255,0.9);border:0;padding:10px;border-radius:999px;box-shadow:0 4px 14px rgba(2,20,20,0.12);cursor:pointer}
+    .dots{display:flex;gap:8px;position:absolute;left:50%;transform:translateX(-50%);bottom:12px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.6);border:0}
+    .dot[aria-current="true"]{background:var(--controls)}
+    @media (max-width:600px){ .slide img{height:260px} }
   </style>
 </head>
 <body>
-  <!-- Hero (set background-image inline so you can swap) -->
-  <header class="hero" style="background-image: url('images/hero.jpg');">
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <div class="eyebrow">About</div>
-        <h1>Curated dive adventures in the South Maldives.</h1>
-        <p style="opacity:0.9; margin:0 0 10px;">
-          We connect travelers with world-class diving, island hopping, and reef exploration across Addu Atoll. Memorable experiences built around comfort and safety.
-        </p>
-        <div class="cta-row">
-          <button class="btn btn-primary" onclick="location.href='/book'">Book a trip</button>
-          <button class="btn btn-outline" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Explore more</button>
+  <main>
+    <section class="carousel" aria-roledescription="carousel" aria-label="Featured dives">
+      <div class="track" id="track">
+        <div class="slide" data-index="0">
+          <img src="images/gallery-1.jpg" alt="Diver near coral reef" loading="lazy" width="1600" height="900">
+        </div>
+        <div class="slide" data-index="1">
+          <img src="images/gallery-2.jpg" alt="Boat at sunset" loading="lazy" width="1600" height="900">
+        </div>
+        <div class="slide" data-index="2">
+          <img src="images/gallery-3.jpg" alt="School of fish underwater" loading="lazy" width="1600" height="900">
         </div>
       </div>
-      <!-- optionally show a small hero-preview image or badge on the right -->
-      <div style="margin-left:auto; display:none;"> <!-- hidden by default -->
-        <img src="images/hero-preview.jpg" alt="" style="width:260px;border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.2)"/>
+
+      <div class="controls" aria-hidden="false">
+        <button id="prev" aria-label="Previous slide">‹</button>
+        <button id="next" aria-label="Next slide">›</button>
       </div>
-    </div>
-  </header>
 
-  <!-- Gallery -->
-  <section id="gallery" class="gallery" aria-label="Photo gallery">
-    <img src="images/gallery-1.jpg" loading="lazy" alt="Underwater reef with diver" data-full="images/gallery-1.jpg">
-    <img src="images/gallery-2.jpg" loading="lazy" alt="Boat at sunset" data-full="images/gallery-2.jpg">
-    <img src="images/gallery-3.jpg" loading="lazy" alt="School of fish" data-full="images/gallery-3.jpg">
-    <img src="images/gallery-4.jpg" loading="lazy" alt="Diver close up" data-full="images/gallery-4.jpg">
-    <img src="images/gallery-5.jpg" loading="lazy" alt="Coral reef" data-full="images/gallery-5.jpg">
-    <img src="images/gallery-6.jpg" loading="lazy" alt="Island drone shot" data-full="images/gallery-6.jpg">
-  </section>
-
-  <!-- simple lightbox -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-    <button class="lb-close" aria-label="Close" onclick="closeLB()">✕</button>
-    <img id="lb-img" src="" alt="">
-  </div>
+      <div class="dots" role="tablist" aria-label="Slide dots" id="dots"></div>
+    </section>
+  </main>
 
   <script>
-    const gallery = document.querySelectorAll('.gallery img');
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lb-img');
+    (function(){
+      const track = document.getElementById('track');
+      const slides = [...track.children];
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      const dotsContainer = document.getElementById('dots');
+      let index = 0, autoplay = true, interval = 5000, timer;
 
-    gallery.forEach(img => {
-      img.addEventListener('click', e => {
-        const src = img.dataset.full || img.src;
-        lbImg.src = src;
-        lbImg.alt = img.alt || '';
-        lb.style.display = 'flex';
-        lb.setAttribute('aria-hidden','false');
-      });
-    });
+      function renderDots(){
+        slides.forEach((s,i)=>{
+          const btn = document.createElement('button');
+          btn.className = 'dot';
+          btn.setAttribute('role','tab');
+          btn.setAttribute('aria-selected', i===0 ? 'true' : 'false');
+          btn.dataset.index = i;
+          btn.addEventListener('click', ()=>goTo(i));
+          dotsContainer.appendChild(btn);
+        });
+        updateDots();
+      }
 
-    function closeLB(){
-      lb.style.display = 'none';
-      lb.setAttribute('aria-hidden','true');
-      lbImg.src = '';
-    }
+      function updateDots(){
+        [...dotsContainer.children].forEach((d,i)=>{
+          d.setAttribute('aria-current', i===index ? 'true' : 'false');
+          d.setAttribute('aria-selected', i===index ? 'true' : 'false');
+        });
+      }
 
-    // close on ESC
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') closeLB();
-    });
-    // click outside to close
-    lb.addEventListener('click', (e) => {
-      if(e.target === lb) closeLB();
-    });
+      function goTo(i){
+        index = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        updateDots();
+        resetTimer();
+      }
+
+      prev.addEventListener('click', ()=>goTo(index-1));
+      next.addEventListener('click', ()=>goTo(index+1));
+      document.addEventListener('keydown', e => { if(e.key === 'ArrowLeft') prev.click(); if(e.key === 'ArrowRight') next.click(); });
+
+      function startTimer(){ if(autoplay) timer = setInterval(()=>goTo(index+1), interval); }
+      function resetTimer(){ clearInterval(timer); startTimer(); }
+
+      renderDots();
+      startTimer();
+    })();
   </script>
 </body>
 </html>
