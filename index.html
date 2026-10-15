@@ -11,24 +11,23 @@
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://YOUR_DOMAIN/#organization",
+        "@id": "https://addu-dive-hub.com/#organization",
         "name": "Addu Dive Hub",
-        "url": "https://YOUR_DOMAIN/",
-        "logo": "https://YOUR_DOMAIN/path/to/logo.png",
+        "url": "https://addu-dive-hub.com/",
+        "logo": "https://addu-dive-hub.com/assets/logo.png",
         "telephone": "+960 555 1234",
         "sameAs": [
-          "https://www.facebook.com/YOUR_PAGE",
-          "https://www.instagram.com/YOUR_PAGE",
-          "https://www.youtube.com/YOUR_CHANNEL"
+          "https://facebook...",
+          "https://instagram"
         ]
       },
       {
         "@type": "LocalBusiness",
-        "@id": "https://YOUR_DOMAIN/#business",
+        "@id": "https://addu-dive-hub.com/#business",
         "name": "Addu Dive Hub",
-        "image": "https://YOUR_DOMAIN/path/to/hero.jpg",
+        "image": "https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=60",
         "description": "Premium dive experiences, island escapes and guided adventures in Addu Atoll, Maldives.",
-        "url": "https://YOUR_DOMAIN/",
+        "url": "https://addu-dive-hub.com/",
         "telephone": "+960 555 1234",
         "address": {
           "@type": "PostalAddress",
@@ -40,8 +39,8 @@
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": "YOUR_LATITUDE",
-          "longitude": "YOUR_LONGITUDE"
+          "latitude": "-0.5406",
+          "longitude": "73.0822"
         },
         "openingHoursSpecification": [
           {
@@ -62,30 +61,25 @@
         "priceRange": "$$",
         "makesOffer": {
           "@type": "Offer",
-          "url": "https://YOUR_DOMAIN/booking",
+          "url": "https://addu-dive-hub.com/booking",
           "priceCurrency": "USD",
           "price": "100.00",
           "availability": "https://schema.org/InStock",
           "validFrom": "2026-01-01"
         },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "5.0",
-          "reviewCount": "24"
-        },
         "sameAs": [
-          "https://www.facebook.com/YOUR_PAGE",
-          "https://www.instagram.com/YOUR_PAGE"
+          "https://facebook...",
+          "https://instagram"
         ]
       },
       {
         "@type": "WebSite",
-        "@id": "https://YOUR_DOMAIN/#website",
-        "url": "https://YOUR_DOMAIN/",
+        "@id": "https://addu-dive-hub.com/#website",
+        "url": "https://addu-dive-hub.com/",
         "name": "Addu Dive Hub",
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://YOUR_DOMAIN/search?q={search_term_string}",
+          "target": "https://addu-dive-hub.com/search?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       }
@@ -254,8 +248,10 @@
         <p class="lead">Tailored itineraries, expert local guides, and safe, comfortable journeys across the best sites of Addu Atoll. Explore vibrant reefs and pristine islands with confidence.</p>
 
         <div class="hero-actions">
+          <!-- hero button -->
           <button class="btn btn-primary js-open-booking" type="button">Book a trip</button>
-          <a class="btn btn-secondary" href="#gallery">View gallery</a>
+          <!-- anchor with #book also handled -->
+          <a class="btn btn-secondary" href="#book">View gallery</a>
         </div>
       </div>
 
@@ -322,6 +318,7 @@
 
             <div class="mini">
               <h4 style="margin:0 0 10px">Ready to travel?</h4>
+              <!-- Plan your trip opens modal -->
               <button class="btn btn-primary js-open-booking" type="button" style="width:100%">Plan your trip</button>
             </div>
           </aside>
