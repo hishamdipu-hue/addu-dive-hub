@@ -1,35 +1,40 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Addu Dive Hub | Professional — Teal Brand</title>
-  <meta name="description" content="Addu Dive Hub — premium dive & island experiences in the South Maldives."/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Addu Dive Hub — Dark Theme (Buttons Fixed)</title>
+  <meta name="description" content="Addu Dive Hub — dark theme demo with working booking buttons and modal." />
   <style>
     :root{
-      --bg:#041017;
-      --panel:#0c1a1d;
-      --text:#e8f6f5;
-      --muted:#9bb4b1;
-      --line:rgba(255,255,255,0.04);
-      --accent:#00a99e;
-      --accent-dark:#00877a;
-      --shadow:0 18px 48px rgba(0,0,0,0.6);
+      --bg-0: #031016;
+      --bg-1: #071821;
+      --panel: #071a1c;
+      --surface: #0b2324;
+      --text: #e8f6f5;
+      --muted: #9bb4b1;
+      --line: rgba(255,255,255,0.03);
+      --accent: #00a99e;
+      --accent-dark: #00877a;
+      --shadow: 0 18px 48px rgba(0,0,0,0.6);
       --radius:12px;
       --max:1200px;
-      --ease:cubic-bezier(.2,.9,.25,1);
-      --glass: rgba(255,255,255,0.03);
+      --ease: cubic-bezier(.2,.9,.25,1);
       font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg), #071821);color:var(--text);-webkit-font-smoothing:antialiased}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg-0),var(--bg-1));color:var(--text);-webkit-font-smoothing:antialiased}
     body{font-family:var(--font-sans);line-height:1.45}
     img{display:block;max-width:100%}
     a{color:inherit;text-decoration:none}
     .container{max-width:var(--max);margin:0 auto;padding:0 22px}
 
     /* Topbar */
-    .topbar{position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(2,8,10,0.95), rgba(2,8,10,0.88));border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px)}
+    .topbar{
+      position:sticky;top:0;z-index:999;background:linear-gradient(180deg, rgba(2,8,10,0.96), rgba(2,8,10,0.92));
+      border-bottom:1px solid var(--line);backdrop-filter:blur(6px);
+    }
     .nav-wrap{max-width:var(--max);margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
     .brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg, rgba(0,169,158,0.12), rgba(0,169,158,0.04));border:1px solid rgba(0,169,158,0.08)}
@@ -37,14 +42,15 @@
     .nav-links{display:flex;gap:18px;align-items:center;color:var(--muted);font-weight:600}
     .nav-links a{padding:8px 6px;border-radius:8px}
     .nav-links a:hover{background:rgba(255,255,255,0.02)}
-    .nav-cta{background:var(--accent);color:#022;padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 30px rgba(0,169,158,0.12);border:0}
+    .nav-cta{background:var(--accent);color:#022;padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 30px rgba(0,169,158,0.12);border:0;cursor:pointer}
 
-    /* HERO */
+    /* Hero */
     .hero{position:relative;min-height:64vh;display:flex;align-items:center;overflow:hidden;border-bottom-left-radius:16px;border-bottom-right-radius:16px}
-    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60');background-size:cover;background-position:center center;filter:brightness(.45) saturate(.9);will-change:transform}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60');background-size:cover;background-position:center center;filter:brightness(.35) saturate(.98);will-change:transform}
     .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,8,10,0.42), rgba(2,8,10,0.12))}
     .hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:64px 22px 84px;display:grid;grid-template-columns:1.1fr 340px;gap:36px;align-items:end}
 
+    /* hero copy box ensures contrast */
     .hero-copy{background: linear-gradient(180deg, rgba(2,8,10,0.86), rgba(2,8,10,0.72));padding:22px 26px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.55);max-width:760px}
     .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
     h1{margin:0;color:var(--text);font-size:clamp(2rem,4.2vw,3.8rem);line-height:0.98;font-weight:800;letter-spacing:-0.02em;text-shadow:0 6px 20px rgba(0,0,0,0.6)}
@@ -144,8 +150,8 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <!-- wired to open booking modal -->
-      <button class="nav-cta js-open-booking" type="button">Book now</button>
+      <!-- Book now (button) -->
+      <button class="nav-cta js-open-booking" type="button" aria-haspopup="dialog">Book now</button>
     </div>
   </header>
 
@@ -161,9 +167,10 @@
         <p class="lead">Tailored itineraries, expert local guides, and safe, comfortable journeys across the best sites of Addu Atoll. Explore vibrant reefs and pristine islands with confidence.</p>
 
         <div class="hero-actions">
-          <!-- wired -->
+          <!-- hero button -->
           <button class="btn btn-primary js-open-booking" type="button">Book a trip</button>
-          <a class="btn btn-secondary" href="#gallery">View gallery</a>
+          <!-- anchor with #book also handled -->
+          <a class="btn btn-secondary" href="#book">View gallery</a>
         </div>
       </div>
 
@@ -230,7 +237,7 @@
 
             <div class="mini">
               <h4 style="margin:0 0 10px">Ready to travel?</h4>
-              <!-- wired -->
+              <!-- Plan your trip opens modal -->
               <button class="btn btn-primary js-open-booking" type="button" style="width:100%">Plan your trip</button>
             </div>
           </aside>
@@ -338,46 +345,149 @@
         </div>
 
         <div id="bookingNote" class="note">We will respond by email within 24 hours. This demo uses a simulated submit.</div>
-        <div id="bookingSuccess" class="success" style="display:none">Thanks — we received your request. We'll email you confirmation shortly.</div>
+        <div id="bookingSuccess" class="success" style="display:none">Thanks — we received your request. We'll email confirmation shortly.</div>
       </form>
     </div>
   </div>
 
   <script>
-    /* ------------------ Safe UI initializers ------------------ */
     (function(){
-      // Carousel (safe)
-      const track = document.getElementById('carouselTrack');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      if (track) {
-        const slides = Array.from(track.children);
-        if (slides.length) {
-          let idx = 0;
-          function go(i){
-            idx = (i + slides.length) % slides.length;
-            track.style.transform = `translateX(-${idx * 100}%)`;
-          }
-          if (prevBtn) prevBtn.addEventListener('click', ()=> go(idx - 1));
-          if (nextBtn) nextBtn.addEventListener('click', ()=> go(idx + 1));
-          let timer = setInterval(()=> go(idx + 1), 4500);
-          const wrap = track.parentElement;
-          if (wrap) {
-            wrap.addEventListener('mouseenter', ()=> clearInterval(timer));
-            wrap.addEventListener('mouseleave', ()=> { timer = setInterval(()=> go(idx + 1), 4500); });
-          }
-        }
+      // Helper: safely query
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+      /* ---------- Delegated booking opener ----------
+         Any element matching:
+           - .js-open-booking (buttons)
+           - [data-book] attribute
+           - button.nav-cta
+           - anchor with href="#book"
+         will open the booking modal.
+      */
+      const bookingModal = $('#bookingModal');
+      const bookingForm = $('#bookingForm');
+      const bookingSuccess = $('#bookingSuccess');
+      const bookingNote = $('#bookingNote');
+      const closeBooking = $('#closeBooking');
+      const cancelBooking = $('#cancelBooking');
+      const submitBooking = $('#submitBooking');
+
+      function openBooking() {
+        if (!bookingModal) return;
+        bookingModal.setAttribute('aria-hidden','false');
+        bookingModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        // reset & focus
+        if (bookingForm) { bookingForm.reset(); bookingSuccess.style.display='none'; bookingNote.style.display='block'; }
+        const first = bookingForm ? bookingForm.querySelector('input, select, textarea, button') : null;
+        if (first) first.focus();
+        trapFocus(bookingModal);
+      }
+      function closeBookingModal() {
+        if (!bookingModal) return;
+        bookingModal.setAttribute('aria-hidden','true');
+        bookingModal.style.display = 'none';
+        document.body.style.overflow = '';
       }
 
-      // Lightbox (safe)
+      // Delegated click handler for booking triggers
+      document.addEventListener('click', function(e){
+        const btn = e.target.closest('.js-open-booking, [data-book], button.nav-cta, a[href="#book"]');
+        if (!btn) return;
+        e.preventDefault();
+        openBooking();
+      }, { passive: false });
+
+      // Cancel/close handlers
+      if (closeBooking) closeBooking.addEventListener('click', closeBookingModal);
+      if (cancelBooking) cancelBooking.addEventListener('click', (e) => { e.preventDefault(); closeBookingModal(); });
+
+      // Close on overlay click
+      if (bookingModal) bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) closeBookingModal();
+      });
+
+      // Esc to close while modal open
+      document.addEventListener('keydown', (e) => {
+        if (!bookingModal) return;
+        if (bookingModal.getAttribute('aria-hidden') === 'false' && e.key === 'Escape') {
+          closeBookingModal();
+        }
+      });
+
+      // Form submit (client-side validation + simulated send)
+      if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          const name = (bookingForm.fullName && bookingForm.fullName.value || '').trim();
+          const email = (bookingForm.email && bookingForm.email.value || '').trim();
+          if (!name || !email) {
+            alert('Please enter your name and email.');
+            return;
+          }
+          if (submitBooking) { submitBooking.disabled = true; submitBooking.textContent = 'Sending...'; }
+          bookingNote.style.display = 'none';
+          // Simulate API call
+          setTimeout(() => {
+            bookingSuccess.style.display = 'block';
+            if (submitBooking) { submitBooking.disabled = false; submitBooking.textContent = 'Submit booking'; }
+            // close after short delay
+            setTimeout(() => closeBookingModal(), 1500);
+          }, 1000);
+        });
+      }
+
+      /* ---------- Focus trap for modal ---------- */
+      function trapFocus(modal) {
+        if (!modal) return;
+        const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const nodes = Array.from(modal.querySelectorAll(focusableSelectors)).filter(n => n.offsetParent !== null);
+        if (!nodes.length) return;
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        function handleKey(e) {
+          if (e.key !== 'Tab') return;
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault(); last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault(); first.focus();
+          }
+        }
+        modal.addEventListener('keydown', handleKey);
+        // remove listener when modal closes
+        const obs = new MutationObserver(() => {
+          if (modal.getAttribute('aria-hidden') === 'true') {
+            modal.removeEventListener('keydown', handleKey);
+            obs.disconnect();
+          }
+        });
+        obs.observe(modal, { attributes: true, attributeFilter: ['aria-hidden'] });
+      }
+
+      /* ---------- Carousel (safe) ---------- */
       (function(){
-        const items = Array.from(document.querySelectorAll('.gallery-item'));
+        const track = $('#carouselTrack');
+        if (!track) return;
+        const slides = Array.from(track.children);
+        if (!slides.length) return;
+        const prev = $('#prevBtn'), next = $('#nextBtn');
+        let idx = 0;
+        function go(i){ idx = (i + slides.length) % slides.length; track.style.transform = `translateX(-${idx*100}%)`; }
+        if (prev) prev.addEventListener('click', ()=> go(idx-1));
+        if (next) next.addEventListener('click', ()=> go(idx+1));
+        let timer = setInterval(()=> go(idx+1), 4500);
+        const wrap = track.parentElement;
+        if (wrap) {
+          wrap.addEventListener('mouseenter', ()=> clearInterval(timer));
+          wrap.addEventListener('mouseleave', ()=> timer = setInterval(()=> go(idx+1), 4500));
+        }
+      })();
+
+      /* ---------- Lightbox (safe) ---------- */
+      (function(){
+        const items = $$('.gallery-item');
         if (!items.length) return;
-        const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightboxImage');
-        const closeBtn = document.getElementById('closeLB');
-        const prevBtn = document.getElementById('prevLB');
-        const nextBtn = document.getElementById('nextLB');
+        const lb = $('#lightbox'), lbImg = $('#lightboxImage'), closeLB = $('#closeLB'), prevLB = $('#prevLB'), nextLB = $('#nextLB');
         let current = 0;
         function open(i){
           current = (i + items.length) % items.length;
@@ -385,156 +495,28 @@
           const src = it.dataset.full || (it.querySelector('img') && it.querySelector('img').src);
           const alt = it.dataset.alt || (it.querySelector('img') && it.querySelector('img').alt) || '';
           if (!src) return;
-          if (lbImg) { lbImg.src = src; lbImg.alt = alt; }
-          if (lb) { lb.style.display = 'flex'; lb.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
+          if (lbImg){ lbImg.src = src; lbImg.alt = alt; }
+          if (lb){ lb.style.display = 'flex'; lb.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
         }
-        function close(){ if (!document.getElementById('lightbox')) return; const lb = document.getElementById('lightbox'); lb.style.display = 'none'; lb.setAttribute('aria-hidden','true'); if (lbImg) lbImg.src = ''; document.body.style.overflow = ''; }
+        function close(){ if (!lb) return; lb.style.display = 'none'; lb.setAttribute('aria-hidden','true'); if (lbImg) lbImg.src = ''; document.body.style.overflow = ''; }
         function nav(offset){ open(current + offset); }
-        items.forEach((it,i)=> {
+        items.forEach((it,i) => {
           it.tabIndex = 0;
           it.addEventListener('click', ()=> open(i));
-          it.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }});
+          it.addEventListener('keydown', e => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); open(i); }});
         });
-        if (closeBtn) closeBtn.addEventListener('click', close);
-        if (prevBtn) prevBtn.addEventListener('click', ()=> nav(-1));
-        if (nextBtn) nextBtn.addEventListener('click', ()=> nav(1));
-        const lbWrap = document.getElementById('lightbox');
-        if (lbWrap) lbWrap.addEventListener('click', (e)=> { if (e.target === lbWrap) close(); });
-        document.addEventListener('keydown', e => {
-          const lbVisible = document.getElementById('lightbox') && document.getElementById('lightbox').style.display === 'flex';
-          if (!lbVisible) return;
+        if (closeLB) closeLB.addEventListener('click', close);
+        if (prevLB) prevLB.addEventListener('click', ()=> nav(-1));
+        if (nextLB) nextLB.addEventListener('click', ()=> nav(1));
+        if (lb) lb.addEventListener('click', e => { if (e.target === lb) close(); });
+        document.addEventListener('keydown', (e) => {
+          const visible = lb && lb.style.display === 'flex';
+          if (!visible) return;
           if (e.key === 'Escape') close();
           if (e.key === 'ArrowLeft') nav(-1);
           if (e.key === 'ArrowRight') nav(1);
         });
       })();
-
-      /* ------------------ Booking modal & form ------------------ */
-      const openButtons = Array.from(document.querySelectorAll('.js-open-booking'));
-      const bookingModal = document.getElementById('bookingModal');
-      const bookingForm = document.getElementById('bookingForm');
-      const closeBooking = document.getElementById('closeBooking');
-      const cancelBooking = document.getElementById('cancelBooking');
-      const submitBooking = document.getElementById('submitBooking');
-      const bookingSuccess = document.getElementById('bookingSuccess');
-      const bookingNote = document.getElementById('bookingNote');
-
-      if (openButtons.length && bookingModal) {
-        let lastFocus = null;
-
-        function focusable(el) {
-          return el && (el.tabIndex >= 0) && !el.disabled;
-        }
-
-        function openModal() {
-          lastFocus = document.activeElement;
-          bookingModal.setAttribute('aria-hidden','false');
-          bookingModal.style.display = 'flex';
-          document.body.style.overflow = 'hidden';
-          // focus first input
-          const first = bookingForm.querySelector('input, select, textarea, button');
-          if (first) first.focus();
-          // simple focus trap
-          trapFocus(bookingModal);
-          // reset form state
-          bookingForm.reset();
-          bookingSuccess.style.display = 'none';
-          bookingNote.style.display = 'block';
-        }
-
-        function closeModal() {
-          bookingModal.setAttribute('aria-hidden','true');
-          bookingModal.style.display = 'none';
-          document.body.style.overflow = '';
-          if (lastFocus) lastFocus.focus();
-        }
-
-        openButtons.forEach(b => b.addEventListener('click', (e) => {
-          e.preventDefault();
-          openModal();
-        }));
-
-        if (closeBooking) closeBooking.addEventListener('click', closeModal);
-        if (cancelBooking) cancelBooking.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
-
-        // form submit (client-side validation + simulated submit)
-        if (bookingForm) {
-          bookingForm.addEventListener('submit', function(e){
-            e.preventDefault();
-            // basic validation: name & email required
-            const name = bookingForm.fullName.value.trim();
-            const email = bookingForm.email.value.trim();
-            if (!name || !email) {
-              alert('Please enter your name and email.');
-              return;
-            }
-            // disable submit while "sending"
-            if (submitBooking) { submitBooking.disabled = true; submitBooking.textContent = 'Sending...'; }
-            bookingNote.style.display = 'none';
-
-            // Simulate server call (replace with real fetch to your API)
-            setTimeout(() => {
-              if (bookingSuccess) bookingSuccess.style.display = 'block';
-              if (submitBooking) { submitBooking.disabled = false; submitBooking.textContent = 'Submit booking'; }
-              // optionally close after a few seconds
-              setTimeout(() => { closeModal(); }, 1800);
-            }, 1100);
-          });
-        }
-
-        // close on Escape
-        document.addEventListener('keydown', (e) => {
-          if (!bookingModal) return;
-          if (bookingModal.getAttribute('aria-hidden') === 'false' && e.key === 'Escape') closeModal();
-        });
-
-        // focus trap implementation
-        function trapFocus(modal) {
-          const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-          const nodes = Array.from(modal.querySelectorAll(focusableSelectors)).filter(n => n.offsetParent !== null);
-          if (!nodes.length) return;
-          const first = nodes[0];
-          const last = nodes[nodes.length - 1];
-          function handle(e) {
-            if (e.key !== 'Tab') return;
-            if (e.shiftKey && document.activeElement === first) {
-              e.preventDefault();
-              last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-              e.preventDefault();
-              first.focus();
-            }
-          }
-          modal.addEventListener('keydown', handle);
-          // remove listener when modal closes
-          const observer = new MutationObserver(() => {
-            if (modal.getAttribute('aria-hidden') === 'true') {
-              modal.removeEventListener('keydown', handle);
-              observer.disconnect();
-            }
-          });
-          observer.observe(modal, { attributes: true, attributeFilter: ['aria-hidden'] });
-        }
-      }
-
-      /* Smooth scroll for anchor links (keep default behavior except for #book which opens modal) */
-      document.addEventListener('click', (e) => {
-        const a = e.target.closest && e.target.closest('a[href^="#"]');
-        if (!a) return;
-        const href = a.getAttribute('href');
-        if (!href) return;
-        if (href === '#book') {
-          // if any booking opener exists, open modal instead of scrolling
-          const bookingOpeners = document.querySelectorAll('.js-open-booking');
-          if (bookingOpeners.length && document.getElementById('bookingModal')) {
-            e.preventDefault();
-            bookingOpeners[0].click();
-            return;
-          }
-        }
-        // otherwise allow default anchor behavior
-      }, { passive: false });
-
     })();
   </script>
 </body>
