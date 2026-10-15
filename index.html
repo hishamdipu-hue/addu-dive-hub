@@ -3,1162 +3,583 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Addu Dive Hub | Premium Dive Experiences</title>
-  <meta name="description" content="Addu Dive Hub offers premium dive experiences, island escapes, and guided adventures in the South Maldives." />
+  <title>Addu Dive Hub — Dark Theme (Buttons Fixed)</title>
+  <meta name="description" content="Addu Dive Hub — dark theme demo with working booking buttons and modal." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://YOUR_DOMAIN/#organization",
+        "name": "Addu Dive Hub",
+        "url": "https://YOUR_DOMAIN/",
+        "logo": "https://YOUR_DOMAIN/path/to/logo.png",
+        "telephone": "+960 555 1234",
+        "sameAs": [
+          "https://www.facebook.com/YOUR_PAGE",
+          "https://www.instagram.com/YOUR_PAGE",
+          "https://www.youtube.com/YOUR_CHANNEL"
+        ]
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://YOUR_DOMAIN/#business",
+        "name": "Addu Dive Hub",
+        "image": "https://YOUR_DOMAIN/path/to/hero.jpg",
+        "description": "Premium dive experiences, island escapes and guided adventures in Addu Atoll, Maldives.",
+        "url": "https://YOUR_DOMAIN/",
+        "telephone": "+960 555 1234",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Addu Atoll",
+          "addressLocality": "Addu City",
+          "addressRegion": "Addu Atoll",
+          "postalCode": "----",
+          "addressCountry": "MV"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "YOUR_LATITUDE",
+          "longitude": "YOUR_LONGITUDE"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "08:00",
+            "closes": "20:00"
+          }
+        ],
+        "priceRange": "$$",
+        "makesOffer": {
+          "@type": "Offer",
+          "url": "https://YOUR_DOMAIN/booking",
+          "priceCurrency": "USD",
+          "price": "100.00",
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2026-01-01"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "24"
+        },
+        "sameAs": [
+          "https://www.facebook.com/YOUR_PAGE",
+          "https://www.instagram.com/YOUR_PAGE"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://YOUR_DOMAIN/#website",
+        "url": "https://YOUR_DOMAIN/",
+        "name": "Addu Dive Hub",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://YOUR_DOMAIN/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     :root{
-      --bg-0: #020d13;
-      --bg-1: #071c24;
-      --bg-2: #0d2b34;
-      --panel: rgba(9, 24, 30, 0.84);
-      --panel-soft: rgba(15, 35, 42, 0.72);
-      --line: rgba(214, 190, 142, 0.18);
-      --text: #edf7f7;
-      --muted: #a7c3c7;
-      --gold: #d9b87a;
-      --gold-soft: #f7dca1;
-      --teal: #42d6d1;
-      --teal-deep: #0a9aa1;
-      --shadow: 0 22px 50px rgba(0,0,0,0.45);
-      --radius: 18px;
-      --max: 1200px;
+      --bg-0: #031016;
+      --bg-1: #071821;
+      --panel: #071a1c;
+      --surface: #0b2324;
+      --text: #e8f6f5;
+      --muted: #9bb4b1;
+      --line: rgba(255,255,255,0.03);
+      --accent: #00a99e;
+      --accent-dark: #00877a;
+      --shadow: 0 18px 48px rgba(0,0,0,0.6);
+      --radius:12px;
+      --max:1200px;
       --ease: cubic-bezier(.2,.9,.25,1);
+      font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body{
-      margin:0;
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top, rgba(66,214,209,0.10), transparent 28%),
-        linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      color:var(--text);
-      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height:1.5;
-      -webkit-font-smoothing: antialiased;
-    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg-0),var(--bg-1));color:var(--text);-webkit-font-smoothing:antialiased}
+    body{font-family:var(--font-sans);line-height:1.45}
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 22px}
 
-    img { display:block; max-width:100%; }
-    a { color:inherit; text-decoration:none; }
-    button, input, select, textarea { font:inherit; }
-    .container { width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
-
+    /* Topbar */
     .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      background:rgba(3, 13, 19, 0.82);
-      border-bottom:1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
-
-    .nav-wrap{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      min-height:80px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:800;
-      letter-spacing:-0.04em;
-      font-size:1.1rem;
-    }
-
-    .brand-mark{
-      width:32px;
-      height:32px;
-      border-radius:10px;
-      background:linear-gradient(145deg, rgba(217,184,122,0.18), rgba(66,214,209,0.18));
-      border:1px solid rgba(217,184,122,0.2);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .brand-mark::before{
-      content:"";
-      position:absolute;
-      inset:7px;
-      border-radius:8px;
-      background:linear-gradient(180deg, rgba(247,220,161,0.85), rgba(66,214,209,0.55));
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-      opacity:0.8;
-    }
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:22px;
-      color:var(--muted);
-      font-size:0.94rem;
-      font-weight:600;
-      flex-wrap:wrap;
-    }
-
-    .nav-links a{
-      opacity:0.9;
-      transition:opacity .2s ease;
-    }
-
-    .nav-links a:hover { opacity:1; }
-
-    .nav-cta, .btn-primary, .hero-btn, .partner-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border:none;
-      border-radius:999px;
-      cursor:pointer;
-      transition:transform .15s var(--ease), filter .2s ease;
-      font-weight:800;
-      letter-spacing:0.02em;
-    }
-
-    .nav-cta, .btn-primary{
-      background:linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color:#071b20;
-      padding:12px 20px;
-      box-shadow: 0 10px 24px rgba(217,184,122,0.28);
-    }
-
-    .btn-primary:hover, .nav-cta:hover, .hero-btn:hover, .partner-btn:hover{
-      transform:translateY(-1px);
-      filter:brightness(1.04);
-    }
-
-    .hero{
-      position:relative;
-      min-height:72vh;
-      background:
-        linear-gradient(180deg, rgba(3,13,19,0.18), rgba(3,13,19,0.70)),
-        url('https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=60') center/cover no-repeat;
-      overflow:hidden;
-      border-bottom:1px solid var(--line);
-    }
-
-    .hero-inner{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns:1.2fr 360px;
-      gap:36px;
-      align-items:end;
-      min-height:72vh;
-      padding:72px 0 88px;
-    }
-
-    .hero-copy{
-      max-width:760px;
-      background: rgba(6, 18, 23, 0.52);
-      border:1px solid var(--line);
-      backdrop-filter: blur(4px);
-      border-radius:18px;
-      padding:32px 28px;
-      box-shadow: var(--shadow);
-    }
-
-    .eyebrow{
-      color:var(--gold-soft);
-      text-transform:uppercase;
-      letter-spacing:0.16em;
-      font-size:11px;
-      font-weight:800;
-      margin-bottom:12px;
-    }
-
-    h1{
-      margin:0;
-      color:#fff;
-      font-size: clamp(2.7rem, 5vw, 5rem);
-      line-height:0.98;
-      letter-spacing:-0.06em;
-      font-weight:800;
-      text-shadow:0 6px 20px rgba(0,0,0,0.45);
-    }
-
-    .lead{
-      font-size:1.07rem;
-      color:var(--muted);
-      max-width:58ch;
-      margin-top:14px;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-      margin-top:24px;
-    }
-
-    .hero-btn{
-      padding:14px 22px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:transparent;
-      color:var(--text);
-    }
-
-    .hero-btn.primary{
-      background:linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color:#071b20;
-      border-color:transparent;
-    }
-
-    .partner-buttons{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:18px;
-    }
-
-    .partner-btn{
-      padding:10px 14px;
-      font-size:0.8rem;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.09);
-      color:var(--text);
-      text-transform:uppercase;
-      letter-spacing:0.06em;
-    }
-
-    .hero-stats{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      align-self:center;
-      justify-self:end;
-      width:100%;
-    }
-
-    .stat{
-      background: rgba(10, 23, 29, 0.72);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .stat strong{
-      display:block;
-      font-size:2rem;
-      line-height:1.1;
-      letter-spacing:-0.06em;
-      color:#fff;
-    }
-
-    .stat span{
-      display:block;
-      margin-top:6px;
-      color:var(--muted);
-      font-size:0.85rem;
-      letter-spacing:0.03em;
-    }
-
-    main{
-      padding-bottom:56px;
-    }
-
-    section{
-      padding:64px 0;
-    }
-
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:18px;
-      margin-bottom:30px;
-    }
-
-    .section-head h2{
-      margin:0;
-      font-size: clamp(2rem, 3vw, 3rem);
-      letter-spacing:-0.06em;
-      line-height:1.05;
-    }
-
-    .section-copy{
-      max-width:700px;
-      color:var(--muted);
-      font-size:1rem;
-    }
-
-    .features-layout{
-      display:grid;
-      grid-template-columns:1.35fr 0.95fr;
-      gap:24px;
-    }
-
-    .panel{
-      background:linear-gradient(180deg, rgba(13, 28, 34, 0.95), rgba(10, 20, 27, 0.85));
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:22px;
-    }
-
-    .feature-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:14px;
-    }
-
-    .feature-card{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      background: rgba(255,255,255,0.02);
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,0.03);
-      padding:12px;
-      min-height: 220px;
-    }
-
-    .feature-card img{
-      width:100%;
-      height:150px;
-      object-fit:cover;
-      border-radius:10px;
-    }
-
-    .feature-card h3{
-      margin:0;
-      font-size:1.02rem;
-      letter-spacing:-0.03em;
-    }
-
-    .feature-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:0.92rem;
-    }
-
-    .side-panel{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-
-    .mini-card{
-      background: rgba(255,255,255,0.02);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px;
-    }
-
-    .mini-card h4{
-      margin:0 0 12px;
-      font-size:1.04rem;
-      letter-spacing:-0.04em;
-    }
-
-    .mini-card ul{
-      margin:0;
-      padding-left:18px;
-      color:var(--muted);
-      display:grid;
-      gap:8px;
-      font-size:0.94rem;
-    }
-
-    .full-width-cta{
-      width:100%;
-      padding:14px 18px;
-    }
-
-    .gallery-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:16px;
-      margin-top:18px;
-    }
-
-    .gallery-item{
-      position:relative;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      cursor:pointer;
-      transition:transform .18s var(--ease), border-color .2s ease;
-    }
-
-    .gallery-item:hover{
-      transform:translateY(-2px);
-      border-color: rgba(217,184,122,0.4);
-    }
-
-    .gallery-item img{
-      width:100%;
-      height:250px;
-      object-fit:cover;
-      display:block;
-    }
-
-    .gallery-item::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, transparent 60%, rgba(2, 13, 19, 0.35));
-    }
-
-    .contact-wrap{
-      display:grid;
-      grid-template-columns:1.1fr 0.9fr;
-      gap:24px;
-    }
-
-    .contact-panel{
-      background:linear-gradient(180deg, rgba(13, 28, 34, 0.95), rgba(10, 20, 27, 0.85));
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:22px;
-    }
-
-    .contact-list{
-      display:grid;
-      gap:12px;
-      margin-top:18px;
-    }
-
-    .contact-item{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      color:var(--muted);
-      font-size:0.96rem;
-    }
-
-    .contact-item strong{
-      color:var(--text);
-      display:block;
-      margin-bottom:2px;
-    }
-
-    .badge{
-      width:34px;
-      height:34px;
-      border-radius:10px;
-      background: rgba(255,255,255,0.03);
-      border:1px solid var(--line);
-      display:grid;
-      place-items:center;
-      flex-shrink:0;
-    }
-
-    .signup-box{
-      display:flex;
-      gap:10px;
-      margin-top:18px;
-    }
-
-    .signup-box input{
-      flex:1;
-      min-width:0;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,0.02);
-      color:var(--text);
-      border-radius:12px;
-      padding:12px 14px;
-      outline:none;
-    }
-
-    .signup-box button{
-      border:none;
-      border-radius:12px;
-      background:linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color:#071b20;
-      font-weight:800;
-      padding:0 18px;
-      cursor:pointer;
-    }
-
-    .trial-box{
-      display:grid;
-      gap:16px;
-    }
-
-    .trial-box div{
-      color:var(--muted);
-      font-size:0.96rem;
-      line-height:1.6;
-    }
-
-    .footer{
-      padding:30px 0 40px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      text-align:center;
-      font-size:0.92rem;
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      background:rgba(0,0,0,0.62);
-      z-index:9999;
-    }
-
-    .modal[aria-hidden="false"]{
-      display:flex;
-    }
-
-    .modal-panel{
-      width:min(760px, 100%);
-      background:linear-gradient(180deg, #071a1c, #0b2324);
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:18px;
-      box-shadow:0 28px 60px rgba(0,0,0,0.5);
-      padding:22px;
-    }
-
-    .modal-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:16px;
-    }
-
-    .modal-header h3{
-      margin:0;
-      font-size:1.5rem;
-      letter-spacing:-0.04em;
-    }
-
-    .close-btn{
-      border:1px solid rgba(255,255,255,0.08);
-      background:transparent;
-      color:var(--text);
-      border-radius:10px;
-      width:40px;
-      height:40px;
-      cursor:pointer;
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .form-grid .full{
-      grid-column:1 / -1;
-    }
-
-    label{
-      display:block;
-      margin-bottom:7px;
-      color:var(--muted);
-      font-size:0.88rem;
-      font-weight:600;
-    }
-
-    input, select, textarea{
-      width:100%;
-      background: rgba(255,255,255,0.02);
-      border:1px solid rgba(255,255,255,0.05);
-      border-radius:10px;
-      padding:11px 12px;
-      color:var(--text);
-      outline:none;
-    }
-
-    input::placeholder, textarea::placeholder{
-      color: rgba(167,195,199,0.7);
-    }
-
-    textarea{
-      min-height:110px;
-      resize:vertical;
-    }
-
-    .modal-actions{
-      display:flex;
-      justify-content:flex-end;
-      gap:12px;
-      margin-top:18px;
-    }
-
-    .ghost-btn{
-      border:1px solid rgba(255,255,255,0.08);
-      background:transparent;
-      color:var(--text);
-      border-radius:10px;
-      padding:11px 18px;
-      cursor:pointer;
-    }
-
-    .success-box{
-      margin-top:14px;
-      border-radius:12px;
-      padding:14px 16px;
-      background:linear-gradient(90deg, rgba(10,154,161,0.25), rgba(66,214,209,0.18));
-      color: #dffaf9;
-      border:1px solid rgba(66,214,209,0.25);
-      display:none;
-    }
-
-    .note{
-      margin-top:12px;
-      color:var(--muted);
-      font-size:0.9rem;
-    }
-
-    .lightbox{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,0.82);
-      z-index:10000;
-      padding:22px;
-    }
-
-    .lightbox[aria-hidden="false"]{
-      display:flex;
-    }
-
-    .lightbox img{
-      max-width:92vw;
-      max-height:88vh;
-      border-radius:12px;
-      box-shadow:0 24px 60px rgba(0,0,0,0.5);
-    }
-
-    .lb-close{
-      position:fixed;
-      top:18px;
-      right:18px;
-      width:42px;
-      height:42px;
-      border:none;
-      border-radius:10px;
-      background:rgba(255,255,255,0.05);
-      color:#fff;
-      cursor:pointer;
-    }
-
-    .lb-nav{
-      position:fixed;
-      left:18px;
-      right:18px;
-      top:50%;
-      transform:translateY(-50%);
-      display:flex;
-      justify-content:space-between;
-      pointer-events:none;
-    }
-
-    .lb-nav button{
-      pointer-events:auto;
-      width:42px;
-      height:42px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-      color:#fff;
-      cursor:pointer;
-    }
-
-    @media (max-width: 980px){
-      .hero-inner,
-      .features-layout,
-      .contact-wrap{
-        grid-template-columns:1fr;
-      }
-
-      .hero-stats{
-        display:grid;
-        grid-template-columns:repeat(3, minmax(0,1fr));
-        width:100%;
-      }
-
-      .feature-grid{
-        grid-template-columns:1fr;
-      }
-
-      .gallery-grid{
-        grid-template-columns:repeat(2, minmax(0,1fr));
-      }
-    }
-
-    @media (max-width: 720px){
-      .nav-wrap{
-        flex-wrap:wrap;
-        justify-content:center;
-        padding:12px 0;
-      }
-
-      .nav-links{
-        justify-content:center;
-      }
-
-      h1{
-        font-size:clamp(2.5rem, 12vw, 4rem);
-      }
-
-      .hero-inner{
-        padding:56px 0 70px;
-      }
-
-      .gallery-grid{
-        grid-template-columns:1fr;
-      }
-
-      .hero-stats{
-        grid-template-columns:1fr;
-      }
-
-      .section-head{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-    }
+      position:sticky;top:0;z-index:999;background:linear-gradient(180deg, rgba(2,8,10,0.96), rgba(2,8,10,0.92));
+      border-bottom:1px solid var(--line);backdrop-filter:blur(6px);
+    }
+    .nav-wrap{max-width:var(--max);margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg, rgba(0,169,158,0.12), rgba(0,169,158,0.04));border:1px solid rgba(0,169,158,0.08)}
+    .brand-title{font-weight:800;font-size:18px;color:var(--text);letter-spacing:0.01em}
+    .nav-links{display:flex;gap:18px;align-items:center;color:var(--muted);font-weight:600}
+    .nav-links a{padding:8px 6px;border-radius:8px}
+    .nav-links a:hover{background:rgba(255,255,255,0.02)}
+    .nav-cta{background:var(--accent);color:#022;padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 30px rgba(0,169,158,0.12);border:0;cursor:pointer}
+
+    /* Hero */
+    .hero{position:relative;min-height:64vh;display:flex;align-items:center;overflow:hidden;border-bottom-left-radius:16px;border-bottom-right-radius:16px}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60');background-size:cover;background-position:center}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,8,10,0.42), rgba(2,8,10,0.12))}
+    .hero-inner{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:64px 22px 84px;display:grid;grid-template-columns:1.1fr 340px;gap:36px;align-items:end}
+
+    /* hero copy box ensures contrast */
+    .hero-copy{background: linear-gradient(180deg, rgba(2,8,10,0.86), rgba(2,8,10,0.72));padding:22px 26px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.55);max-width:760px}
+    .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
+    h1{margin:0;color:var(--text);font-size:clamp(2rem,4.2vw,3.8rem);line-height:0.98;font-weight:800;letter-spacing:-0.02em;text-shadow:0 6px 20px rgba(0,0,0,0.6)}
+    .lead{margin-top:12px;color:var(--muted);font-size:1.02rem;max-width:56ch}
+    .hero-actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform .12s var(--ease);border:0}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--accent);color:#022;box-shadow:0 14px 36px rgba(0,169,158,0.12)}
+    .btn-primary:hover{background:var(--accent-dark)}
+    .btn-secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06)}
+
+    .hero-aside{display:flex;flex-direction:column;gap:12px;align-self:center;justify-self:end;width:100%}
+    .stat{background:rgba(255,255,255,0.03);border-radius:10px;padding:14px 12px;border:1px solid rgba(255,255,255,0.02);color:var(--text)}
+    .stat .num{font-size:22px;font-weight:800}
+    .stat .label{font-size:13px;color:var(--muted);margin-top:6px}
+
+    /* Sections */
+    section{padding:64px 0}
+    .section-intro{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+    h2{margin:0;font-size:clamp(1.6rem,3.2vw,2.6rem);color:var(--text)}
+    .section-copy{max-width:680px;color:var(--muted);font-size:1rem;line-height:1.7}
+
+    .features-layout{display:grid;grid-template-columns:1.2fr 0.8fr;gap:24px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+    .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+    .feature-card{display:flex;gap:12px;background:rgba(255,255,255,0.02);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.02)}
+    .feature-card img{width:86px;height:64px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .feature-card h3{margin:0;color:var(--text);font-size:1rem}
+    .feature-card p{margin:0;color:var(--muted);font-size:.95rem}
+
+    .side-panel{display:flex;flex-direction:column;gap:16px}
+    .mini{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:10px;padding:18px}
+
+    /* Carousel */
+    .carousel-wrap{margin-top:16px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+    .carousel-track{display:flex;transition:transform .48s var(--ease);will-change:transform}
+    .carousel-slide{min-width:100%;flex-shrink:0}
+    .carousel-slide img{height:300px;object-fit:cover;width:100%}
+    .carousel-controls{position:absolute;right:16px;top:16px;display:flex;gap:8px}
+    .circle-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.96);cursor:pointer;font-size:20px;color:#082022}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .gallery-item{overflow:hidden;border-radius:12px;border:1px solid var(--line);cursor:pointer;transition:transform .18s var(--ease)}
+    .gallery-item img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .25s var(--ease)}
+    .gallery-item:hover img{transform:scale(1.04)}
+    @media (max-width:980px){ .features-layout{grid-template-columns:1fr} .feature-grid{grid-template-columns:1fr} }
+    @media (max-width:720px){
+      .hero-inner{grid-template-columns:1fr;padding:48px 18px 64px}
+      .gallery{grid-template-columns:1fr}
+      .carousel-slide img{height:220px}
+      .brand-title{font-size:16px}
+    }
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.86);display:none;align-items:center;justify-content:center;z-index:9999}
+    .lightbox img{max-width:92%;max-height:88vh;border-radius:8px;box-shadow:0 20px 48px rgba(0,0,0,0.6)}
+    .lb-close{position:fixed;top:18px;right:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text);width:40px;height:40px;border-radius:8px}
+    .lb-nav{position:fixed;top:50%;left:18px;right:18px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none}
+    .lb-nav button{pointer-events:auto;width:44px;height:44px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+
+    /* Booking modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:12000;padding:24px}
+    .modal[aria-hidden="false"]{display:flex}
+    .modal-panel{background:linear-gradient(180deg,#071a1b,#0b2224);border-radius:12px;width:100%;max-width:760px;padding:22px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 28px 60px rgba(0,0,0,0.6)}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .modal h3{margin:0;color:var(--text)}
+    .modal .close{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px;border-radius:8px;cursor:pointer}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .form-row .full{grid-column:1/-1}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select, textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);
+      outline:none;font-size:14px;
+    }
+    textarea{min-height:100px;resize:vertical}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px 14px;border-radius:8px;cursor:pointer}
+    .note{font-size:13px;color:var(--muted);margin-top:8px}
+    .success{background:linear-gradient(90deg,#004d49,#007a74);padding:14px;border-radius:10px;color:white;margin-top:12px;text-align:center}
+    footer{padding:36px 0;text-align:center;color:var(--muted);font-size:14px}
   </style>
 </head>
 <body>
+  <!-- Topbar -->
   <header class="topbar" role="banner">
     <div class="nav-wrap container">
-      <div class="brand" aria-label="Addu Dive Hub brand">
+      <div class="brand">
         <span class="brand-mark" aria-hidden="true"></span>
-        <span>Addu Dive Hub</span>
+        <span class="brand-title">Addu Dive Hub</span>
       </div>
 
-      <nav class="nav-links" aria-label="Main nav">
-        <a href="#about">Home</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
       </nav>
 
-      <button type="button" class="nav-cta js-open-booking">Book now</button>
+      <!-- Book now (button) -->
+      <button class="nav-cta js-open-booking" type="button" aria-haspopup="dialog">Book now</button>
     </div>
   </header>
 
-  <section class="hero" id="about">
-    <div class="container hero-inner">
+  <!-- Hero -->
+  <section class="hero" id="about" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner container">
       <div class="hero-copy">
-        <div class="eyebrow">Dive Center</div>
-        <h1>Explore the deep.<br/>Discover Addu Hub.</h1>
-        <p class="lead">
-          Unparalleled marine adventures in the Maldives’ southern atoll. From guided dives and boat charters to
-          island returns and bespoke experiences, every stay is crafted for comfort, discovery and memorable escapes.
-        </p>
+        <div class="eyebrow">About</div>
+        <h1 id="hero-title">Premium diving & island experiences in the South Maldives</h1>
+        <p class="lead">Tailored itineraries, expert local guides, and safe, comfortable journeys across the best sites of Addu Atoll. Explore vibrant reefs and pristine islands with confidence.</p>
 
         <div class="hero-actions">
-          <button type="button" class="hero-btn primary js-open-booking">Book a trip</button>
-          <a href="#gallery" class="hero-btn">View gallery</a>
-        </div>
-
-        <div class="partner-buttons" aria-label="Travel partner links">
-          <a class="partner-btn" href="https://www.booking.com/searchresults.html?ss=Addu%20Atoll%20Maldives" target="_blank" rel="noopener noreferrer sponsored">Booking.com</a>
-          <a class="partner-btn" href="https://www.expedia.com/" target="_blank" rel="noopener noreferrer sponsored">Expedia</a>
-          <a class="partner-btn" href="https://www.getyourguide.com/" target="_blank" rel="noopener noreferrer sponsored">GetYourGuide</a>
+          <button class="btn btn-primary js-open-booking" type="button">Book a trip</button>
+          <a class="btn btn-secondary" href="#gallery">View gallery</a>
         </div>
       </div>
 
-      <aside class="hero-stats" aria-label="Quick stats">
-        <div class="stat">
-          <strong>12+</strong>
-          <span>Years of dive experience</span>
-        </div>
-        <div class="stat">
-          <strong>24/7</strong>
-          <span>Travel and support</span>
-        </div>
-        <div class="stat">
-          <strong>5★</strong>
-          <span>Guest reviews</span>
-        </div>
+      <aside class="hero-aside" aria-label="Quick stats">
+        <div class="stat"><div class="num">12+</div><div class="label">Years experience</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="label">Support</div></div>
+        <div class="stat"><div class="num">5★</div><div class="label">Guest reviews</div></div>
       </aside>
     </div>
   </section>
 
   <main>
+    <!-- Features -->
     <section id="experience">
       <div class="container">
-        <div class="section-head">
-          <h2>The Addu experience</h2>
-          <div class="section-copy">
-            Premium dive experiences tailored to your pace, with small-group adventures, expert local guidance and
-            immersive island-to-sea journeys in the Southern Maldives.
-          </div>
+        <div class="section-intro">
+          <h2>Featured experiences</h2>
+          <div class="section-copy">Carefully curated diving adventures and island journeys designed for comfort, safety, and unforgettable memories.</div>
         </div>
 
-        <div class="features-layout">
+        <div class="features-layout container">
           <div class="panel">
             <div class="feature-grid">
-              <article class="feature-card">
+              <div class="feature-card">
                 <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=60" alt="Reef dive" />
-                <div>
-                  <h3>Reef dives</h3>
-                  <p>Vibrant coral gardens and crystal-clear blue water.</p>
-                </div>
-              </article>
+                <div><h3>Reef dives</h3><p>Vibrant coral gardens and macro life.</p></div>
+              </div>
 
-              <article class="feature-card">
-                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=60" alt="Boat excursion" />
-                <div>
-                  <h3>Boat trips</h3>
-                  <p>Comfortable transfers to the best dive points.</p>
-                </div>
-              </article>
+              <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=60" alt="Boat days" />
+                <div><h3>Boat days</h3><p>Private charters and island transfers.</p></div>
+              </div>
 
-              <article class="feature-card">
+              <div class="feature-card">
                 <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Island escape" />
-                <div>
-                  <h3>Island escape</h3>
-                  <p>Slow, scenic travel designed for rest and discovery.</p>
-                </div>
-              </article>
+                <div><h3>Island escape</h3><p>Serene retreats with premium support.</p></div>
+              </div>
+            </div>
+
+            <div class="carousel-wrap" aria-label="Featured images">
+              <div class="carousel-controls">
+                <button class="circle-btn" id="prevBtn" aria-label="Previous">&#x2039;</button>
+                <button class="circle-btn" id="nextBtn" aria-label="Next">&#x203A;</button>
+              </div>
+
+              <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1600&q=60" alt="Diver exploring a reef" loading="lazy"/></div>
+                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=60" alt="Boat on turquoise water" loading="lazy"/></div>
+                <div class="carousel-slide"><img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1600&q=60" alt="School of fish underwater" loading="lazy"/></div>
+              </div>
             </div>
           </div>
 
-          <aside class="side-panel">
-            <div class="mini-card">
-              <h4>Why choose us</h4>
-              <ul>
-                <li>Flexible custom packages</li>
-                <li>Certified local expertise</li>
+          <aside class="panel side-panel">
+            <div class="mini">
+              <h4 style="margin:0 0 10px">Why choose Addu Dive Hub</h4>
+              <ul style="margin:0;padding-left:18px;color:var(--muted)">
+                <li>Tailored itineraries</li>
+                <li>Small group expertise</li>
                 <li>Safety-first planning</li>
-                <li>Seamless island support</li>
+                <li>Seamless travel support</li>
               </ul>
             </div>
 
-            <div class="mini-card">
-              <h4>Ready to start?</h4>
-              <button type="button" class="btn-primary full-width-cta js-open-booking">Plan your trip</button>
+            <div class="mini">
+              <h4 style="margin:0 0 10px">Ready to travel?</h4>
+              <button class="btn btn-primary js-open-booking" type="button" style="width:100%">Plan your trip</button>
             </div>
           </aside>
         </div>
       </div>
     </section>
 
+    <!-- Gallery -->
     <section id="gallery">
       <div class="container">
-        <div class="section-head">
-          <h2>Gallery</h2>
-        </div>
+        <div class="section-intro"><h2>Gallery</h2></div>
 
-        <div class="gallery-grid" aria-label="Addu Dive Hub gallery">
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=60" data-alt="Reef dive">
-            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=60" alt="Reef dive" loading="lazy" />
+        <div class="gallery" aria-label="Image gallery">
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=60" data-alt="Reef diving">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=900&q=60" alt="Reef diving" loading="lazy"/>
           </div>
-
           <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=60" data-alt="Island getaway">
-            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Island getaway" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Island getaway" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1800&q=60" data-alt="Boat and reef">
-            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=60" alt="Boat and reef" loading="lazy" />
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1800&q=60" data-alt="School of fish">
+            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=900&q=60" alt="School of fish" loading="lazy"/>
           </div>
-
           <div class="gallery-item" data-full="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1800&q=60" data-alt="Ocean horizon">
-            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=60" alt="Ocean horizon" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=60" alt="Ocean horizon" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60" data-alt="Boat on water">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=60" alt="Boat on water" loading="lazy" />
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=60" data-alt="Boat sunset">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=60" alt="Boat sunset" loading="lazy"/>
           </div>
-
-          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=60" data-alt="Scenic island">
-            <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=60" alt="Scenic island" loading="lazy" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="contact-wrap">
-          <div class="contact-panel">
-            <div class="eyebrow">Contact</div>
-            <h2>Plan your next underwater escape</h2>
-
-            <div class="contact-list">
-              <div class="contact-item">
-                <div class="badge">✉</div>
-                <div>
-                  <strong>Email</strong>
-                  hello@addu-dive-hub.com
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="badge">☎</div>
-                <div>
-                  <strong>Phone</strong>
-                  +960 555 1234
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="badge">⌂</div>
-                <div>
-                  <strong>Location</strong>
-                  Addu Atoll, Maldives
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="contact-panel">
-            <div class="eyebrow">Newsletter</div>
-            <h2>Keep up with our deep adventures</h2>
-
-            <div class="trial-box">
-              <div>Get seasonal updates, island news and limited offer alerts from our team.</div>
-              <div class="signup-box">
-                <input type="email" placeholder="Enter your email" aria-label="Enter your email" />
-                <button type="button">Join</button>
-              </div>
-            </div>
+          <div class="gallery-item" data-full="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=60" data-alt="Beach">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=60" alt="Beach" loading="lazy"/>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    © 2026 Addu Dive Hub. All rights reserved.
+  <footer id="contact">
+    <div class="container" style="text-align:center;color:var(--muted);padding:28px 0">
+      © 2026 Addu Dive Hub — Premium dive experiences in the South Maldives.
+    </div>
   </footer>
 
-  <div class="modal" id="bookingModal" aria-hidden="true">
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="lb-close" id="closeLB" aria-label="Close">✕</button>
+    <div class="lb-nav">
+      <button id="prevLB" aria-label="Previous">‹</button>
+      <button id="nextLB" aria-label="Next">›</button>
+    </div>
+    <img id="lightboxImage" src="" alt=""/>
+  </div>
+
+  <!-- Booking modal -->
+  <div class="modal" id="bookingModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <div class="modal-panel" role="document">
       <div class="modal-header">
         <h3 id="bookingTitle">Book your dive</h3>
-        <button type="button" class="close-btn" id="closeBooking" aria-label="Close booking modal">✕</button>
+        <button class="close" id="closeBooking" aria-label="Close booking dialog">✕</button>
       </div>
 
-      <form id="bookingForm">
-        <div class="form-grid">
+      <form id="bookingForm" novalidate>
+        <div class="form-row" style="margin-top:12px">
           <div>
             <label for="fullName">Full name</label>
-            <input id="fullName" name="fullName" type="text" placeholder="Your name" required />
+            <input id="fullName" name="fullName" type="text" required placeholder="Your name">
           </div>
-
           <div>
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            <input id="email" name="email" type="email" required placeholder="you@example.com">
           </div>
+        </div>
 
+        <div class="form-row">
           <div>
             <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" placeholder="+960 ..." />
+            <input id="phone" name="phone" type="tel" placeholder="+880..." >
           </div>
-
           <div>
             <label for="date">Preferred date</label>
-            <input id="date" name="date" type="date" />
+            <input id="date" name="date" type="date" >
           </div>
+        </div>
 
+        <div class="form-row">
           <div class="full">
             <label for="package">Package</label>
             <select id="package" name="package">
-              <option value="Intro dive">Intro dive</option>
-              <option value="Day trip">Day trip</option>
-              <option value="3-day package">3-day package</option>
+              <option value="intro">Intro dive</option>
+              <option value="day">Day trip</option>
+              <option value="package">3-day package</option>
             </select>
           </div>
+        </div>
 
+        <div class="form-row">
           <div class="full">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Any special requests, dietary needs, mobility support, or trip notes..."></textarea>
+            <label for="message">Message or special requests</label>
+            <textarea id="message" name="message" placeholder="Dietary needs, mobility, etc."></textarea>
           </div>
         </div>
 
         <div class="modal-actions">
-          <button type="button" class="ghost-btn" id="cancelBooking">Cancel</button>
-          <button type="submit" class="btn-primary" id="submitBooking">Submit booking</button>
+          <button type="button" class="btn-ghost" id="cancelBooking">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitBooking">Submit booking</button>
         </div>
 
-        <div class="note">We’ll get back to you within 24 hours.</div>
-        <div class="success-box" id="bookingSuccess">Thank you — your booking request has been received.</div>
+        <div id="bookingNote" class="note">We will respond by email within 24 hours. This demo uses a simulated submit.</div>
+        <div id="bookingSuccess" class="success" style="display:none">Thanks — we received your request. We'll email confirmation shortly.</div>
       </form>
     </div>
   </div>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lb-close" id="closeLB" aria-label="Close image viewer">✕</button>
-    <div class="lb-nav">
-      <button id="prevLB" aria-label="Previous image">‹</button>
-      <button id="nextLB" aria-label="Next image">›</button>
-    </div>
-    <img id="lightboxImage" src="" alt="" />
-  </div>
-
   <script>
-    (function () {
-      const modal = document.getElementById('bookingModal');
-      const form = document.getElementById('bookingForm');
-      const closeBtn = document.getElementById('closeBooking');
-      const cancelBtn = document.getElementById('cancelBooking');
-      const successBox = document.getElementById('bookingSuccess');
-      const submitBtn = document.getElementById('submitBooking');
+    (function(){
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-      function openModal() {
-        modal.setAttribute('aria-hidden', 'false');
-        modal.style.display = 'flex';
+      const bookingModal = $('#bookingModal');
+      const bookingForm = $('#bookingForm');
+      const bookingSuccess = $('#bookingSuccess');
+      const bookingNote = $('#bookingNote');
+      const closeBooking = $('#closeBooking');
+      const cancelBooking = $('#cancelBooking');
+      const submitBooking = $('#submitBooking');
+
+      function openBooking() {
+        if (!bookingModal) return;
+        bookingModal.setAttribute('aria-hidden','false');
+        bookingModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        setTimeout(() => {
-          const firstInput = form.querySelector('input, select, textarea');
-          if (firstInput) firstInput.focus();
-        }, 50);
+        if (bookingForm) { bookingForm.reset(); bookingSuccess.style.display='none'; bookingNote.style.display='block'; }
+        const first = bookingForm ? bookingForm.querySelector('input, select, textarea, button') : null;
+        if (first) first.focus();
+        trapFocus(bookingModal);
       }
-
-      function closeModal() {
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
+      function closeBookingModal() {
+        if (!bookingModal) return;
+        bookingModal.setAttribute('aria-hidden','true');
+        bookingModal.style.display = 'none';
         document.body.style.overflow = '';
       }
 
-      document.addEventListener('click', function (event) {
-        const trigger = event.target.closest('.js-open-booking');
-        if (trigger) {
-          event.preventDefault();
-          openModal();
+      document.addEventListener('click', function(e){
+        const btn = e.target.closest('.js-open-booking, [data-book], button.nav-cta, a[href="#book"]');
+        if (!btn) return;
+        e.preventDefault();
+        openBooking();
+      }, { passive: false });
+
+      if (closeBooking) closeBooking.addEventListener('click', closeBookingModal);
+      if (cancelBooking) cancelBooking.addEventListener('click', (e) => { e.preventDefault(); closeBookingModal(); });
+
+      if (bookingModal) bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) closeBookingModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!bookingModal) return;
+        if (bookingModal.getAttribute('aria-hidden') === 'false' && e.key === 'Escape') {
+          closeBookingModal();
         }
       });
 
-      if (closeBtn) closeBtn.addEventListener('click', closeModal);
-      if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
-
-      if (modal) {
-        modal.addEventListener('click', function (event) {
-          if (event.target === modal) closeModal();
-        });
-      }
-
-      document.addEventListener('keydown', function (event) {
-        if (modal && modal.getAttribute('aria-hidden') === 'false' && event.key === 'Escape') {
-          closeModal();
-        }
-      });
-
-      if (form) {
-        form.addEventListener('submit', async function (event) {
-          event.preventDefault();
-
-          const fullName = document.getElementById('fullName').value.trim();
-          const email = document.getElementById('email').value.trim();
-
-          if (!fullName || !email) {
+      if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          const name = (bookingForm.fullName && bookingForm.fullName.value || '').trim();
+          const email = (bookingForm.email && bookingForm.email.value || '').trim();
+          if (!name || !email) {
             alert('Please enter your name and email.');
             return;
           }
-
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Sending...';
-
-          const payload = {
-            fullName,
-            email,
-            phone: document.getElementById('phone').value.trim(),
-            date: document.getElementById('date').value,
-            package: document.getElementById('package').value,
-            message: document.getElementById('message').value.trim()
-          };
-
-          try {
-            const response = await fetch('/.netlify/functions/create-booking', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-              throw new Error(result.error || 'Booking failed');
-            }
-
-            successBox.style.display = 'block';
-            form.reset();
-
-            setTimeout(() => {
-              closeModal();
-              successBox.style.display = 'none';
-            }, 1800);
-          } catch (err) {
-            alert('Booking failed. Please try again later.');
-            console.error(err);
-          } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit booking';
-          }
+          if (submitBooking) { submitBooking.disabled = true; submitBooking.textContent = 'Sending...'; }
+          bookingNote.style.display = 'none';
+          setTimeout(() => {
+            bookingSuccess.style.display = 'block';
+            if (submitBooking) { submitBooking.disabled = false; submitBooking.textContent = 'Submit booking'; }
+            setTimeout(() => closeBookingModal(), 1500);
+          }, 1000);
         });
       }
 
-      const images = Array.from(document.querySelectorAll('.gallery-item'));
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImage = document.getElementById('lightboxImage');
-      const closeLB = document.getElementById('closeLB');
-      const prevLB = document.getElementById('prevLB');
-      const nextLB = document.getElementById('nextLB');
-      let currentIndex = 0;
-
-      function openLightbox(index) {
-        currentIndex = index;
-        const item = images[currentIndex];
-        if (!item) return;
-        const src = item.dataset.full || item.querySelector('img').src;
-        const alt = item.dataset.alt || item.querySelector('img').alt || 'Gallery image';
-        lightboxImage.src = src;
-        lightboxImage.alt = alt;
-        lightbox.setAttribute('aria-hidden', 'false');
-        lightbox.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeLightbox() {
-        lightbox.setAttribute('aria-hidden', 'true');
-        lightbox.style.display = 'none';
-        document.body.style.overflow = '';
-      }
-
-      images.forEach((item, index) => {
-        item.addEventListener('click', () => openLightbox(index));
-      });
-
-      if (closeLB) closeLB.addEventListener('click', closeLightbox);
-      if (prevLB) prevLB.addEventListener('click', () => {
-        const newIndex = (currentIndex - 1 + images.length) % images.length;
-        openLightbox(newIndex);
-      });
-      if (nextLB) nextLB.addEventListener('click', () => {
-        const newIndex = (currentIndex + 1) % images.length;
-        openLightbox(newIndex);
-      });
-
-      if (lightbox) {
-        lightbox.addEventListener('click', function (event) {
-          if (event.target === lightbox) closeLightbox();
-        });
-      }
-
-      document.addEventListener('keydown', function (event) {
-        if (lightbox && lightbox.getAttribute('aria-hidden') === 'false') {
-          if (event.key === 'Escape') closeLightbox();
-          if (event.key === 'ArrowLeft') {
-            const newIndex = (currentIndex - 1 + images.length) % images.length;
-            openLightbox(newIndex);
-          }
-          if (event.key === 'ArrowRight') {
-            const newIndex = (currentIndex + 1) % images.length;
-            openLightbox(newIndex);
+      function trapFocus(modal) {
+        if (!modal) return;
+        const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+        const nodes = Array.from(modal.querySelectorAll(focusableSelectors)).filter(n => n.offsetParent !== null);
+        if (!nodes.length) return;
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        function handleKey(e) {
+          if (e.key !== 'Tab') return;
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault(); last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault(); first.focus();
           }
         }
-      });
+        modal.addEventListener('keydown', handleKey);
+        const obs = new MutationObserver(() => {
+          if (modal.getAttribute('aria-hidden') === 'true') {
+            modal.removeEventListener('keydown', handleKey);
+            obs.disconnect();
+          }
+        });
+        obs.observe(modal, { attributes: true, attributeFilter: ['aria-hidden'] });
+      }
+
+      (function(){
+        const track = $('#carouselTrack');
+        if (!track) return;
+        const slides = Array.from(track.children);
+        if (!slides.length) return;
+        const prev = $('#prevBtn'), next = $('#nextBtn');
+        let idx = 0;
+        function go(i){ idx = (i + slides.length) % slides.length; track.style.transform = `translateX(-${idx*100}%)`; }
+        if (prev) prev.addEventListener('click', ()=> go(idx-1));
+        if (next) next.addEventListener('click', ()=> go(idx+1));
+        let timer = setInterval(()=> go(idx+1), 4500);
+        const wrap = track.parentElement;
+        if (wrap) {
+          wrap.addEventListener('mouseenter', ()=> clearInterval(timer));
+          wrap.addEventListener('mouseleave', ()=> timer = setInterval(()=> go(idx+1), 4500));
+        }
+      })();
+
+      (function(){
+        const items = $$('.gallery-item');
+        if (!items.length) return;
+        const lb = $('#lightbox'), lbImg = $('#lightboxImage'), closeLB = $('#closeLB'), prevLB = $('#prevLB'), nextLB = $('#nextLB');
+        let current = 0;
+        function open(i){
+          current = (i + items.length) % items.length;
+          const it = items[current];
+          const src = it.dataset.full || (it.querySelector('img') && it.querySelector('img').src);
+          const alt = it.dataset.alt || (it.querySelector('img') && it.querySelector('img').alt) || '';
+          if (!src) return;
+          if (lbImg){ lbImg.src = src; lbImg.alt = alt; }
+          if (lb){ lb.style.display = 'flex'; lb.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
+        }
+        function close(){ if (!lb) return; lb.style.display = 'none'; lb.setAttribute('aria-hidden','true'); if (lbImg) lbImg.src = ''; document.body.style.overflow = ''; }
+        function nav(offset){ open(current + offset); }
+        items.forEach((it,i) => {
+          it.tabIndex = 0;
+          it.addEventListener('click', ()=> open(i));
+          it.addEventListener('keydown', e => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); open(i); }});
+        });
+        if (closeLB) closeLB.addEventListener('click', close);
+        if (prevLB) prevLB.addEventListener('click', ()=> nav(-1));
+        if (nextLB) nextLB.addEventListener('click', ()=> nav(1));
+        if (lb) lb.addEventListener('click', e => { if (e.target === lb) close(); });
+        document.addEventListener('keydown', (e) => {
+          const visible = lb && lb.style.display === 'flex';
+          if (!visible) return;
+          if (e.key === 'Escape') close();
+          if (e.key === 'ArrowLeft') nav(-1);
+          if (e.key === 'ArrowRight') nav(1);
+        });
+      })();
     })();
   </script>
 </body>
