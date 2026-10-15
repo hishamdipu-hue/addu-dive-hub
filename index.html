@@ -107,7 +107,7 @@
 
     .nav-links a:hover { opacity:1; }
 
-    .nav-cta, .btn-primary, .hero-btn{
+    .nav-cta, .btn-primary, .hero-btn, .partner-btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -126,7 +126,7 @@
       box-shadow: 0 10px 24px rgba(217,184,122,0.28);
     }
 
-    .btn-primary:hover, .nav-cta:hover, .hero-btn:hover{
+    .btn-primary:hover, .nav-cta:hover, .hero-btn:hover, .partner-btn:hover{
       transform:translateY(-1px);
       filter:brightness(1.04);
     }
@@ -206,6 +206,23 @@
       background:linear-gradient(135deg, var(--gold-soft), var(--gold));
       color:#071b20;
       border-color:transparent;
+    }
+
+    .partner-buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .partner-btn{
+      padding:10px 14px;
+      font-size:0.8rem;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.09);
+      color:var(--text);
+      text-transform:uppercase;
+      letter-spacing:0.06em;
     }
 
     .hero-stats{
@@ -742,6 +759,12 @@
           <button type="button" class="hero-btn primary js-open-booking">Book a trip</button>
           <a href="#gallery" class="hero-btn">View gallery</a>
         </div>
+
+        <div class="partner-buttons" aria-label="Travel partner links">
+          <a class="partner-btn" href="https://www.booking.com/searchresults.html?ss=Addu%20Atoll%20Maldives" target="_blank" rel="noopener noreferrer sponsored">Booking.com</a>
+          <a class="partner-btn" href="https://www.expedia.com/" target="_blank" rel="noopener noreferrer sponsored">Expedia</a>
+          <a class="partner-btn" href="https://www.getyourguide.com/" target="_blank" rel="noopener noreferrer sponsored">GetYourGuide</a>
+        </div>
       </div>
 
       <aside class="hero-stats" aria-label="Quick stats">
@@ -1076,7 +1099,6 @@
         });
       }
 
-      // Lightbox
       const images = Array.from(document.querySelectorAll('.gallery-item'));
       const lightbox = document.getElementById('lightbox');
       const lightboxImage = document.getElementById('lightboxImage');
