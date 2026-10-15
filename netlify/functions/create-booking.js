@@ -1,33 +1,69 @@
 // netlify/functions/create-booking.js
+// Improved: handles OPTIONS (CORS preflight) and returns CORS headers on every response.
+
+const CORS_HEADERS = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*', // change to your domain in production for better security
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
+
+function jsonResponse(statusCode, body) {
+  return {
+    statusCode,
+    headers: CORS_HEADERS,
+    body: JSON.stringify(body)
+  };
+}
+
 exports.handler = async function (event) {
+  // respond to preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: CORS_HEADERS,
+      body: ''
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return jsonResponse(405, { error: 'Method not allowed' });
   }
 
   try {
-    const data = JSON.parse(event.body || '{}');
+    // protect against empty or non-JSON bodies
+    if (!event.body) return jsonResponse(400, { error: 'Empty request body' });
 
-    const full_name = (data.fullName || data.full_name || '').trim();
-    const email = (data.email || '').trim();
-
-    if (!full_name || !email) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'Name and email are required' }) };
+    let data;
+    try {
+      data = JSON.parse(event.body);
+    } catch (err) {
+      return jsonResponse(400, { error: 'Invalid JSON' });
     }
 
+    // required fields validation
+    const full_name = (data.fullName || data.full_name || '').trim();
+    const email = (data.email || '').trim();
+    if (!full_name || !email) {
+      return jsonResponse(400, { error: 'Name and email are required' });
+    }
+
+    // minimal sanitization / limit fields written to DB
     const payload = {
       full_name,
       email,
-      phone: data.phone || '',
+      phone: String(data.phone || '').slice(0, 40),
       preferred_date: data.date || null,
-      package: data.package || '',
-      message: data.message || ''
+      package: String(data.package || '').slice(0, 60),
+      message: String(data.message || '').slice(0, 1000)
     };
 
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-      return { statusCode: 500, body: JSON.stringify({ error: 'Server misconfiguration' }) };
+      console.error('Missing Supabase env vars');
+      return jsonResponse(500, { error: 'Server misconfiguration' });
     }
 
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bookings`, {
@@ -44,16 +80,13 @@ exports.handler = async function (event) {
     const json = await res.json();
 
     if (!res.ok) {
-      console.error(json);
-      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save booking' }) };
+      console.error('Supabase insert error', json);
+      return jsonResponse(502, { error: 'Failed to save booking' });
     }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ success: true, record: json[0] })
-    };
+    return jsonResponse(200, { success: true, record: json[0] });
   } catch (err) {
     console.error(err);
-    return { statusCode: 500, body: JSON.stringify({ error: 'Server error' }) };
+    return jsonResponse(500, { error: 'Server error' });
   }
 };
