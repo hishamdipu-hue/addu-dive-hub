@@ -1,0 +1,301 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#020d13">
+<title>Addu Dive Hub | Photo Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#020d13;color:#edf7f7;font-family:Arial,sans-serif;line-height:1.5}
+main{width:min(760px,calc(100% - 28px));margin:35px auto}
+.panel{background:#09181e;border:1px solid #594d36;border-radius:16px;padding:22px;margin:18px 0}
+h1,h2{color:#f7dca1}
+p{color:#b4c9cd}
+input,button{font:inherit;padding:12px;border-radius:8px}
+input{display:block;width:100%;margin:9px 0 16px;background:#061319;color:white;border:1px solid #65777a}
+button{border:0;cursor:pointer;font-weight:bold;margin:5px 5px 5px 0}
+.primary{background:#f7dca1;color:#071b20}
+.secondary{background:#17323b;color:white;border:1px solid #49616a}
+.danger{background:#7e2d2d;color:white}
+button:disabled{opacity:.5;cursor:wait}
+#status{overflow-wrap:anywhere}
+.photo{border:1px solid #40545a;border-radius:10px;padding:10px;margin:12px 0}
+.photo img{width:100%;max-height:260px;object-fit:contain;background:#000;border-radius:8px}
+.photo-name{overflow-wrap:anywhere}
+.hidden{display:none}
+a{color:#f7dca1}
+</style>
+</head>
+<body>
+<main>
+  <h1>Addu Dive Hub</h1>
+  <p>Administrator photo manager</p>
+
+  <section class="panel" id="login-panel">
+    <h2>Admin Sign In</h2>
+    <p>Sign in with the email and password you created in Supabase.</p>
+    <form id="login-form">
+      <label for="email">Email address</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <button class="primary" type="submit">Sign In</button>
+    </form>
+  </section>
+
+  <section class="panel hidden" id="manager-panel">
+    <h2>Your Photos</h2>
+    <p>Choose photos from your phone to upload to Supabase.</p>
+    <form id="upload-form">
+      <label for="files">Select photo files</label>
+      <input id="files" type="file" accept="image/*" multiple required>
+      <button class="primary" type="submit">Upload Photos</button>
+    </form>
+    <button class="secondary" id="refresh" type="button">Refresh Photos</button>
+    <button class="secondary" id="logout" type="button">Sign Out</button>
+    <div id="photo-list"></div>
+  </section>
+
+  <section class="panel">
+    <p id="status" role="status" aria-live="polite">Connecting to photo storage…</p>
+    <p><a href="./index.html">Return to the public website</a></p>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const PROJECT_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
+  const PUBLISHABLE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
+  const BUCKET = "Dive-photo";
+
+  const status = document.getElementById("status");
+  const loginPanel = document.getElementById("login-panel");
+  const managerPanel = document.getElementById("manager-panel");
+  const photoList = document.getElementById("photo-list");
+  const uploadForm = document.getElementById("upload-form");
+  const loginForm = document.getElementById("login-form");
+
+  if (!window.supabase) {
+    status.textContent = "Could not load Supabase. Check your internet connection and reload.";
+    return;
+  }
+
+  const client = window.supabase.createClient(
+    PROJECT_URL,
+    PUBLISHABLE_KEY
+  );
+
+  let currentUser = null;
+
+  function setStatus(message) {
+    status.textContent = message;
+  }
+
+  function showSignedIn(user) {
+    currentUser = user;
+    loginPanel.classList.toggle("hidden", !!user);
+    managerPanel.classList.toggle("hidden", !user);
+
+    if (user) {
+      setStatus("Signed in as " + user.email);
+      loadPhotos();
+    } else {
+      photoList.replaceChildren();
+      setStatus("Please sign in to manage photos.");
+    }
+  }
+
+  loginForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const button = loginForm.querySelector("button");
+    button.disabled = true;
+    setStatus("Signing in…");
+
+    try {
+      const { data, error } = await client.auth.signInWithPassword({
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value
+      });
+
+      if (error) throw error;
+
+      showSignedIn(data.user);
+      loginForm.reset();
+    } catch (error) {
+      setStatus("Sign-in failed: " + error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  async function loadPhotos() {
+    if (!currentUser) return;
+
+    setStatus("Loading photos…");
+    photoList.replaceChildren();
+
+    const { data, error } = await client.storage
+      .from(BUCKET)
+      .list("", {
+        limit: 100,
+        sortBy: { column: "created_at", order: "desc" }
+      });
+
+    if (error) {
+      setStatus("Could not list photos: " + error.message +
+        ". Check your Storage SELECT policies.");
+      return;
+    }
+
+    const photos = (data || []).filter(item =>
+      item.name && item.name !== ".emptyFolderPlaceholder"
+    );
+
+    if (!photos.length) {
+      setStatus("No photos found in the Dive-photo bucket yet.");
+      return;
+    }
+
+    setStatus(photos.length + " photo(s) found.");
+
+    photos.forEach(item => {
+      const path = item.name;
+      const urlResult = client.storage.from(BUCKET).getPublicUrl(path);
+
+      const card = document.createElement("article");
+      card.className = "photo";
+
+      const image = document.createElement("img");
+      image.src = urlResult.data.publicUrl;
+      image.alt = path;
+      image.loading = "lazy";
+
+      const name = document.createElement("p");
+      name.className = "photo-name";
+      name.textContent = path;
+
+      const remove = document.createElement("button");
+      remove.className = "danger";
+      remove.type = "button";
+      remove.textContent = "Delete Photo";
+
+      remove.addEventListener("click", async () => {
+        if (!currentUser) {
+          setStatus("Please sign in again.");
+          return;
+        }
+
+        if (!confirm("Permanently delete " + path + "?")) return;
+
+        remove.disabled = true;
+        setStatus("Deleting photo…");
+
+        const { error: deleteError } = await client.storage
+          .from(BUCKET)
+          .remove([path]);
+
+        if (deleteError) {
+          setStatus("Delete failed: " + deleteError.message);
+          remove.disabled = false;
+          return;
+        }
+
+        setStatus("Photo deleted.");
+        await loadPhotos();
+      });
+
+      card.append(image, name, remove);
+      photoList.appendChild(card);
+    });
+  }
+
+  uploadForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!currentUser) {
+      setStatus("Please sign in before uploading.");
+      return;
+    }
+
+    const files = Array.from(document.getElementById("files").files || []);
+    const button = uploadForm.querySelector("button");
+
+    if (!files.length) {
+      setStatus("Choose at least one photo.");
+      return;
+    }
+
+    if (files.some(file => !file.type.startsWith("image/"))) {
+      setStatus("Please choose image files only.");
+      return;
+    }
+
+    button.disabled = true;
+    let uploaded = 0;
+
+    try {
+      for (const file of files) {
+        const safeName = file.name
+          .normalize("NFKD")
+          .replace(/[^a-zA-Z0-9._-]/g, "-");
+
+        const path = Date.now() + "-" +
+          Math.random().toString(36).slice(2, 8) + "-" + safeName;
+
+        setStatus("Uploading " + file.name + "…");
+
+        const { error } = await client.storage
+          .from(BUCKET)
+          .upload(path, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+          });
+
+        if (error) throw error;
+        uploaded++;
+      }
+
+      uploadForm.reset();
+      setStatus(uploaded + " photo(s) uploaded successfully.");
+      await loadPhotos();
+    } catch (error) {
+      setStatus(uploaded + " photo(s) uploaded. Upload error: " + error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  document.getElementById("refresh").addEventListener("click", loadPhotos);
+
+  document.getElementById("logout").addEventListener("click", async () => {
+    const { error } = await client.auth.signOut();
+
+    if (error) {
+      setStatus("Sign-out failed: " + error.message);
+      return;
+    }
+
+    showSignedIn(null);
+  });
+
+  client.auth.onAuthStateChange((_event, session) => {
+    showSignedIn(session ? session.user : null);
+  });
+
+  client.auth.getSession().then(({ data, error }) => {
+    if (error) {
+      setStatus("Could not check sign-in: " + error.message);
+      return;
+    }
+
+    showSignedIn(data.session ? data.session.user : null);
+  });
+})();
+</script>
+</body>
+</html>
