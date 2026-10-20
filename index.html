@@ -1,3 +1,5 @@
+HTML
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -48,17 +50,31 @@ nav {
   padding: 12px 0;
 }
 .brand { font-size: 20px; font-weight: bold; color: var(--light); }
-.nav-links { display: flex; gap: 15px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+.nav-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted);
+}
 .nav-links a:hover { color: var(--light); }
 
 .hero {
   min-height: 530px;
   display: flex;
   align-items: center;
-  background: linear-gradient(90deg,rgba(2,13,19,.94),rgba(2,13,19,.42)),url("Try_diving_image3-845x684.jpg") center/cover no-repeat;
+  background:
+    linear-gradient(90deg,rgba(2,13,19,.94),rgba(2,13,19,.42)),
+    url("Try_diving_image3-845x684.jpg") center/cover no-repeat;
 }
 .hero-content { max-width: 700px; padding: 75px 0; }
-.eyebrow { color: var(--light); font-size: 12px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
+.eyebrow {
+  color: var(--light);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
 h1 { font-size: clamp(38px,8vw,68px); line-height: 1.08; margin: 14px 0; }
 h2 { color: var(--light); line-height: 1.2; }
 p { color: var(--muted); }
@@ -78,19 +94,46 @@ p { color: var(--muted); }
 
 section { padding: 60px 0; scroll-margin-top: 90px; }
 .section-heading { max-width: 700px; margin-bottom: 26px; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 20px; }
-.card { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 20px;
+}
+.card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
 .card img { width: 100%; height: 220px; object-fit: cover; }
 .card-content { padding: 18px; }
 .card h3 { color: var(--light); }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 16px; margin-top: 20px; }
-.gallery-grid img { width: 100%; height: 220px; object-fit: cover; border: 1px solid var(--line); border-radius: 12px; }
 
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.gallery-grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.gallery-status { font-size: 14px; overflow-wrap: anywhere; }
 .video-wrap { display: flex; justify-content: center; }
-.video-frame { width: 100%; max-width: 400px; aspect-ratio: 9/16; border: 0; border-radius: 16px; background: #000; }
+.video-frame {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 9/16;
+  border: 0;
+  border-radius: 16px;
+  background: #000;
+}
 .video-link { text-align: center; margin-top: 14px; }
-
-.contact-panel, .upload-panel {
+.contact-panel {
   padding: 24px;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -106,33 +149,16 @@ input[type=email] {
   color: white;
   margin: 6px 0;
 }
-footer { padding: 25px 0; border-top: 1px solid var(--line); text-align: center; }
-
-/* Make the photo tool easy to find */
-#local-photo-tool { background: #071c24; }
-.upload-panel { border: 2px solid var(--gold); }
-.upload-title { margin-top: 8px; }
-.upload-note { font-size: 14px; }
-#adh-photo-input {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 14px 0;
-  padding: 12px;
-  color: var(--text);
-  background: #061319;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+footer {
+  padding: 25px 0;
+  border-top: 1px solid var(--line);
+  text-align: center;
 }
-#adh-photo-status { overflow-wrap: anywhere; }
-#adh-photo-preview img { background: #061319; }
-#adh-clear-photos { margin-top: 8px; }
-
 @media(max-width:600px) {
   .hero { min-height: 460px; }
   .nav-links { gap: 10px; }
   section { padding: 45px 0; }
-  .upload-panel, .contact-panel { padding: 18px; }
+  .contact-panel { padding: 18px; }
 }
 </style>
 </head>
@@ -145,7 +171,6 @@ footer { padding: 25px 0; border-top: 1px solid var(--line); text-align: center;
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#experiences">Experiences</a>
-        <a href="#local-photo-tool">Photo Tool</a>
         <a href="#gallery">Gallery</a>
         <a href="#video">Video</a>
         <a href="#contact">Contact</a>
@@ -174,25 +199,28 @@ footer { padding: 25px 0; border-top: 1px solid var(--line); text-align: center;
       <h2>Our Experiences</h2>
       <p>Explore the ocean, discover marine life and enjoy the natural beauty of the Maldives.</p>
     </div>
+
     <div class="cards">
       <article class="card">
-        <img src="Try_diving_image3-845x684.jpg" alt="Try scuba diving" loading="lazy">
+        <img id="experience-photo-1" src="Try_diving_image3-845x684.jpg" alt="Try scuba diving" loading="lazy">
         <div class="card-content">
           <h3>Try Scuba Diving</h3>
           <p>Discover the underwater world and experience the excitement of breathing underwater.</p>
           <a class="btn btn-outline" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20am%20interested%20in%20try%20scuba%20diving." target="_blank" rel="noopener">Enquire Now</a>
         </div>
       </article>
+
       <article class="card">
-        <img src="Try_diving_image3-845x684.jpg" alt="Ocean adventures" loading="lazy">
+        <img id="experience-photo-2" src="Try_diving_image3-845x684.jpg" alt="Ocean adventures" loading="lazy">
         <div class="card-content">
           <h3>Ocean Adventures</h3>
           <p>Explore the beautiful ocean and discover the marine life around Addu Atoll.</p>
           <a class="btn btn-outline" href="https://wa.me/9609373383" target="_blank" rel="noopener">Learn More</a>
         </div>
       </article>
+
       <article class="card">
-        <img src="Try_diving_image3-845x684.jpg" alt="Island experiences" loading="lazy">
+        <img id="experience-photo-3" src="Try_diving_image3-845x684.jpg" alt="Island experiences" loading="lazy">
         <div class="card-content">
           <h3>Island Experiences</h3>
           <p>Discover local island beauty and create unforgettable memories in the Maldives.</p>
@@ -203,34 +231,16 @@ footer { padding: 25px 0; border-top: 1px solid var(--line); text-align: center;
   </div>
 </section>
 
-<!-- PHOTO TOOL: placed before Gallery so it is easier to find -->
-<section id="local-photo-tool">
-  <div class="container">
-    <div class="upload-panel">
-      <div class="eyebrow">Photo Tool</div>
-      <h2 class="upload-title">Photo Upload &amp; Preview</h2>
-      <p>Select photos from your Android phone to preview them here.</p>
-      <p class="upload-note"><strong>Important:</strong> This tool previews photos on your device only. It does not publish them to the live website or permanently save them online.</p>
-
-      <label for="adh-photo-input"><strong>Select photos from your phone:</strong></label>
-      <input id="adh-photo-input" type="file" accept="image/*" multiple>
-
-      <button id="adh-clear-photos" class="btn btn-outline" type="button">Clear Preview</button>
-
-      <p id="adh-photo-status" role="status" aria-live="polite">No photos selected yet.</p>
-      <div id="adh-photo-preview" class="gallery-grid"></div>
-    </div>
-  </div>
-</section>
-
 <section id="gallery">
   <div class="container">
     <div class="section-heading">
       <div class="eyebrow">Underwater Memories</div>
       <h2>Our Gallery</h2>
       <p>A glimpse of the adventures and experiences waiting for you in Addu.</p>
+      <p id="gallery-status" class="gallery-status" role="status" aria-live="polite">Loading photos...</p>
     </div>
-    <div class="gallery-grid">
+
+    <div id="adh-public-gallery" class="gallery-grid">
       <img src="Try_diving_image3-845x684.jpg" alt="Addu diving experience" loading="lazy">
       <img src="Try_diving_image3-845x684.jpg" alt="Underwater exploration" loading="lazy">
       <img src="Try_diving_image3-845x684.jpg" alt="Maldives marine life" loading="lazy">
@@ -290,11 +300,120 @@ footer { padding: 25px 0; border-top: 1px solid var(--line); text-align: center;
   </div>
 </footer>
 
-<script>
-document.getElementById("current-year").textContent = new Date().getFullYear();
+<!-- Supabase JavaScript library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-/* Newsletter: opens the visitor's email app.
-   This does not automatically store email addresses. */
+<script>
+document.getElementById("current-year").textContent =
+  new Date().getFullYear();
+
+/*
+  SUPABASE PUBLIC WEBSITE SETTINGS
+  This publishable key is intended for frontend use.
+  Never put a service-role or secret key in this file.
+*/
+const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
+const PHOTO_BUCKET = "Dive-photo";
+
+const gallery = document.getElementById("adh-public-gallery");
+const galleryStatus = document.getElementById("gallery-status");
+
+async function loadSupabasePhotos() {
+  try {
+    if (!window.supabase || !window.supabase.createClient) {
+      throw new Error("The photo service could not be loaded. Please refresh the page.");
+    }
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    /*
+      List photos in the bucket.
+      This requires a read-only SELECT policy for this bucket.
+      It does not give visitors upload or delete permission.
+    */
+    const { data, error } = await supabaseClient.storage
+      .from(PHOTO_BUCKET)
+      .list("", {
+        limit: 100,
+        sortBy: { column: "created_at", order: "desc" }
+      });
+
+    if (error) throw error;
+
+    const photos = (data || []).filter(function(file) {
+      return file.name &&
+        file.id &&
+        file.name !== ".emptyFolderPlaceholder" &&
+        (!file.metadata ||
+          !file.metadata.mimetype ||
+          file.metadata.mimetype.startsWith("image/"));
+    });
+
+    if (photos.length === 0) {
+      galleryStatus.textContent =
+        "No uploaded photos found yet. Upload photos through the Admin page.";
+      return;
+    }
+
+    // Build public image URLs from the Supabase bucket.
+    const photoItems = photos.map(function(file) {
+      const result = supabaseClient.storage
+        .from(PHOTO_BUCKET)
+        .getPublicUrl(file.name);
+
+      return {
+        name: file.name,
+        url: result.data.publicUrl
+      };
+    });
+
+    // Replace the old example gallery with uploaded photos.
+    gallery.replaceChildren();
+
+    photoItems.forEach(function(photo, index) {
+      const img = document.createElement("img");
+      img.src = photo.url;
+      img.alt = "Addu Dive Hub photo " + (index + 1);
+      img.loading = "lazy";
+      img.onerror = function() {
+        img.alt = "Photo could not be displayed: " + photo.name;
+      };
+      gallery.appendChild(img);
+    });
+
+    // Show the newest three uploaded photos in Experiences.
+    const experienceIds = [
+      "experience-photo-1",
+      "experience-photo-2",
+      "experience-photo-3"
+    ];
+
+    experienceIds.forEach(function(id, index) {
+      const img = document.getElementById(id);
+      if (photoItems[index]) {
+        img.src = photoItems[index].url;
+      }
+    });
+
+    galleryStatus.textContent =
+      photos.length + " photo(s) loaded from Addu Dive Hub storage.";
+
+  } catch (error) {
+    console.error("Supabase photo loading error:", error);
+
+    galleryStatus.textContent =
+      "Photos could not be loaded. Please check the Supabase read-only storage policy and bucket settings.";
+  }
+}
+
+loadSupabasePhotos();
+
+/* Newsletter: opens the visitor's email app. */
 document.getElementById("newsletter-form").addEventListener("submit", function(event) {
   event.preventDefault();
 
@@ -309,67 +428,6 @@ document.getElementById("newsletter-form").addEventListener("submit", function(e
 
   window.location.href =
     "mailto:hishamdipu@gmail.com?subject=" + subject + "&body=" + body;
-});
-
-/* Local photo preview only. This does not upload images to GitHub. */
-const photoInput = document.getElementById("adh-photo-input");
-const preview = document.getElementById("adh-photo-preview");
-const photoStatus = document.getElementById("adh-photo-status");
-const clearButton = document.getElementById("adh-clear-photos");
-let photoUrls = [];
-
-function clearPhotoPreview() {
-  photoUrls.forEach(function(url) {
-    URL.revokeObjectURL(url);
-  });
-
-  photoUrls = [];
-  preview.replaceChildren();
-  photoStatus.textContent = "No photos selected yet.";
-}
-
-photoInput.addEventListener("change", function() {
-  photoUrls.forEach(function(url) {
-    URL.revokeObjectURL(url);
-  });
-  photoUrls = [];
-  preview.replaceChildren();
-
-  const files = Array.from(photoInput.files || []);
-  const imageFiles = files.filter(function(file) {
-    return file.type.startsWith("image/");
-  });
-
-  if (imageFiles.length === 0) {
-    photoStatus.textContent = "No photos selected. Please choose image files.";
-    return;
-  }
-
-  imageFiles.forEach(function(file) {
-    const url = URL.createObjectURL(file);
-    photoUrls.push(url);
-
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = file.name;
-    img.loading = "lazy";
-    img.title = file.name;
-    preview.appendChild(img);
-  });
-
-  photoStatus.textContent =
-    imageFiles.length + " photo(s) selected and ready to preview on this device.";
-});
-
-clearButton.addEventListener("click", function() {
-  clearPhotoPreview();
-  photoInput.value = "";
-});
-
-window.addEventListener("pagehide", function() {
-  photoUrls.forEach(function(url) {
-    URL.revokeObjectURL(url);
-  });
 });
 </script>
 </body>
