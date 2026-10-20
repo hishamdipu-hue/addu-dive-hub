@@ -1,4 +1,3 @@
-HTML
 
 <!doctype html>
 <html lang="en">
@@ -7,158 +6,131 @@ HTML
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#020d13">
 <title>Addu Dive Hub | Premium Dive Experiences</title>
-<meta name="description" content="Discover premium dive experiences, island escapes and guided adventures in Addu Atoll, Maldives.">
+<meta name="description" content="Discover premium diving, marine life, island escapes and guided adventures in Addu Atoll, Maldives.">
 
 <style>
 :root {
-  --bg: #020d13;
-  --panel: #09181e;
-  --gold: #d9b87a;
-  --light: #f7dca1;
-  --text: #edf7f7;
-  --muted: #a7c3c7;
-  --line: rgba(214,190,142,.3);
+  --bg:#020d13;
+  --panel:#09181e;
+  --gold:#d9b87a;
+  --light:#f7dca1;
+  --text:#edf7f7;
+  --muted:#a7c3c7;
+  --line:rgba(214,190,142,.3);
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;line-height:1.6
 }
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
-button, input { font: inherit; }
-.container { width: min(1100px, calc(100% - 32px)); margin: auto; }
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button,input{font:inherit}
+.container{width:min(1100px,calc(100% - 32px));margin:auto}
 
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(2,13,19,.97);
-  border-bottom: 1px solid var(--line);
+header{
+  position:sticky;top:0;z-index:10;
+  background:rgba(2,13,19,.97);
+  border-bottom:1px solid var(--line)
 }
-nav {
-  min-height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 12px 0;
+nav{
+  min-height:70px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;
+  flex-wrap:wrap;padding:12px 0
 }
-.brand { font-size: 20px; font-weight: bold; color: var(--light); }
-.nav-links {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  font-size: 14px;
-  color: var(--muted);
+.brand{font-size:20px;font-weight:bold;color:var(--light)}
+.nav-links{
+  display:flex;gap:14px;flex-wrap:wrap;
+  font-size:14px;color:var(--muted)
 }
-.nav-links a:hover { color: var(--light); }
+.nav-links a:hover{color:var(--light)}
 
-.hero {
-  min-height: 530px;
-  display: flex;
-  align-items: center;
+.hero{
+  min-height:530px;display:flex;align-items:center;
   background:
     linear-gradient(90deg,rgba(2,13,19,.94),rgba(2,13,19,.42)),
-    url("Try_diving_image3-845x684.jpg") center/cover no-repeat;
+    url("Try_diving_image3-845x684.jpg") center/cover no-repeat
 }
-.hero-content { max-width: 700px; padding: 75px 0; }
-.eyebrow {
-  color: var(--light);
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+.hero-content{max-width:700px;padding:75px 0}
+.eyebrow{
+  color:var(--light);font-size:12px;font-weight:bold;
+  letter-spacing:3px;text-transform:uppercase
 }
-h1 { font-size: clamp(38px,8vw,68px); line-height: 1.08; margin: 14px 0; }
-h2 { color: var(--light); line-height: 1.2; }
-p { color: var(--muted); }
-.btn {
-  display: inline-block;
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  padding: 12px 20px;
-  margin: 6px 6px 6px 0;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
+h1{font-size:clamp(38px,8vw,68px);line-height:1.08;margin:14px 0}
+h2{color:var(--light);line-height:1.2}
+p{color:var(--muted)}
+.btn{
+  display:inline-block;border:1px solid var(--line);
+  border-radius:30px;padding:12px 20px;
+  margin:6px 6px 6px 0;font-weight:bold;
+  cursor:pointer;text-align:center
 }
-.btn-primary { background: var(--light); color: #071b20; }
-.btn-outline { background: transparent; color: var(--text); }
-.btn:hover { filter: brightness(1.08); }
+.btn-primary{background:var(--light);color:#071b20}
+.btn-outline{background:transparent;color:var(--text)}
+.btn:hover{filter:brightness(1.08)}
 
-section { padding: 60px 0; scroll-margin-top: 90px; }
-.section-heading { max-width: 700px; margin-bottom: 26px; }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-  gap: 20px;
+section{padding:60px 0;scroll-margin-top:90px}
+.section-heading{max-width:700px;margin-bottom:26px}
+.cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px
 }
-.card {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--panel);
+.card{
+  overflow:hidden;border:1px solid var(--line);
+  border-radius:16px;background:var(--panel)
 }
-.card img { width: 100%; height: 220px; object-fit: cover; }
-.card-content { padding: 18px; }
-.card h3 { color: var(--light); }
+.card img{width:100%;height:220px;object-fit:cover}
+.card-content{padding:18px}
+.card h3{color:var(--light)}
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-  gap: 16px;
-  margin-top: 20px;
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;margin-top:20px
 }
-.gallery-grid img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+.gallery-grid img{
+  width:100%;height:220px;object-fit:cover;
+  border:1px solid var(--line);border-radius:12px
 }
-.gallery-status { font-size: 14px; overflow-wrap: anywhere; }
-.video-wrap { display: flex; justify-content: center; }
-.video-frame {
-  width: 100%;
-  max-width: 400px;
-  aspect-ratio: 9/16;
-  border: 0;
-  border-radius: 16px;
-  background: #000;
+.gallery-status{font-size:14px;overflow-wrap:anywhere}
+
+#local-photo-tool{background:#071c24}
+.upload-panel,.contact-panel{
+  padding:24px;border:1px solid var(--line);
+  border-radius:16px;background:var(--panel)
 }
-.video-link { text-align: center; margin-top: 14px; }
-.contact-panel {
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--panel);
+.upload-panel{border:2px solid var(--gold)}
+.upload-title{margin-top:8px}
+.upload-note{font-size:14px}
+#adh-photo-input{
+  display:block;width:100%;margin:14px 0;padding:12px;
+  color:var(--text);background:#061319;
+  border:1px solid var(--line);border-radius:8px
 }
-input[type=email] {
-  width: 100%;
-  max-width: 400px;
-  padding: 13px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: #061319;
-  color: white;
-  margin: 6px 0;
+#adh-photo-status{overflow-wrap:anywhere}
+#adh-photo-preview img{background:#061319}
+#adh-clear-photos{margin-top:8px}
+
+.video-wrap{display:flex;justify-content:center}
+.video-frame{
+  width:100%;max-width:400px;aspect-ratio:9/16;
+  border:0;border-radius:16px;background:#000
 }
-footer {
-  padding: 25px 0;
-  border-top: 1px solid var(--line);
-  text-align: center;
+.video-link{text-align:center;margin-top:14px}
+
+input[type=email]{
+  width:100%;max-width:400px;padding:13px;
+  border-radius:8px;border:1px solid var(--line);
+  background:#061319;color:white;margin:6px 0
 }
-@media(max-width:600px) {
-  .hero { min-height: 460px; }
-  .nav-links { gap: 10px; }
-  section { padding: 45px 0; }
-  .contact-panel { padding: 18px; }
+.social-links{display:flex;gap:10px;flex-wrap:wrap}
+footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
+
+@media(max-width:600px){
+  .hero{min-height:460px}
+  .nav-links{gap:10px}
+  section{padding:45px 0}
+  .upload-panel,.contact-panel{padding:18px}
 }
 </style>
 </head>
@@ -171,7 +143,9 @@ footer {
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#experiences">Experiences</a>
+        <a href="#local-photo-tool">Photo Tool</a>
         <a href="#gallery">Gallery</a>
+        <a href="#location">Location</a>
         <a href="#video">Video</a>
         <a href="#contact">Contact</a>
       </div>
@@ -199,7 +173,6 @@ footer {
       <h2>Our Experiences</h2>
       <p>Explore the ocean, discover marine life and enjoy the natural beauty of the Maldives.</p>
     </div>
-
     <div class="cards">
       <article class="card">
         <img id="experience-photo-1" src="Try_diving_image3-845x684.jpg" alt="Try scuba diving" loading="lazy">
@@ -209,7 +182,6 @@ footer {
           <a class="btn btn-outline" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20am%20interested%20in%20try%20scuba%20diving." target="_blank" rel="noopener">Enquire Now</a>
         </div>
       </article>
-
       <article class="card">
         <img id="experience-photo-2" src="Try_diving_image3-845x684.jpg" alt="Ocean adventures" loading="lazy">
         <div class="card-content">
@@ -218,7 +190,6 @@ footer {
           <a class="btn btn-outline" href="https://wa.me/9609373383" target="_blank" rel="noopener">Learn More</a>
         </div>
       </article>
-
       <article class="card">
         <img id="experience-photo-3" src="Try_diving_image3-845x684.jpg" alt="Island experiences" loading="lazy">
         <div class="card-content">
@@ -231,6 +202,24 @@ footer {
   </div>
 </section>
 
+<!-- Local preview tool. Permanent uploads and deletion use admin.html. -->
+<section id="local-photo-tool">
+  <div class="container">
+    <div class="upload-panel">
+      <div class="eyebrow">Photo Tool</div>
+      <h2 class="upload-title">Photo Upload &amp; Preview</h2>
+      <p>Select photos from your phone to preview them.</p>
+      <p class="upload-note"><strong>Important:</strong> This tool previews images on this device only. To permanently upload or delete website photos, use the secure Admin page.</p>
+      <a class="btn btn-primary" href="admin.html">Open Admin Photo Manager</a>
+      <label for="adh-photo-input"><strong>Preview photos on this device:</strong></label>
+      <input id="adh-photo-input" type="file" accept="image/*" multiple>
+      <button id="adh-clear-photos" class="btn btn-outline" type="button">Clear Preview</button>
+      <p id="adh-photo-status" role="status" aria-live="polite">No photos selected yet.</p>
+      <div id="adh-photo-preview" class="gallery-grid"></div>
+    </div>
+  </div>
+</section>
+
 <section id="gallery">
   <div class="container">
     <div class="section-heading">
@@ -239,11 +228,26 @@ footer {
       <p>A glimpse of the adventures and experiences waiting for you in Addu.</p>
       <p id="gallery-status" class="gallery-status" role="status" aria-live="polite">Loading photos...</p>
     </div>
-
     <div id="adh-public-gallery" class="gallery-grid">
       <img src="Try_diving_image3-845x684.jpg" alt="Addu diving experience" loading="lazy">
       <img src="Try_diving_image3-845x684.jpg" alt="Underwater exploration" loading="lazy">
       <img src="Try_diving_image3-845x684.jpg" alt="Maldives marine life" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="location">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">Find Us</div>
+      <h2>Discover Addu Atoll</h2>
+      <p>Addu Dive Hub invites you to explore the reefs, marine life and island beauty of Addu Atoll in the southern Maldives.</p>
+    </div>
+    <div class="contact-panel">
+      <p><strong>Destination:</strong> Addu Atoll, Maldives</p>
+      <p>Contact us to confirm meeting points, availability and arrangements for your chosen experience.</p>
+      <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20please%20share%20your%20location%20and%20meeting%20point." target="_blank" rel="noopener">Ask for Our Location</a>
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Addu+Atoll+Maldives" target="_blank" rel="noopener">View Addu Atoll Map</a>
     </div>
   </div>
 </section>
@@ -273,6 +277,12 @@ footer {
       <p><strong>WhatsApp:</strong> <a href="https://wa.me/9609373383" target="_blank" rel="noopener">+960 937 3383</a></p>
       <p><strong>Email:</strong> <a href="mailto:hishamdipu@gmail.com">hishamdipu@gmail.com</a></p>
       <a class="btn btn-primary" href="https://wa.me/9609373383" target="_blank" rel="noopener">Contact Us on WhatsApp</a>
+      <h3>Follow Us</h3>
+      <p>Replace these general links with your actual business profile URLs when available.</p>
+      <div class="social-links">
+        <a class="btn btn-outline" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+        <a class="btn btn-outline" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      </div>
     </div>
   </div>
 </section>
@@ -281,7 +291,7 @@ footer {
   <div class="container">
     <div class="contact-panel">
       <h2>Stay Connected</h2>
-      <p>Enter your email to prepare a subscription request.</p>
+      <p>Enter your email to prepare a newsletter subscription request.</p>
       <form id="newsletter-form">
         <label for="newsletter-email">Your email address</label><br>
         <input id="newsletter-email" type="email" placeholder="you@example.com" required>
@@ -297,21 +307,17 @@ footer {
 <footer>
   <div class="container">
     <p>© <span id="current-year"></span> Addu Dive Hub. Explore the South Maldives.</p>
+    <p><a href="#home">Back to top ↑</a></p>
   </div>
 </footer>
 
-<!-- Supabase JavaScript library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 document.getElementById("current-year").textContent =
   new Date().getFullYear();
 
-/*
-  SUPABASE PUBLIC WEBSITE SETTINGS
-  This publishable key is intended for frontend use.
-  Never put a service-role or secret key in this file.
-*/
+/* Supabase public website configuration.
+   Never put a service-role or secret key in this file. */
 const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
@@ -323,20 +329,15 @@ const galleryStatus = document.getElementById("gallery-status");
 async function loadSupabasePhotos() {
   try {
     if (!window.supabase || !window.supabase.createClient) {
-      throw new Error("The photo service could not be loaded. Please refresh the page.");
+      throw new Error("Supabase library did not load.");
     }
 
-    const supabaseClient = window.supabase.createClient(
+    const client = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_PUBLISHABLE_KEY
     );
 
-    /*
-      List photos in the bucket.
-      This requires a read-only SELECT policy for this bucket.
-      It does not give visitors upload or delete permission.
-    */
-    const { data, error } = await supabaseClient.storage
+    const { data, error } = await client.storage
       .from(PHOTO_BUCKET)
       .list("", {
         limit: 100,
@@ -347,7 +348,6 @@ async function loadSupabasePhotos() {
 
     const photos = (data || []).filter(function(file) {
       return file.name &&
-        file.id &&
         file.name !== ".emptyFolderPlaceholder" &&
         (!file.metadata ||
           !file.metadata.mimetype ||
@@ -356,23 +356,18 @@ async function loadSupabasePhotos() {
 
     if (photos.length === 0) {
       galleryStatus.textContent =
-        "No uploaded photos found yet. Upload photos through the Admin page.";
+        "No uploaded photos found. Please upload photos through the Admin page.";
       return;
     }
 
-    // Build public image URLs from the Supabase bucket.
     const photoItems = photos.map(function(file) {
-      const result = supabaseClient.storage
+      const publicUrl = client.storage
         .from(PHOTO_BUCKET)
-        .getPublicUrl(file.name);
+        .getPublicUrl(file.name).data.publicUrl;
 
-      return {
-        name: file.name,
-        url: result.data.publicUrl
-      };
+      return { name: file.name, url: publicUrl };
     });
 
-    // Replace the old example gallery with uploaded photos.
     gallery.replaceChildren();
 
     photoItems.forEach(function(photo, index) {
@@ -386,18 +381,13 @@ async function loadSupabasePhotos() {
       gallery.appendChild(img);
     });
 
-    // Show the newest three uploaded photos in Experiences.
-    const experienceIds = [
+    [
       "experience-photo-1",
       "experience-photo-2",
       "experience-photo-3"
-    ];
-
-    experienceIds.forEach(function(id, index) {
+    ].forEach(function(id, index) {
       const img = document.getElementById(id);
-      if (photoItems[index]) {
-        img.src = photoItems[index].url;
-      }
+      if (photoItems[index]) img.src = photoItems[index].url;
     });
 
     galleryStatus.textContent =
@@ -405,15 +395,69 @@ async function loadSupabasePhotos() {
 
   } catch (error) {
     console.error("Supabase photo loading error:", error);
-
     galleryStatus.textContent =
-      "Photos could not be loaded. Please check the Supabase read-only storage policy and bucket settings.";
+      "Photos could not be loaded. Check the Supabase bucket name and read-only storage policy.";
   }
 }
 
 loadSupabasePhotos();
 
-/* Newsletter: opens the visitor's email app. */
+/* Local-only photo preview; this does not upload anything. */
+const photoInput = document.getElementById("adh-photo-input");
+const preview = document.getElementById("adh-photo-preview");
+const photoStatus = document.getElementById("adh-photo-status");
+const clearButton = document.getElementById("adh-clear-photos");
+let photoUrls = [];
+
+function clearPhotoPreview() {
+  photoUrls.forEach(function(url) {
+    URL.revokeObjectURL(url);
+  });
+  photoUrls = [];
+  preview.replaceChildren();
+  photoStatus.textContent = "No photos selected yet.";
+}
+
+photoInput.addEventListener("change", function() {
+  clearPhotoPreview();
+
+  const files = Array.from(photoInput.files || []).filter(function(file) {
+    return file.type.startsWith("image/");
+  });
+
+  if (!files.length) {
+    photoStatus.textContent = "Choose one or more image files to preview.";
+    return;
+  }
+
+  files.forEach(function(file) {
+    const url = URL.createObjectURL(file);
+    photoUrls.push(url);
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = file.name;
+    img.loading = "lazy";
+    preview.appendChild(img);
+  });
+
+  photoStatus.textContent =
+    files.length + " photo(s) selected for local preview only.";
+});
+
+clearButton.addEventListener("click", function() {
+  clearPhotoPreview();
+  photoInput.value = "";
+});
+
+window.addEventListener("pagehide", function() {
+  photoUrls.forEach(function(url) {
+    URL.revokeObjectURL(url);
+  });
+});
+
+/* Newsletter request: opens the visitor's email application.
+   This does not automatically save subscriber addresses. */
 document.getElementById("newsletter-form").addEventListener("submit", function(event) {
   event.preventDefault();
 
