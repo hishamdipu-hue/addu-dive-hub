@@ -29,6 +29,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
     body {
       margin: 0;
       font-family: Inter, "Segoe UI", Arial, sans-serif;
@@ -36,45 +37,95 @@
       background: linear-gradient(180deg,var(--bg-0),var(--bg-1));
       line-height: 1.6;
     }
+
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
     button, input { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
+
     a:focus-visible, button:focus-visible, input:focus-visible {
       outline: 2px solid var(--teal);
       outline-offset: 4px;
     }
-    .container { width: min(var(--max),calc(100% - 32px)); margin: 0 auto; }
+
+    .container {
+      width: min(var(--max),calc(100% - 32px));
+      margin: 0 auto;
+    }
+
     .topbar {
-      position: sticky; top: 0; z-index: 1000;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
       background: rgba(3,13,19,.94);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
     }
+
     .nav-wrap {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 20px; min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 76px;
     }
+
     .brand {
-      display: flex; align-items: center; gap: 12px;
-      font-weight: 800; letter-spacing: -.04em; white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      white-space: nowrap;
     }
+
     .brand-mark {
-      width: 34px; height: 34px; border-radius: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       background: linear-gradient(145deg,rgba(217,184,122,.3),rgba(66,214,209,.3));
       border: 1px solid var(--line);
     }
-    .nav-links { display: flex; align-items: center; gap: 20px; color: var(--muted); font-weight: 600; }
-    .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold-soft); }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      text-align: center; border: 1px solid transparent;
-      border-radius: 999px; padding: 12px 20px; font-weight: 800;
-      cursor: pointer; transition: transform .2s, opacity .2s;
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: var(--muted);
+      font-weight: 600;
     }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--gold-soft);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s, opacity .2s;
+    }
+
     .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: linear-gradient(135deg,var(--gold-soft),var(--gold)); color: #071b20; }
-    .btn-outline { border-color: var(--line); color: var(--text); background: rgba(255,255,255,.03); }
+
+    .btn-primary {
+      background: linear-gradient(135deg,var(--gold-soft),var(--gold));
+      color: #071b20;
+    }
+
+    .btn-outline {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,.03);
+    }
+
     .hero {
       position: relative;
       background:
@@ -82,81 +133,289 @@
         linear-gradient(180deg,rgba(3,13,19,.1),var(--bg-0)),
         url("https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
     }
+
     .hero-inner {
-      display: grid; grid-template-columns: minmax(0,1.3fr) minmax(220px,.6fr);
-      gap: 36px; align-items: center; min-height: 680px; padding: 76px 0;
+      display: grid;
+      grid-template-columns: minmax(0,1.3fr) minmax(220px,.6fr);
+      gap: 36px;
+      align-items: center;
+      min-height: 680px;
+      padding: 76px 0;
     }
+
     .hero-copy {
-      max-width: 760px; background: rgba(6,18,23,.68);
-      border: 1px solid var(--line); border-radius: var(--radius);
-      padding: clamp(24px,4vw,42px); box-shadow: var(--shadow);
+      max-width: 760px;
+      background: rgba(6,18,23,.68);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(24px,4vw,42px);
+      box-shadow: var(--shadow);
     }
+
     .eyebrow {
-      color: var(--gold-soft); text-transform: uppercase;
-      letter-spacing: .16em; font-size: 11px; font-weight: 800; margin-bottom: 12px;
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 12px;
     }
-    h1 { margin: 0; color: #fff; font-size: clamp(2.6rem,6vw,5rem); line-height: 1; letter-spacing: -.06em; }
-    h2 { margin: 0 0 14px; font-size: clamp(1.8rem,3.5vw,2.7rem); line-height: 1.15; letter-spacing: -.045em; }
+
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(2.6rem,6vw,5rem);
+      line-height: 1;
+      letter-spacing: -.06em;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.8rem,3.5vw,2.7rem);
+      line-height: 1.15;
+      letter-spacing: -.045em;
+    }
+
     h3 { margin: 0 0 8px; }
-    .lead { margin: 18px 0 0; font-size: 1.08rem; color: var(--muted); max-width: 58ch; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-    .hero-stats { display: grid; gap: 14px; }
-    .stat {
-      background: rgba(10,23,29,.82); border: 1px solid var(--line);
-      border-radius: 16px; padding: 20px; box-shadow: var(--shadow);
+
+    .lead {
+      margin: 18px 0 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 58ch;
     }
-    .stat strong { display: block; font-size: 2rem; color: #fff; line-height: 1.1; }
-    .stat span { display: block; margin-top: 6px; color: var(--muted); font-size: .88rem; }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .hero-stats { display: grid; gap: 14px; }
+
+    .stat {
+      background: rgba(10,23,29,.82);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2rem;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
     section { padding: 76px 0; }
-    .section-head { max-width: 760px; margin-bottom: 30px; }
-    .section-copy { color: var(--muted); margin: 0; }
-    .cards { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 30px;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 20px;
+    }
+
     .experience-card, .contact-panel {
       background: linear-gradient(180deg,rgba(13,28,34,.95),rgba(10,20,27,.9));
-      border: 1px solid var(--line); border-radius: var(--radius);
-      overflow: hidden; box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
-    .experience-card img { width: 100%; height: 220px; object-fit: cover; }
+
+    .experience-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
     .card-body { padding: 22px; }
-    .card-body p { color: var(--muted); margin: 0 0 18px; }
-    .text-link { color: var(--gold-soft); font-weight: 800; }
+
+    .card-body p {
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .text-link {
+      color: var(--gold-soft);
+      font-weight: 800;
+    }
+
     .text-link:hover { text-decoration: underline; }
-    .gallery-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
-    .gallery-grid a { display: block; overflow: hidden; border-radius: 14px; border: 1px solid var(--line); }
-    .gallery-grid img { width: 100%; height: 240px; object-fit: cover; transition: transform .25s; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .gallery-grid a {
+      display: block;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform .25s;
+    }
+
     .gallery-grid a:hover img { transform: scale(1.04); }
-    .contact-wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+
+    /* YouTube Short player */
+    .video-wrap {
+      margin-top: 32px;
+      max-width: 420px;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: #000;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+    }
+
     .contact-panel { padding: 26px; }
-    .contact-list { display: grid; gap: 18px; margin-top: 22px; }
-    .contact-item { display: flex; align-items: flex-start; gap: 12px; color: var(--muted); }
-    .contact-item strong { display: block; color: var(--text); margin-bottom: 2px; }
+
+    .contact-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .contact-item strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
     .contact-item a { overflow-wrap: anywhere; }
+
     .contact-item a:hover { color: var(--gold-soft); }
+
     .badge {
-      width: 38px; height: 38px; border-radius: 11px;
-      background: rgba(255,255,255,.04); border: 1px solid var(--line);
-      display: grid; place-items: center; flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
     }
-    .signup-box { display: grid; gap: 12px; margin-top: 20px; }
+
+    .signup-box {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
     .signup-box input {
-      width: 100%; min-width: 0; border: 1px solid var(--line);
-      background: rgba(255,255,255,.04); color: var(--text);
-      border-radius: 12px; padding: 14px;
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 14px;
     }
+
     .signup-box input::placeholder { color: #a7c3c7; }
     .signup-box button { width: 100%; }
-    .form-note { color: var(--muted); font-size: .85rem; margin: 12px 0 0; }
-    .footer { padding: 28px 0 36px; border-top: 1px solid var(--line); color: var(--muted); text-align: center; font-size: .9rem; }
-    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin-top: 12px; }
+
+    .form-note {
+      color: var(--muted);
+      font-size: .85rem;
+      margin: 12px 0 0;
+    }
+
+    .footer {
+      padding: 28px 0 36px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: .9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 12px;
+    }
+
     .footer-links a:hover { color: var(--gold-soft); }
+
     @media (max-width: 900px) {
       .nav-wrap { flex-wrap: wrap; padding: 14px 0; }
-      .nav-links { order: 3; width: 100%; justify-content: center; flex-wrap: wrap; gap: 12px 20px; }
-      .hero-inner { grid-template-columns: 1fr; min-height: auto; padding: 64px 0; }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 64px 0;
+      }
+
       .hero-stats { grid-template-columns: repeat(3,minmax(0,1fr)); }
       .cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .contact-wrap { grid-template-columns: 1fr; }
     }
+
     @media (max-width: 600px) {
       .container { width: min(var(--max),calc(100% - 24px)); }
       .nav-wrap { gap: 12px; }
@@ -170,12 +429,14 @@
       .gallery-grid img { height: 230px; }
       .contact-panel { padding: 22px; }
     }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition: none !important; }
     }
   </style>
 </head>
+
 <body>
   <header class="topbar">
     <div class="container nav-wrap">
@@ -274,6 +535,7 @@
       </div>
     </section>
 
+    <!-- GALLERY: includes your uploaded photo -->
     <section id="gallery">
       <div class="container">
         <div class="section-head">
@@ -281,22 +543,50 @@
           <h2>A glimpse of paradise.</h2>
           <p class="section-copy">Explore the beauty of the sea and tropical island life.</p>
         </div>
+
         <div class="gallery-grid">
           <a href="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=1400&q=85"
              target="_blank" rel="noopener noreferrer" aria-label="Open diving photograph">
             <img src="https://images.unsplash.com/photo-1544551763-46a013bb70b5?auto=format&fit=crop&w=700&q=75"
                  alt="Scuba diving underwater" loading="lazy">
           </a>
+
           <a href="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1400&q=85"
              target="_blank" rel="noopener noreferrer" aria-label="Open tropical island photograph">
             <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=700&q=75"
                  alt="Tropical island and ocean" loading="lazy">
           </a>
+
           <a href="https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1400&q=85"
              target="_blank" rel="noopener noreferrer" aria-label="Open marine life photograph">
             <img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=700&q=75"
                  alt="Underwater marine life" loading="lazy">
           </a>
+
+          <!-- Your uploaded GitHub photo -->
+          <a href="Try_diving_image3-845x684.jpg"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Open diving photograph">
+            <img src="Try_diving_image3-845x684.jpg"
+                 alt="Discover scuba diving with Addu Dive Hub"
+                 loading="lazy">
+          </a>
+        </div>
+
+        <!-- Embedded YouTube Short -->
+        <div class="video-wrap">
+          <div class="eyebrow">Watch Addu underwater</div>
+          <h3>Addu Dive Hub video</h3>
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/OY9urxw-2ow"
+              title="Addu Dive Hub YouTube Short"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
       </div>
     </section>
@@ -311,19 +601,26 @@
           <div class="contact-list">
             <div class="contact-item">
               <span class="badge" aria-hidden="true">☎</span>
-              <div><strong>Phone / WhatsApp</strong>
+              <div>
+                <strong>Phone / WhatsApp</strong>
                 <a href="tel:+9609373383">+960 937 3383</a>
               </div>
             </div>
+
             <div class="contact-item">
               <span class="badge" aria-hidden="true">✉</span>
-              <div><strong>Email</strong>
+              <div>
+                <strong>Email</strong>
                 <a href="mailto:hishamdipu@gmail.com">hishamdipu@gmail.com</a>
               </div>
             </div>
+
             <div class="contact-item">
               <span class="badge" aria-hidden="true">⌂</span>
-              <div><strong>Location</strong>Addu Atoll, Maldives</div>
+              <div>
+                <strong>Location</strong>
+                Addu Atoll, Maldives
+              </div>
             </div>
           </div>
 
@@ -348,6 +645,7 @@
                    placeholder="you@example.com" autocomplete="email" required>
             <button class="btn btn-primary" type="submit">Request updates</button>
           </form>
+
           <p class="form-note" id="newsletter-message" role="status" aria-live="polite">
             This form opens an email draft; it does not automatically store subscriptions.
           </p>
