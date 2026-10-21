@@ -20,157 +20,67 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,sans-serif;line-height:1.6
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button,input,select,textarea{font:inherit}
 .container{width:min(1100px,calc(100% - 32px));margin:auto}
-
-header{
-  position:sticky;top:0;z-index:10;
-  background:rgba(2,13,19,.97);
-  border-bottom:1px solid var(--line)
-}
-nav{
-  min-height:70px;display:flex;align-items:center;
-  justify-content:space-between;gap:16px;
-  flex-wrap:wrap;padding:12px 0
-}
+header{position:sticky;top:0;z-index:10;background:rgba(2,13,19,.97);border-bottom:1px solid var(--line)}
+nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 0}
 .brand{font-size:20px;font-weight:bold;color:var(--light)}
-.nav-links{
-  display:flex;gap:14px;flex-wrap:wrap;
-  font-size:14px;color:var(--muted)
-}
+.nav-links{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
 .nav-links a:hover{color:var(--light)}
-
-.hero{
-  min-height:530px;display:flex;align-items:center;
-  background:
-    linear-gradient(90deg,rgba(2,13,19,.94),rgba(2,13,19,.42)),
-    url("Try_diving_image3-845x684.jpg") center/cover no-repeat
-}
+.hero{min-height:530px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(2,13,19,.94),rgba(2,13,19,.42)),url("Try_diving_image3-845x684.jpg") center/cover no-repeat}
 .hero-content{max-width:700px;padding:75px 0}
-.eyebrow{
-  color:var(--light);font-size:12px;font-weight:bold;
-  letter-spacing:3px;text-transform:uppercase
-}
+.eyebrow{color:var(--light);font-size:12px;font-weight:bold;letter-spacing:3px;text-transform:uppercase}
 h1{font-size:clamp(38px,8vw,68px);line-height:1.08;margin:14px 0}
 h2{color:var(--light);line-height:1.2}
 p{color:var(--muted)}
-.btn{
-  display:inline-block;border:1px solid var(--line);
-  border-radius:30px;padding:12px 20px;
-  margin:6px 6px 6px 0;font-weight:bold;
-  cursor:pointer;text-align:center
-}
+.btn{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:12px 20px;margin:6px 6px 6px 0;font-weight:bold;cursor:pointer;text-align:center}
 .btn-primary{background:var(--light);color:#071b20}
 .btn-outline{background:transparent;color:var(--text)}
 .btn:hover{filter:brightness(1.08)}
-
+button:disabled{opacity:.6;cursor:wait}
 section{padding:60px 0;scroll-margin-top:90px}
 .section-heading{max-width:700px;margin-bottom:26px}
-.cards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px
-}
-.card{
-  overflow:hidden;border:1px solid var(--line);
-  border-radius:16px;background:var(--panel)
-}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
 .card img{width:100%;height:220px;object-fit:cover}
 .card-content{padding:18px}
 .card h3{color:var(--light)}
-
-.gallery-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:16px;margin-top:20px
-}
-.gallery-grid img{
-  width:100%;height:220px;object-fit:cover;
-  border:1px solid var(--line);border-radius:12px
-}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:20px}
+.gallery-grid img{width:100%;height:220px;object-fit:cover;border:1px solid var(--line);border-radius:12px}
 .gallery-status{font-size:14px;overflow-wrap:anywhere}
-
 #local-photo-tool{background:#071c24}
-.upload-panel,.contact-panel{
-  padding:24px;border:1px solid var(--line);
-  border-radius:16px;background:var(--panel)
-}
+.upload-panel,.contact-panel{padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
 .upload-panel{border:2px solid var(--gold)}
 .upload-title{margin-top:8px}
 .upload-note{font-size:14px}
-#adh-photo-input{
-  display:block;width:100%;margin:14px 0;padding:12px;
-  color:var(--text);background:#061319;
-  border:1px solid var(--line);border-radius:8px
-}
+#adh-photo-input{display:block;width:100%;margin:14px 0;padding:12px;color:var(--text);background:#061319;border:1px solid var(--line);border-radius:8px}
 #adh-photo-status{overflow-wrap:anywhere}
 #adh-photo-preview img{background:#061319}
 #adh-clear-photos{margin-top:8px}
-
-/* Guest reviews */
-.reviews-layout{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));
-  gap:22px
-}
-.review-panel{
-  padding:22px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:var(--panel);
-  min-width:0
-}
+.reviews-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}
+.review-panel{padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--panel);min-width:0}
 .review-panel h3{color:var(--light);margin-top:0}
-.review-form label{
-  display:block;
-  margin:14px 0 6px;
-  color:var(--text);
-  font-weight:bold
-}
-.review-form input,
-.review-form select,
-.review-form textarea{
-  display:block;width:100%;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:8px;
-  background:#061319;
-  color:var(--text)
-}
+.review-form label{display:block;margin:14px 0 6px;color:var(--text);font-weight:bold}
+.review-form input,.review-form select,.review-form textarea{display:block;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#061319;color:var(--text)}
 .review-form textarea{min-height:125px;resize:vertical}
 .review-form button{margin-top:16px}
 .review-stars{color:var(--light);letter-spacing:2px}
-.review-item{
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
-  overflow-wrap:anywhere
-}
+.review-item{padding:16px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
 .review-item:last-child{border-bottom:0}
 .review-name{font-weight:bold;color:var(--text)}
 .review-date{font-size:12px;color:var(--muted)}
 #review-status,#reviews-list-status{overflow-wrap:anywhere}
 .google-mark{font-size:22px;font-weight:bold}
 .small-note{font-size:13px}
-
 .video-wrap{display:flex;justify-content:center}
-.video-frame{
-  width:100%;max-width:400px;aspect-ratio:9/16;
-  border:0;border-radius:16px;background:#000
-}
+.video-frame{width:100%;max-width:400px;aspect-ratio:9/16;border:0;border-radius:16px;background:#000}
 .video-link{text-align:center;margin-top:14px}
-
-input[type=email]{
-  width:100%;max-width:400px;padding:13px;
-  border-radius:8px;border:1px solid var(--line);
-  background:#061319;color:white;margin:6px 0
-}
+input[type=email]{width:100%;max-width:400px;padding:13px;border-radius:8px;border:1px solid var(--line);background:#061319;color:white;margin:6px 0}
 .social-links{display:flex;gap:10px;flex-wrap:wrap}
 footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
-
 @media(max-width:600px){
   .hero{min-height:460px}
   .nav-links{gap:10px}
@@ -248,7 +158,6 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
   </div>
 </section>
 
-<!-- Local preview tool. Permanent uploads and deletion use admin.html. -->
 <section id="local-photo-tool">
   <div class="container">
     <div class="upload-panel">
@@ -282,7 +191,6 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
   </div>
 </section>
 
-<!-- Reviews section -->
 <section id="reviews">
   <div class="container">
     <div class="section-heading">
@@ -295,21 +203,16 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
       <div class="review-panel">
         <div class="google-mark">Google Reviews</div>
         <p>Visit Google to look for Addu Dive Hub reviews and ratings.</p>
-        <a class="btn btn-primary"
-           href="https://www.google.com/maps/search/?api=1&query=Addu+Dive+Hub+Maldives"
-           target="_blank" rel="noopener">
-          Find Us on Google
-        </a>
+        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Dive+Hub+Maldives" target="_blank" rel="noopener">Find Us on Google</a>
         <p class="small-note">This opens a Google Maps search. It is not an embedded Google rating or a guarantee that a business profile is available.</p>
       </div>
 
       <div class="review-panel">
         <h3>Write a Review</h3>
-        <p>Your review will be checked by our team before appearing publicly.</p>
+        <p>Your review will appear on our website immediately after submission.</p>
         <form id="guest-review-form" class="review-form">
           <label for="guest-review-name">Your name</label>
-          <input id="guest-review-name" name="name" type="text"
-                 minlength="2" maxlength="80" autocomplete="name" required>
+          <input id="guest-review-name" name="name" type="text" minlength="2" maxlength="80" autocomplete="name" required>
 
           <label for="guest-review-rating">Your star rating</label>
           <select id="guest-review-rating" name="rating" required>
@@ -321,14 +224,9 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
           </select>
 
           <label for="guest-review-text">Your review</label>
-          <textarea id="guest-review-text" name="review"
-                    minlength="8" maxlength="1200"
-                    placeholder="Tell us about your experience..."
-                    required></textarea>
+          <textarea id="guest-review-text" name="review" minlength="8" maxlength="1200" placeholder="Tell us about your experience..." required></textarea>
 
-          <button id="guest-review-submit" class="btn btn-primary" type="submit">
-            Submit Review
-          </button>
+          <button id="guest-review-submit" class="btn btn-primary" type="submit">Submit Review</button>
           <p id="review-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -336,9 +234,7 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
 
     <div class="review-panel" style="margin-top:22px">
       <h3>What Our Guests Say</h3>
-      <p id="reviews-list-status" role="status" aria-live="polite">
-        Loading approved reviews...
-      </p>
+      <p id="reviews-list-status" role="status" aria-live="polite">Loading guest reviews...</p>
       <div id="approved-reviews-list"></div>
     </div>
   </div>
@@ -355,7 +251,7 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
       <p><strong>Destination:</strong> Addu Atoll, Maldives</p>
       <p>Contact us to confirm meeting points, availability and arrangements for your chosen experience.</p>
       <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20please%20share%20your%20location%20and%20meeting%20point." target="_blank" rel="noopener">Ask for Our Location</a>
-      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Addu+Atoll+Maldives" target="_blank" rel="noopener">View Addu Atoll Map</a>
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Atoll+Maldives" target="_blank" rel="noopener">View Addu Atoll Map</a>
     </div>
   </div>
 </section>
@@ -424,15 +320,11 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
 document.getElementById("current-year").textContent =
   new Date().getFullYear();
 
-/* Public Supabase configuration.
-   Never place a service-role or secret key in website code. */
+/* Public configuration only. Never put a service-role key here. */
 const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
 const PHOTO_BUCKET = "Dive-photo";
-
-const gallery = document.getElementById("adh-public-gallery");
-const galleryStatus = document.getElementById("gallery-status");
 
 let supabaseClient = null;
 
@@ -442,6 +334,10 @@ if (window.supabase && window.supabase.createClient) {
     SUPABASE_PUBLISHABLE_KEY
   );
 }
+
+/* Public photo gallery: existing Supabase storage integration. */
+const gallery = document.getElementById("adh-public-gallery");
+const galleryStatus = document.getElementById("gallery-status");
 
 async function loadSupabasePhotos() {
   try {
@@ -514,8 +410,8 @@ async function loadSupabasePhotos() {
 
 loadSupabasePhotos();
 
-/* Secure guest reviews.
-   Supabase RLS must be configured using the SQL provided separately. */
+/* Guest reviews: use the public.reviews table created in Supabase.
+   The database policy permits public insertion only when approved=true. */
 const reviewForm = document.getElementById("guest-review-form");
 const reviewStatus = document.getElementById("review-status");
 const reviewSubmit = document.getElementById("guest-review-submit");
@@ -527,16 +423,56 @@ function showReviewStars(rating) {
   return "★".repeat(value) + "☆".repeat(5 - value);
 }
 
+function displayReviews(data) {
+  approvedReviewsList.replaceChildren();
+
+  if (!data || data.length === 0) {
+    reviewsListStatus.textContent =
+      "No guest reviews yet. Be the first to share your experience.";
+    return;
+  }
+
+  data.forEach(function(item) {
+    const article = document.createElement("article");
+    article.className = "review-item";
+
+    const name = document.createElement("div");
+    name.className = "review-name";
+    name.textContent = item.name;
+
+    const stars = document.createElement("div");
+    stars.className = "review-stars";
+    stars.setAttribute("aria-label", item.rating + " out of 5 stars");
+    stars.textContent = showReviewStars(item.rating);
+
+    const date = document.createElement("div");
+    date.className = "review-date";
+    const parsedDate = new Date(item.created_at);
+    date.textContent = Number.isNaN(parsedDate.getTime())
+      ? ""
+      : parsedDate.toLocaleDateString();
+
+    const review = document.createElement("p");
+    review.textContent = item.review;
+
+    article.append(name, stars, date, review);
+    approvedReviewsList.appendChild(article);
+  });
+
+  reviewsListStatus.textContent =
+    data.length + " guest review(s).";
+}
+
 async function loadApprovedReviews() {
   if (!supabaseClient) {
     reviewsListStatus.textContent =
-      "Reviews cannot load because the Supabase library is unavailable.";
+      "Reviews could not load because the Supabase library is unavailable.";
     return;
   }
 
   try {
     const { data, error } = await supabaseClient
-      .from("customer_reviews")
+      .from("reviews")
       .select("id,name,rating,review,created_at")
       .eq("approved", true)
       .order("created_at", { ascending: false })
@@ -544,48 +480,12 @@ async function loadApprovedReviews() {
 
     if (error) throw error;
 
-    approvedReviewsList.replaceChildren();
-
-    if (!data || data.length === 0) {
-      reviewsListStatus.textContent =
-        "No approved guest reviews yet. Be the first to share your experience.";
-      return;
-    }
-
-    data.forEach(function(item) {
-      const article = document.createElement("article");
-      article.className = "review-item";
-
-      const name = document.createElement("div");
-      name.className = "review-name";
-      name.textContent = item.name;
-
-      const stars = document.createElement("div");
-      stars.className = "review-stars";
-      stars.setAttribute("aria-label", item.rating + " out of 5 stars");
-      stars.textContent = showReviewStars(item.rating);
-
-      const date = document.createElement("div");
-      date.className = "review-date";
-      const parsedDate = new Date(item.created_at);
-      date.textContent = Number.isNaN(parsedDate.getTime())
-        ? ""
-        : parsedDate.toLocaleDateString();
-
-      const review = document.createElement("p");
-      review.textContent = item.review;
-
-      article.append(name, stars, date, review);
-      approvedReviewsList.appendChild(article);
-    });
-
-    reviewsListStatus.textContent =
-      data.length + " approved review(s).";
+    displayReviews(data);
 
   } catch (error) {
     console.error("Review loading error:", error);
     reviewsListStatus.textContent =
-      "Reviews are not connected yet. The Supabase customer_reviews table and security policies must be set up.";
+      "Guest reviews could not load. Please check the reviews table and its Supabase security policies.";
   }
 }
 
@@ -600,47 +500,100 @@ reviewForm.addEventListener("submit", async function(event) {
   }
 
   const name = document.getElementById("guest-review-name").value.trim();
-  const rating = Number(document.getElementById("guest-review-rating").value);
+  const rating = Number(
+    document.getElementById("guest-review-rating").value
+  );
   const review = document.getElementById("guest-review-text").value.trim();
 
   if (name.length < 2 || name.length > 80) {
-    reviewStatus.textContent = "Your name must be between 2 and 80 characters.";
+    reviewStatus.textContent =
+      "Your name must be between 2 and 80 characters.";
     return;
   }
 
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    reviewStatus.textContent = "Please choose a rating from 1 to 5 stars.";
+    reviewStatus.textContent =
+      "Please choose a rating from 1 to 5 stars.";
     return;
   }
 
   if (review.length < 8 || review.length > 1200) {
-    reviewStatus.textContent = "Your review must be between 8 and 1200 characters.";
+    reviewStatus.textContent =
+      "Your review must be between 8 and 1200 characters.";
     return;
   }
 
   reviewSubmit.disabled = true;
   reviewSubmit.textContent = "Submitting...";
-  reviewStatus.textContent = "Sending your review securely...";
+  reviewStatus.textContent = "Submitting your review...";
 
   try {
-    const { error } = await supabaseClient
-      .from("customer_reviews")
+    /* IMPORTANT: save to reviews, not customer_reviews.
+       approved=true makes this review immediately eligible for display. */
+    const { data, error } = await supabaseClient
+      .from("reviews")
       .insert([{
         name: name,
         rating: rating,
         review: review,
-        approved: false
-      }]);
+        approved: true
+      }])
+      .select("id,name,rating,review,created_at,approved")
+      .single();
 
     if (error) throw error;
 
+    /* Show the newly saved review immediately on this page. */
+    const currentItems = Array.from(
+      approvedReviewsList.querySelectorAll(".review-item")
+    );
+
+    const newArticle = document.createElement("article");
+    newArticle.className = "review-item";
+
+    const newName = document.createElement("div");
+    newName.className = "review-name";
+    newName.textContent = data.name;
+
+    const newStars = document.createElement("div");
+    newStars.className = "review-stars";
+    newStars.setAttribute(
+      "aria-label",
+      data.rating + " out of 5 stars"
+    );
+    newStars.textContent = showReviewStars(data.rating);
+
+    const newDate = document.createElement("div");
+    newDate.className = "review-date";
+    const parsedDate = new Date(data.created_at);
+    newDate.textContent = Number.isNaN(parsedDate.getTime())
+      ? ""
+      : parsedDate.toLocaleDateString();
+
+    const newReview = document.createElement("p");
+    newReview.textContent = data.review;
+
+    newArticle.append(newName, newStars, newDate, newReview);
+    approvedReviewsList.prepend(newArticle);
+
+    /* Keep the display limited to the newest 50 reviews. */
+    while (approvedReviewsList.children.length > 50) {
+      approvedReviewsList.lastElementChild.remove();
+    }
+
+    reviewsListStatus.textContent =
+      Math.min(currentItems.length + 1, 50) +
+      " guest review(s).";
+
     reviewForm.reset();
     reviewStatus.textContent =
-      "Thank you! Your review was submitted and is awaiting approval.";
+      "Thank you! Your review is now published and visible on the website.";
+
   } catch (error) {
     console.error("Review submission error:", error);
+
     reviewStatus.textContent =
-      "Your review could not be saved. The review database and security policies may not be set up yet. Please try again later.";
+      "Your review could not be saved. Please check the Supabase reviews table and its INSERT and SELECT policies, then try again.";
   } finally {
     reviewSubmit.disabled = false;
     reviewSubmit.textContent = "Submit Review";
@@ -703,8 +656,7 @@ window.addEventListener("pagehide", function() {
   });
 });
 
-/* Newsletter request: opens the visitor's email application.
-   This does not automatically save subscriber addresses. */
+/* Newsletter request: opens the visitor's email application. */
 document.getElementById("newsletter-form").addEventListener("submit", function(event) {
   event.preventDefault();
 
