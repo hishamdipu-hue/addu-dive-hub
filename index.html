@@ -18,6 +18,8 @@ HTML
   --text:#edf7f7;
   --muted:#a7c3c7;
   --line:rgba(214,190,142,.3);
+  --adh-radius:30px;
+  --adh-glow:0 0 18px rgba(217,184,122,.35);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -37,10 +39,10 @@ nav{min-height:70px;display:flex;align-items:center;justify-content:space-betwee
 h1{font-size:clamp(38px,8vw,68px);line-height:1.08;margin:14px 0}
 h2{color:var(--light);line-height:1.2}
 p{color:var(--muted)}
-.btn{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:12px 20px;margin:6px 6px 6px 0;font-weight:bold;cursor:pointer;text-align:center}
+.btn{display:inline-block;border:1px solid var(--line);border-radius:var(--adh-radius);padding:12px 20px;margin:6px 6px 6px 0;font-weight:bold;cursor:pointer;text-align:center;transition:all .25s ease}
 .btn-primary{background:var(--light);color:#071b20}
 .btn-outline{background:transparent;color:var(--text)}
-.btn:hover{filter:brightness(1.08)}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
 button:disabled{opacity:.6;cursor:wait}
 section{padding:60px 0;scroll-margin-top:90px}
 .section-heading{max-width:700px;margin-bottom:26px}
@@ -53,7 +55,7 @@ section{padding:60px 0;scroll-margin-top:90px}
 .gallery-grid img{width:100%;height:220px;object-fit:cover;border:1px solid var(--line);border-radius:12px}
 .gallery-status{font-size:14px;overflow-wrap:anywhere}
 
-/* Compact local photo preview tool */
+/* Local photo preview tool */
 #local-photo-tool{background:#071c24}
 #local-photo-tool .container{max-width:760px}
 .upload-panel{padding:16px;border:1px solid var(--gold);border-radius:14px;background:#09181e}
@@ -87,6 +89,46 @@ section{padding:60px 0;scroll-margin-top:90px}
 input[type=email]{width:100%;max-width:400px;padding:13px;border-radius:8px;border:1px solid var(--line);background:#061319;color:white;margin:6px 0}
 .social-links{display:flex;gap:10px;flex-wrap:wrap}
 footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
+
+/* Button configurator */
+#adh-config-open{
+  position:fixed;right:16px;bottom:16px;z-index:9998;
+  padding:12px 17px;border:1px solid var(--gold);
+  border-radius:999px;background:#09181e;color:var(--light);
+  box-shadow:0 4px 22px #0008;cursor:pointer;font-weight:bold;
+}
+#adh-config-panel{
+  position:fixed;inset:0 0 0 auto;z-index:9999;
+  width:min(350px,90vw);height:100dvh;overflow-y:auto;
+  padding:24px;background:#071923;color:var(--text);
+  border-left:1px solid var(--line);box-shadow:-12px 0 35px #0008;
+  transform:translateX(110%);visibility:hidden;
+  transition:transform .25s ease,visibility .25s ease;
+}
+#adh-config-panel.adh-open{transform:translateX(0);visibility:visible}
+#adh-config-panel h2{margin:12px 0;color:var(--light)}
+#adh-config-panel p{font-size:14px}
+#adh-config-panel label{display:block;margin:20px 0 8px;color:var(--text)}
+#adh-config-panel select{
+  width:100%;padding:12px;border:1px solid var(--line);
+  border-radius:8px;background:#102a36;color:white;
+}
+#adh-config-panel input[type=checkbox]{accent-color:var(--gold);transform:scale(1.2);margin-right:8px}
+#adh-config-close{float:right;background:none;border:0;color:var(--light);font-size:28px;cursor:pointer}
+#adh-config-reset{
+  width:100%;padding:12px;margin-top:22px;border:1px solid var(--gold);
+  border-radius:8px;background:var(--light);color:#071b20;font-weight:bold;cursor:pointer;
+}
+body.adh-glow-enabled .btn:not(#adh-config-open){box-shadow:var(--adh-glow)}
+body.adh-square-buttons .btn{border-radius:0!important}
+body.adh-pill-buttons .btn{border-radius:999px!important}
+body.adh-theme-cyan .btn-primary{
+  background:linear-gradient(135deg,#8be9f5,#0891b2);color:#03141b;border-color:#22d3ee
+}
+body.adh-theme-emerald .btn-primary{
+  background:linear-gradient(135deg,#6ee7b7,#059669);color:#031b14;border-color:#10b981
+}
+body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a2e);color:#071b20;border-color:#d9b87a}
 
 @media(max-width:600px){
   .hero{min-height:460px}
@@ -208,7 +250,6 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
       <h2>Guest Reviews</h2>
       <p>Read guest feedback and share your own experience with Addu Dive Hub.</p>
     </div>
-
     <div class="reviews-layout">
       <div class="review-panel">
         <div class="google-mark">Google Reviews</div>
@@ -216,14 +257,12 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
         <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Dive+Hub+Maldives" target="_blank" rel="noopener">Find Us on Google</a>
         <p class="small-note">This opens a Google Maps search.</p>
       </div>
-
       <div class="review-panel">
         <h3>Write a Review</h3>
         <p>Your review will appear on our website immediately after submission.</p>
         <form id="guest-review-form" class="review-form">
           <label for="guest-review-name">Your name</label>
           <input id="guest-review-name" name="name" type="text" minlength="2" maxlength="80" autocomplete="name" required>
-
           <label for="guest-review-rating">Your star rating</label>
           <select id="guest-review-rating" name="rating" required>
             <option value="5">★★★★★ — Excellent</option>
@@ -232,16 +271,13 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
             <option value="2">★★☆☆☆ — Fair</option>
             <option value="1">★☆☆☆☆ — Poor</option>
           </select>
-
           <label for="guest-review-text">Your review</label>
           <textarea id="guest-review-text" name="review" minlength="8" maxlength="1200" placeholder="Tell us about your experience..." required></textarea>
-
           <button id="guest-review-submit" class="btn btn-primary" type="submit">Submit Review</button>
           <p id="review-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
-
     <div class="review-panel" style="margin-top:22px">
       <h3>What Our Guests Say</h3>
       <p id="reviews-list-status" role="status" aria-live="polite">Loading guest reviews...</p>
@@ -325,15 +361,45 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
   </div>
 </footer>
 
+<!-- Button configurator panel -->
+<button id="adh-config-open" type="button" aria-controls="adh-config-panel" aria-expanded="false">
+  ⚙ Button Settings
+</button>
+
+<aside id="adh-config-panel" aria-label="Button settings" aria-hidden="true">
+  <button id="adh-config-close" type="button" aria-label="Close settings">×</button>
+  <h2>Button Configuration</h2>
+  <p>Customize the button appearance on this website.</p>
+
+  <label for="adh-shape">Button shape</label>
+  <select id="adh-shape">
+    <option value="rounded">Rounded</option>
+    <option value="square">Square</option>
+    <option value="pill">Pill</option>
+  </select>
+
+  <label for="adh-theme">Button colour</label>
+  <select id="adh-theme">
+    <option value="gold">Ocean Gold</option>
+    <option value="cyan">Lagoon Cyan</option>
+    <option value="emerald">Emerald</option>
+  </select>
+
+  <label>
+    <input id="adh-glow" type="checkbox" checked>
+    Enable glowing effect
+  </label>
+
+  <button id="adh-config-reset" type="button">Reset settings</button>
+</aside>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-document.getElementById("current-year").textContent =
-  new Date().getFullYear();
+document.getElementById("current-year").textContent = new Date().getFullYear();
 
-/* Public configuration only. Never put a service-role key here. */
+/* Supabase public configuration */
 const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
 const PHOTO_BUCKET = "Dive-photo";
 
 let supabaseClient = null;
@@ -345,43 +411,29 @@ if (window.supabase && window.supabase.createClient) {
   );
 }
 
-/*
-  GALLERY:
-  Reads images from the root of Dive-photo.
-  Example: Dive-photo/my-gallery-photo.jpg
-*/
+/* Public gallery */
 const gallery = document.getElementById("adh-public-gallery");
 const galleryStatus = document.getElementById("gallery-status");
 
 async function loadSupabasePhotos() {
   try {
-    if (!supabaseClient) {
-      throw new Error("Supabase library did not load.");
-    }
+    if (!supabaseClient) throw new Error("Supabase library did not load.");
 
     const { data, error } = await supabaseClient.storage
       .from(PHOTO_BUCKET)
-      .list("", {
-        limit: 100,
-        sortBy: { column: "created_at", order: "desc" }
-      });
+      .list("", { limit: 100, sortBy: { column: "created_at", order: "desc" } });
 
     if (error) throw error;
 
-    // Ignore folders and show only image files in the bucket root.
     const photos = (data || []).filter(function(file) {
-      return file.id &&
-        file.name &&
+      return file.id && file.name &&
         file.name !== ".emptyFolderPlaceholder" &&
-        (!file.metadata ||
-          !file.metadata.mimetype ||
-          file.metadata.mimetype.startsWith("image/"));
+        (!file.metadata || !file.metadata.mimetype ||
+         file.metadata.mimetype.startsWith("image/"));
     });
 
-    // Preserve the default gallery images when no uploads exist.
     if (photos.length === 0) {
-      galleryStatus.textContent =
-        "No uploaded gallery photos found yet. Default photos are displayed.";
+      galleryStatus.textContent = "No uploaded gallery photos found yet. Default photos are displayed.";
       return;
     }
 
@@ -389,89 +441,50 @@ async function loadSupabasePhotos() {
 
     photos.forEach(function(photo, index) {
       const img = document.createElement("img");
-
-      img.src = supabaseClient.storage
-        .from(PHOTO_BUCKET)
-        .getPublicUrl(photo.name).data.publicUrl;
-
+      img.src = supabaseClient.storage.from(PHOTO_BUCKET).getPublicUrl(photo.name).data.publicUrl;
       img.alt = "Addu Dive Hub gallery photo " + (index + 1);
       img.loading = "lazy";
-
-      img.onerror = function() {
-        img.alt = "Gallery photo could not be displayed: " + photo.name;
-      };
-
       gallery.appendChild(img);
     });
 
-    galleryStatus.textContent =
-      photos.length + " gallery photo(s) loaded.";
-
+    galleryStatus.textContent = photos.length + " gallery photo(s) loaded.";
   } catch (error) {
     console.error("Gallery loading error:", error);
-    galleryStatus.textContent =
-      "Gallery photos could not be loaded. Check the Supabase bucket and storage read policy.";
+    galleryStatus.textContent = "Gallery photos could not be loaded. Check the Supabase bucket and storage read policy.";
   }
 }
 
-/*
-  OUR EXPERIENCES:
-  Reads images only from the experiences/ folder.
-  Example: Dive-photo/experiences/try-diving.jpg
-
-  Gallery uploads in the root folder will never replace these images.
-*/
+/* Experience images are loaded from the experiences/ folder */
 async function loadExperiencePhotos() {
-  const experienceIds = [
-    "experience-photo-1",
-    "experience-photo-2",
-    "experience-photo-3"
-  ];
+  const experienceIds = ["experience-photo-1", "experience-photo-2", "experience-photo-3"];
 
   try {
-    if (!supabaseClient) {
-      throw new Error("Supabase library did not load.");
-    }
+    if (!supabaseClient) throw new Error("Supabase library did not load.");
 
     const { data, error } = await supabaseClient.storage
       .from(PHOTO_BUCKET)
-      .list("experiences", {
-        limit: 100,
-        sortBy: { column: "created_at", order: "desc" }
-      });
+      .list("experiences", { limit: 100, sortBy: { column: "created_at", order: "desc" } });
 
     if (error) throw error;
 
-    const experiencePhotos = (data || []).filter(function(file) {
-      return file.id &&
-        file.name &&
+    const photos = (data || []).filter(function(file) {
+      return file.id && file.name &&
         file.name !== ".emptyFolderPlaceholder" &&
-        (!file.metadata ||
-          !file.metadata.mimetype ||
-          file.metadata.mimetype.startsWith("image/"));
+        (!file.metadata || !file.metadata.mimetype ||
+         file.metadata.mimetype.startsWith("image/"));
     });
 
     experienceIds.forEach(function(id, index) {
       const img = document.getElementById(id);
-      const photo = experiencePhotos[index];
-
+      const photo = photos[index];
       if (!img || !photo) return;
-
-      const path = "experiences/" + photo.name;
 
       img.src = supabaseClient.storage
         .from(PHOTO_BUCKET)
-        .getPublicUrl(path).data.publicUrl;
+        .getPublicUrl("experiences/" + photo.name).data.publicUrl;
     });
-
-    console.info(
-      "Experience photos loaded:",
-      experiencePhotos.length
-    );
-
   } catch (error) {
     console.error("Experience photo loading error:", error);
-    // If the folder is empty, the default experience images remain visible.
   }
 }
 
@@ -494,8 +507,7 @@ function displayReviews(data) {
   approvedReviewsList.replaceChildren();
 
   if (!data || data.length === 0) {
-    reviewsListStatus.textContent =
-      "No guest reviews yet. Be the first to share your experience.";
+    reviewsListStatus.textContent = "No guest reviews yet. Be the first to share your experience.";
     return;
   }
 
@@ -515,9 +527,7 @@ function displayReviews(data) {
     const date = document.createElement("div");
     date.className = "review-date";
     const parsedDate = new Date(item.created_at);
-    date.textContent = Number.isNaN(parsedDate.getTime())
-      ? ""
-      : parsedDate.toLocaleDateString();
+    date.textContent = Number.isNaN(parsedDate.getTime()) ? "" : parsedDate.toLocaleDateString();
 
     const review = document.createElement("p");
     review.textContent = item.review;
@@ -531,8 +541,7 @@ function displayReviews(data) {
 
 async function loadApprovedReviews() {
   if (!supabaseClient) {
-    reviewsListStatus.textContent =
-      "Reviews could not load because the Supabase library is unavailable.";
+    reviewsListStatus.textContent = "Reviews could not load because the Supabase library is unavailable.";
     return;
   }
 
@@ -546,11 +555,9 @@ async function loadApprovedReviews() {
 
     if (error) throw error;
     displayReviews(data);
-
   } catch (error) {
     console.error("Review loading error:", error);
-    reviewsListStatus.textContent =
-      "Guest reviews could not load. Check the reviews table and its Supabase security policies.";
+    reviewsListStatus.textContent = "Guest reviews could not load. Check the reviews table and its Supabase security policies.";
   }
 }
 
@@ -559,20 +566,16 @@ reviewForm.addEventListener("submit", async function(event) {
   reviewStatus.textContent = "";
 
   if (!supabaseClient) {
-    reviewStatus.textContent =
-      "Could not connect to the review service. Please try again later.";
+    reviewStatus.textContent = "Could not connect to the review service. Please try again later.";
     return;
   }
 
   const name = document.getElementById("guest-review-name").value.trim();
-  const rating = Number(
-    document.getElementById("guest-review-rating").value
-  );
+  const rating = Number(document.getElementById("guest-review-rating").value);
   const review = document.getElementById("guest-review-text").value.trim();
 
   if (name.length < 2 || name.length > 80) {
-    reviewStatus.textContent =
-      "Your name must be between 2 and 80 characters.";
+    reviewStatus.textContent = "Your name must be between 2 and 80 characters.";
     return;
   }
 
@@ -582,8 +585,7 @@ reviewForm.addEventListener("submit", async function(event) {
   }
 
   if (review.length < 8 || review.length > 1200) {
-    reviewStatus.textContent =
-      "Your review must be between 8 and 1200 characters.";
+    reviewStatus.textContent = "Your review must be between 8 and 1200 characters.";
     return;
   }
 
@@ -594,57 +596,45 @@ reviewForm.addEventListener("submit", async function(event) {
   try {
     const { data, error } = await supabaseClient
       .from("reviews")
-      .insert([{
-        name: name,
-        rating: rating,
-        review: review,
-        approved: true
-      }])
+      .insert([{ name: name, rating: rating, review: review, approved: true }])
       .select("id,name,rating,review,created_at,approved")
       .single();
 
     if (error) throw error;
 
-    const newArticle = document.createElement("article");
-    newArticle.className = "review-item";
+    const article = document.createElement("article");
+    article.className = "review-item";
 
     const newName = document.createElement("div");
     newName.className = "review-name";
     newName.textContent = data.name;
 
-    const newStars = document.createElement("div");
-    newStars.className = "review-stars";
-    newStars.setAttribute("aria-label", data.rating + " out of 5 stars");
-    newStars.textContent = showReviewStars(data.rating);
+    const stars = document.createElement("div");
+    stars.className = "review-stars";
+    stars.setAttribute("aria-label", data.rating + " out of 5 stars");
+    stars.textContent = showReviewStars(data.rating);
 
-    const newDate = document.createElement("div");
-    newDate.className = "review-date";
+    const date = document.createElement("div");
+    date.className = "review-date";
     const parsedDate = new Date(data.created_at);
-    newDate.textContent = Number.isNaN(parsedDate.getTime())
-      ? ""
-      : parsedDate.toLocaleDateString();
+    date.textContent = Number.isNaN(parsedDate.getTime()) ? "" : parsedDate.toLocaleDateString();
 
-    const newReview = document.createElement("p");
-    newReview.textContent = data.review;
+    const reviewText = document.createElement("p");
+    reviewText.textContent = data.review;
 
-    newArticle.append(newName, newStars, newDate, newReview);
-    approvedReviewsList.prepend(newArticle);
+    article.append(newName, stars, date, reviewText);
+    approvedReviewsList.prepend(article);
 
     while (approvedReviewsList.children.length > 50) {
       approvedReviewsList.lastElementChild.remove();
     }
 
-    reviewsListStatus.textContent =
-      approvedReviewsList.children.length + " guest review(s).";
-
+    reviewsListStatus.textContent = approvedReviewsList.children.length + " guest review(s).";
     reviewForm.reset();
-    reviewStatus.textContent =
-      "Thank you! Your review is now published and visible on the website.";
-
+    reviewStatus.textContent = "Thank you! Your review is now published and visible on the website.";
   } catch (error) {
     console.error("Review submission error:", error);
-    reviewStatus.textContent =
-      "Your review could not be saved. Check the Supabase reviews table and its INSERT and SELECT policies.";
+    reviewStatus.textContent = "Your review could not be saved. Check the Supabase reviews table and its INSERT and SELECT policies.";
   } finally {
     reviewSubmit.disabled = false;
     reviewSubmit.textContent = "Submit Review";
@@ -653,7 +643,7 @@ reviewForm.addEventListener("submit", async function(event) {
 
 loadApprovedReviews();
 
-/* Local photo preview only; it does not upload photos to the website. */
+/* Local photo preview only; it does not upload photos to the website */
 const photoInput = document.getElementById("adh-photo-input");
 const preview = document.getElementById("adh-photo-preview");
 const photoStatus = document.getElementById("adh-photo-status");
@@ -661,10 +651,7 @@ const clearButton = document.getElementById("adh-clear-photos");
 let photoUrls = [];
 
 function clearPhotoPreview() {
-  photoUrls.forEach(function(url) {
-    URL.revokeObjectURL(url);
-  });
-
+  photoUrls.forEach(function(url) { URL.revokeObjectURL(url); });
   photoUrls = [];
   preview.replaceChildren();
   photoStatus.textContent = "No photos selected yet.";
@@ -693,8 +680,7 @@ photoInput.addEventListener("change", function() {
     preview.appendChild(img);
   });
 
-  photoStatus.textContent =
-    files.length + " photo(s) selected for local preview only.";
+  photoStatus.textContent = files.length + " photo(s) selected for local preview only.";
 });
 
 clearButton.addEventListener("click", function() {
@@ -703,27 +689,76 @@ clearButton.addEventListener("click", function() {
 });
 
 window.addEventListener("pagehide", function() {
-  photoUrls.forEach(function(url) {
-    URL.revokeObjectURL(url);
-  });
+  photoUrls.forEach(function(url) { URL.revokeObjectURL(url); });
 });
 
-/* Newsletter request: opens the visitor's email application. */
+/* Newsletter: opens the visitor's email application */
 document.getElementById("newsletter-form").addEventListener("submit", function(event) {
   event.preventDefault();
 
   const email = document.getElementById("newsletter-email").value.trim();
   const subject = encodeURIComponent("Addu Dive Hub Newsletter Subscription");
-  const body = encodeURIComponent(
-    "Please add this email to the Addu Dive Hub newsletter list:\n\n" + email
-  );
+  const body = encodeURIComponent("Please add this email to the Addu Dive Hub newsletter list:\n\n" + email);
 
   document.getElementById("newsletter-status").textContent =
     "Opening your email app to send the subscription request.";
 
-  window.location.href =
-    "mailto:hishamdipu@gmail.com?subject=" + subject + "&body=" + body;
+  window.location.href = "mailto:hishamdipu@gmail.com?subject=" + subject + "&body=" + body;
 });
+
+/* Button configurator interactions */
+const configPanel = document.getElementById("adh-config-panel");
+const configOpen = document.getElementById("adh-config-open");
+const configClose = document.getElementById("adh-config-close");
+const shapeSelect = document.getElementById("adh-shape");
+const themeSelect = document.getElementById("adh-theme");
+const glowCheckbox = document.getElementById("adh-glow");
+const resetConfig = document.getElementById("adh-config-reset");
+
+function toggleConfig(open) {
+  configPanel.classList.toggle("adh-open", open);
+  configPanel.setAttribute("aria-hidden", String(!open));
+  configOpen.setAttribute("aria-expanded", String(open));
+}
+
+configOpen.addEventListener("click", function() { toggleConfig(true); });
+configClose.addEventListener("click", function() { toggleConfig(false); });
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") toggleConfig(false);
+});
+
+shapeSelect.addEventListener("change", function() {
+  document.body.classList.remove("adh-square-buttons", "adh-pill-buttons");
+  if (shapeSelect.value === "square") {
+    document.body.classList.add("adh-square-buttons");
+  } else if (shapeSelect.value === "pill") {
+    document.body.classList.add("adh-pill-buttons");
+  }
+});
+
+themeSelect.addEventListener("change", function() {
+  document.body.classList.remove("adh-theme-gold", "adh-theme-cyan", "adh-theme-emerald");
+  document.body.classList.add("adh-theme-" + themeSelect.value);
+});
+
+glowCheckbox.addEventListener("change", function() {
+  document.body.classList.toggle("adh-glow-enabled", glowCheckbox.checked);
+});
+
+resetConfig.addEventListener("click", function() {
+  shapeSelect.value = "rounded";
+  themeSelect.value = "gold";
+  glowCheckbox.checked = true;
+
+  document.body.classList.remove(
+    "adh-square-buttons", "adh-pill-buttons",
+    "adh-theme-cyan", "adh-theme-emerald"
+  );
+  document.body.classList.add("adh-theme-gold", "adh-glow-enabled");
+});
+
+document.body.classList.add("adh-theme-gold", "adh-glow-enabled");
 </script>
 </body>
 </html>
