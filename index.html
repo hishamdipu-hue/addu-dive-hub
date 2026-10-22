@@ -1,143 +1,358 @@
-HTML
-
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#020d13">
+<meta name="theme-color" content="#020b10">
 <title>Addu Dive Hub | Premium Dive Experiences</title>
-<meta name="description" content="Discover premium diving, marine life, island escapes and guided adventures in Addu Atoll, Maldives.">
+<meta name="description" content="Discover diving, coral reefs, marine life and guided adventures in Addu Atoll, Maldives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#020d13;
-  --panel:#09181e;
-  --gold:#d9b87a;
-  --light:#f7dca1;
-  --text:#edf7f7;
-  --muted:#a7c3c7;
-  --line:rgba(214,190,142,.3);
-  --adh-radius:30px;
-  --adh-glow:0 0 18px rgba(217,184,122,.35);
+  --bg: #020b10;
+  --panel: #0c2229;
+  --gold: #d8b36a;
+  --light: #f3d99b;
+  --text: #edf4f3;
+  --muted: #a7c3c7;
+  --line: rgba(216,179,106,.3);
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-button,input,select,textarea{font:inherit}
-.container{width:min(1100px,calc(100% - 32px));margin:auto}
-header{position:sticky;top:0;z-index:10;background:rgba(2,13,19,.97);border-bottom:1px solid var(--line)}
-nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 0}
-.brand{font-size:20px;font-weight:bold;color:var(--light)}
-.nav-links{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
-.nav-links a:hover{color:var(--light)}
-.hero{min-height:530px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(2,13,19,.94),rgba(2,13,19,.42)),url("Try_diving_image3-845x684.jpg") center/cover no-repeat}
-.hero-content{max-width:700px;padding:75px 0}
-.eyebrow{color:var(--light);font-size:12px;font-weight:bold;letter-spacing:3px;text-transform:uppercase}
-h1{font-size:clamp(38px,8vw,68px);line-height:1.08;margin:14px 0}
-h2{color:var(--light);line-height:1.2}
-p{color:var(--muted)}
-.btn{display:inline-block;border:1px solid var(--line);border-radius:var(--adh-radius);padding:12px 20px;margin:6px 6px 6px 0;font-weight:bold;cursor:pointer;text-align:center;transition:all .25s ease}
-.btn-primary{background:var(--light);color:#071b20}
-.btn-outline{background:transparent;color:var(--text)}
-.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
-button:disabled{opacity:.6;cursor:wait}
-section{padding:60px 0;scroll-margin-top:90px}
-.section-heading{max-width:700px;margin-bottom:26px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
-.card img{width:100%;height:220px;object-fit:cover}
-.card-content{padding:18px}
-.card h3{color:var(--light)}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:20px}
-.gallery-grid img{width:100%;height:220px;object-fit:cover;border:1px solid var(--line);border-radius:12px}
-.gallery-status{font-size:14px;overflow-wrap:anywhere}
 
-/* Local photo preview tool */
-#local-photo-tool{background:#071c24}
-#local-photo-tool .container{max-width:760px}
-.upload-panel{padding:16px;border:1px solid var(--gold);border-radius:14px;background:#09181e}
-.upload-title{margin:4px 0 8px}
-.upload-note{font-size:13px}
-#local-photo-tool .btn{padding:9px 15px;margin:5px 4px 5px 0;font-size:13px}
-#adh-photo-input{display:block;width:100%;margin:10px 0;padding:9px;color:var(--text);background:#061319;border:1px solid var(--line);border-radius:8px}
-#adh-photo-status{font-size:13px;overflow-wrap:anywhere}
-#adh-photo-preview.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,120px));gap:10px;margin-top:12px}
-#adh-photo-preview img{width:100%;height:90px;object-fit:cover;background:#061319;border:1px solid var(--line);border-radius:8px}
-#adh-clear-photos{margin-top:6px}
+* { box-sizing: border-box; }
 
-.reviews-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}
-.review-panel{padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--panel);min-width:0}
-.review-panel h3{color:var(--light);margin-top:0}
-.review-form label{display:block;margin:14px 0 6px;color:var(--text);font-weight:bold}
-.review-form input,.review-form select,.review-form textarea{display:block;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#061319;color:var(--text)}
-.review-form textarea{min-height:125px;resize:vertical}
-.review-form button{margin-top:16px}
-.review-stars{color:var(--light);letter-spacing:2px}
-.review-item{padding:16px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
-.review-item:last-child{border-bottom:0}
-.review-name{font-weight:bold;color:var(--text)}
-.review-date{font-size:12px;color:var(--muted)}
-#review-status,#reviews-list-status{overflow-wrap:anywhere}
-.google-mark{font-size:22px;font-weight:bold}
-.small-note{font-size:13px}
-.video-wrap{display:flex;justify-content:center}
-.video-frame{width:100%;max-width:400px;aspect-ratio:9/16;border:0;border-radius:16px;background:#000}
-.video-link{text-align:center;margin-top:14px}
-input[type=email]{width:100%;max-width:400px;padding:13px;border-radius:8px;border:1px solid var(--line);background:#061319;color:white;margin:6px 0}
-.social-links{display:flex;gap:10px;flex-wrap:wrap}
-footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
 
-/* Button configurator */
-#adh-config-open{
-  position:fixed;right:16px;bottom:16px;z-index:9998;
-  padding:12px 17px;border:1px solid var(--gold);
-  border-radius:999px;background:#09181e;color:var(--light);
-  box-shadow:0 4px 22px #0008;cursor:pointer;font-weight:bold;
+body {
+  margin: 0;
+  color: var(--text);
+  font: 16px/1.6 'Inter', Arial, sans-serif;
+  background: radial-gradient(ellipse at top, #0b2932 0%, #020b10 60%);
 }
-#adh-config-panel{
-  position:fixed;inset:0 0 0 auto;z-index:9999;
-  width:min(350px,90vw);height:100dvh;overflow-y:auto;
-  padding:24px;background:#071923;color:var(--text);
-  border-left:1px solid var(--line);box-shadow:-12px 0 35px #0008;
-  transform:translateX(110%);visibility:hidden;
-  transition:transform .25s ease,visibility .25s ease;
-}
-#adh-config-panel.adh-open{transform:translateX(0);visibility:visible}
-#adh-config-panel h2{margin:12px 0;color:var(--light)}
-#adh-config-panel p{font-size:14px}
-#adh-config-panel label{display:block;margin:20px 0 8px;color:var(--text)}
-#adh-config-panel select{
-  width:100%;padding:12px;border:1px solid var(--line);
-  border-radius:8px;background:#102a36;color:white;
-}
-#adh-config-panel input[type=checkbox]{accent-color:var(--gold);transform:scale(1.2);margin-right:8px}
-#adh-config-close{float:right;background:none;border:0;color:var(--light);font-size:28px;cursor:pointer}
-#adh-config-reset{
-  width:100%;padding:12px;margin-top:22px;border:1px solid var(--gold);
-  border-radius:8px;background:var(--light);color:#071b20;font-weight:bold;cursor:pointer;
-}
-body.adh-glow-enabled .btn:not(#adh-config-open){box-shadow:var(--adh-glow)}
-body.adh-square-buttons .btn{border-radius:0!important}
-body.adh-pill-buttons .btn{border-radius:999px!important}
-body.adh-theme-cyan .btn-primary{
-  background:linear-gradient(135deg,#8be9f5,#0891b2);color:#03141b;border-color:#22d3ee
-}
-body.adh-theme-emerald .btn-primary{
-  background:linear-gradient(135deg,#6ee7b7,#059669);color:#031b14;border-color:#10b981
-}
-body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a2e);color:#071b20;border-color:#d9b87a}
 
-@media(max-width:600px){
-  .hero{min-height:460px}
-  .nav-links{gap:10px}
-  section{padding:45px 0}
-  .upload-panel,.contact-panel,.review-panel{padding:18px}
-  #local-photo-tool .upload-panel{padding:14px}
-  #adh-photo-preview.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
-  #adh-photo-preview img{height:80px}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+
+.container {
+  width: min(1100px, calc(100% - 32px));
+  margin: auto;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(2,11,16,.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+nav {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+}
+
+.brand {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--light);
+}
+
+.nav-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.nav-links a:hover { color: var(--light); }
+
+.hero {
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(2,11,16,.92), rgba(2,11,16,.35)),
+    url("Try_diving_image3-845x684.jpg") center/cover no-repeat;
+}
+
+.hero-content {
+  max-width: 720px;
+  padding: 80px 0;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+h1, h2, h3 {
+  font-family: 'Cinzel', Georgia, serif;
+}
+
+h1 {
+  font-size: clamp(38px, 7vw, 68px);
+  line-height: 1.12;
+  margin: 16px 0;
+  text-transform: uppercase;
+}
+
+h2 {
+  color: var(--light);
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.2;
+}
+
+h3 { color: var(--light); }
+p { color: var(--muted); }
+
+.btn {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 12px 20px;
+  margin: 6px 6px 6px 0;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  background: rgba(216,179,106,.05);
+  color: var(--light);
+  transition: .25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(216,179,106,.25);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #f0d79a, #b68b43);
+  color: #081218;
+  border-color: var(--light);
+}
+
+button:disabled { opacity: .6; cursor: wait; }
+
+section {
+  padding: 72px 0;
+  scroll-margin-top: 85px;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.section-heading h2 { margin-bottom: 12px; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: 22px;
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #0c2229, #051116);
+  box-shadow: 0 12px 36px rgba(0,0,0,.2);
+  transition: transform .25s ease, border-color .25s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--light);
+}
+
+.card img {
+  width: 100%;
+  height: 235px;
+  object-fit: cover;
+}
+
+.card-content { padding: 20px; }
+.card-content h3 { margin-top: 0; }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.gallery-status,
+#adh-photo-status,
+#review-status,
+#reviews-list-status,
+#newsletter-status {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+#local-photo-tool { background: #071c24; }
+#local-photo-tool .container { max-width: 760px; }
+
+.upload-panel,
+.review-panel,
+.contact-panel {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #0c2229, #051116);
+  min-width: 0;
+}
+
+#adh-photo-input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  color: var(--text);
+  background: #061319;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+#adh-photo-preview.gallery-grid {
+  grid-template-columns: repeat(auto-fill, minmax(90px, 120px));
+  gap: 10px;
+}
+
+#adh-photo-preview img { height: 90px; }
+
+.reviews-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 22px;
+}
+
+.review-form label {
+  display: block;
+  margin: 14px 0 6px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #061319;
+  color: var(--text);
+}
+
+.review-form textarea {
+  min-height: 125px;
+  resize: vertical;
+}
+
+.review-stars {
+  color: var(--light);
+  letter-spacing: 2px;
+}
+
+.review-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+
+.review-name { font-weight: 700; color: var(--text); }
+.review-date { font-size: 12px; color: var(--muted); }
+
+.google-mark { font-size: 22px; font-weight: 700; }
+.small-note { font-size: 13px; }
+
+.video-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.video-frame {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #000;
+}
+
+.video-link { text-align: center; margin-top: 14px; }
+
+input[type="email"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #061319;
+  color: white;
+  margin: 6px 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+footer {
+  padding: 25px 0;
+  border-top: 1px solid var(--line);
+  background: #02090d;
+  text-align: center;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--light);
+  outline-offset: 3px;
+}
+
+@media(max-width: 850px) {
+  nav { align-items: flex-start; }
+  .nav-links { gap: 10px; }
+}
+
+@media(max-width: 600px) {
+  .hero { min-height: 500px; }
+  section { padding: 48px 0; }
+  .upload-panel, .contact-panel, .review-panel { padding: 16px; }
+  #adh-photo-preview.gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+  }
+  #adh-photo-preview img { height: 80px; }
+  .card img { height: 210px; }
 }
 </style>
 </head>
@@ -150,6 +365,8 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#experiences">Experiences</a>
+        <a href="#dive-sites">Dive Sites</a>
+        <a href="#courses">Courses</a>
         <a href="#local-photo-tool">Photo Tool</a>
         <a href="#gallery">Gallery</a>
         <a href="#reviews">Reviews</a>
@@ -168,8 +385,8 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
       <div class="eyebrow">Discover the South Maldives</div>
       <h1>Explore the Deep. Discover Addu.</h1>
       <p>Discover the incredible underwater world of Addu Atoll, beautiful reefs, marine life and unforgettable island adventures with Addu Dive Hub.</p>
-      <a class="btn btn-primary" href="https://wa.me/9609373383" target="_blank" rel="noopener">Book Your Adventure</a>
-      <a class="btn btn-outline" href="#experiences">Explore Experiences</a>
+      <a class="btn btn-primary" href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer">Book Your Adventure</a>
+      <a class="btn" href="#experiences">Explore Experiences</a>
     </div>
   </div>
 </section>
@@ -187,15 +404,15 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
         <div class="card-content">
           <h3>Try Scuba Diving</h3>
           <p>Discover the underwater world and experience the excitement of breathing underwater.</p>
-          <a class="btn btn-outline" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20am%20interested%20in%20try%20scuba%20diving." target="_blank" rel="noopener">Enquire Now</a>
+          <a class="btn" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20am%20interested%20in%20try%20scuba%20diving." target="_blank" rel="noopener noreferrer">Enquire Now</a>
         </div>
       </article>
       <article class="card">
         <img id="experience-photo-2" src="Try_diving_image3-845x684.jpg" alt="Ocean adventures" loading="lazy">
         <div class="card-content">
           <h3>Ocean Adventures</h3>
-          <p>Explore the beautiful ocean and discover the marine life around Addu Atoll.</p>
-          <a class="btn btn-outline" href="https://wa.me/9609373383" target="_blank" rel="noopener">Learn More</a>
+          <p>Explore the beautiful ocean and discover marine life around Addu Atoll.</p>
+          <a class="btn" href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer">Learn More</a>
         </div>
       </article>
       <article class="card">
@@ -203,7 +420,79 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
         <div class="card-content">
           <h3>Island Experiences</h3>
           <p>Discover local island beauty and create unforgettable memories in the Maldives.</p>
-          <a class="btn btn-outline" href="https://wa.me/9609373383" target="_blank" rel="noopener">Enquire Now</a>
+          <a class="btn" href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer">Enquire Now</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="dive-sites">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">Explore Addu Atoll</div>
+      <h2>Dive Sites</h2>
+      <p>Discover underwater experiences around Addu Atoll. Contact us to confirm site conditions and availability.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <img src="Try_diving_image3-845x684.jpg" alt="Reef diving in Addu Atoll" loading="lazy">
+        <div class="card-content">
+          <h3>Reef Diving</h3>
+          <p>Explore coral formations and the marine life found around the reefs of Addu Atoll.</p>
+          <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20am%20interested%20in%20reef%20diving." target="_blank" rel="noopener noreferrer">Ask About Reef Diving</a>
+        </div>
+      </article>
+      <article class="card">
+        <img src="Try_diving_image3-845x684.jpg" alt="Wreck diving adventure" loading="lazy">
+        <div class="card-content">
+          <h3>Wreck Diving</h3>
+          <p>Ask our team about wreck-diving experiences and the conditions required for your dive.</p>
+          <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20please%20share%20information%20about%20wreck%20diving." target="_blank" rel="noopener noreferrer">Ask About Wreck Diving</a>
+        </div>
+      </article>
+      <article class="card">
+        <img src="Try_diving_image3-845x684.jpg" alt="Marine life underwater" loading="lazy">
+        <div class="card-content">
+          <h3>Marine Life</h3>
+          <p>Discover the underwater environment and learn about marine life in the southern Maldives.</p>
+          <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20would%20like%20to%20know%20about%20marine%20life%20dives." target="_blank" rel="noopener noreferrer">Explore Marine Life</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">Learn With Us</div>
+      <h2>Diving Courses</h2>
+      <p>Ask which training options are available for your experience level. Course availability, prerequisites and certification details will be confirmed directly by the dive team.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <img src="Try_diving_image3-845x684.jpg" alt="Introductory scuba diving" loading="lazy">
+        <div class="card-content">
+          <h3>Try Scuba Diving</h3>
+          <p>An introductory experience for people who want to discover what breathing underwater feels like.</p>
+          <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20would%20like%20to%20try%20scuba%20diving." target="_blank" rel="noopener noreferrer">Enquire Now</a>
+        </div>
+      </article>
+      <article class="card">
+        <img src="Try_diving_image3-845x684.jpg" alt="Open Water diving training" loading="lazy">
+        <div class="card-content">
+          <h3>Open Water Training</h3>
+          <p>Ask about beginner certification training, requirements, schedule and what is included.</p>
+          <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20please%20share%20details%20about%20Open%20Water%20training." target="_blank" rel="noopener noreferrer">Course Details</a>
+        </div>
+      </article>
+      <article class="card">
+        <img src="Try_diving_image3-845x684.jpg" alt="Advanced scuba diving training" loading="lazy">
+        <div class="card-content">
+          <h3>Advanced Training</h3>
+          <p>Already certified? Contact us to discuss advanced training options and prerequisites.</p>
+          <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20I%20would%20like%20information%20about%20advanced%20dive%20training." target="_blank" rel="noopener noreferrer">Ask About Training</a>
         </div>
       </article>
     </div>
@@ -212,17 +501,18 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
 
 <section id="local-photo-tool">
   <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">Manage Your Memories</div>
+      <h2>Photo Tool</h2>
+      <p>Preview photos on this device or open the admin page to upload and manage website gallery photos.</p>
+    </div>
     <div class="upload-panel">
-      <div class="eyebrow">Photo Tool</div>
-      <h2 class="upload-title">Photo Upload &amp; Preview</h2>
-      <p>Select photos from your phone to preview them.</p>
-      <p class="upload-note"><strong>Important:</strong> To permanently upload or delete website photos, use the secure Admin page.</p>
-      <a class="btn btn-primary" href="admin.html">Admin only</a>
-      <label for="adh-photo-input"><strong>Preview photos on this device:</strong></label>
-      <input id="adh-photo-input" type="file" accept="image/*" multiple>
-      <button id="adh-clear-photos" class="btn btn-outline" type="button">Clear Preview</button>
+      <label for="adh-photo-input">Choose photos to preview</label>
+      <input id="adh-photo-input" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif" multiple>
+      <div class="gallery-grid" id="adh-photo-preview"></div>
       <p id="adh-photo-status" role="status" aria-live="polite">No photos selected yet.</p>
-      <div id="adh-photo-preview" class="gallery-grid"></div>
+      <button id="adh-clear-photos" class="btn" type="button">Clear Preview</button>
+      <a class="btn btn-primary" href="admin.html">Open Photo Admin</a>
     </div>
   </div>
 </section>
@@ -233,7 +523,7 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
       <div class="eyebrow">Underwater Memories</div>
       <h2>Our Gallery</h2>
       <p>A glimpse of the adventures and experiences waiting for you in Addu.</p>
-      <p id="gallery-status" class="gallery-status" role="status" aria-live="polite">Loading photos...</p>
+      <p id="gallery-status" class="gallery-status" role="status" aria-live="polite">Loading photos…</p>
     </div>
     <div id="adh-public-gallery" class="gallery-grid">
       <img src="Try_diving_image3-845x684.jpg" alt="Addu diving experience" loading="lazy">
@@ -248,18 +538,18 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
     <div class="section-heading">
       <div class="eyebrow">Your Experience Matters</div>
       <h2>Guest Reviews</h2>
-      <p>Read guest feedback and share your own experience with Addu Dive Hub.</p>
+      <p>Read guest feedback and share your experience. Reviews are displayed when approved by the site's review settings.</p>
     </div>
     <div class="reviews-layout">
       <div class="review-panel">
         <div class="google-mark">Google Reviews</div>
         <p>Visit Google to look for Addu Dive Hub reviews and ratings.</p>
-        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Dive+Hub+Maldives" target="_blank" rel="noopener">Find Us on Google</a>
+        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Dive+Hub+Maldives" target="_blank" rel="noopener noreferrer">Find Us on Google</a>
         <p class="small-note">This opens a Google Maps search.</p>
       </div>
       <div class="review-panel">
         <h3>Write a Review</h3>
-        <p>Your review will appear on our website immediately after submission.</p>
+        <p>Share your experience with other visitors.</p>
         <form id="guest-review-form" class="review-form">
           <label for="guest-review-name">Your name</label>
           <input id="guest-review-name" name="name" type="text" minlength="2" maxlength="80" autocomplete="name" required>
@@ -272,7 +562,7 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
             <option value="1">★☆☆☆☆ — Poor</option>
           </select>
           <label for="guest-review-text">Your review</label>
-          <textarea id="guest-review-text" name="review" minlength="8" maxlength="1200" placeholder="Tell us about your experience..." required></textarea>
+          <textarea id="guest-review-text" name="review" minlength="8" maxlength="1200" placeholder="Tell us about your experience…" required></textarea>
           <button id="guest-review-submit" class="btn btn-primary" type="submit">Submit Review</button>
           <p id="review-status" role="status" aria-live="polite"></p>
         </form>
@@ -280,7 +570,7 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
     </div>
     <div class="review-panel" style="margin-top:22px">
       <h3>What Our Guests Say</h3>
-      <p id="reviews-list-status" role="status" aria-live="polite">Loading guest reviews...</p>
+      <p id="reviews-list-status" role="status" aria-live="polite">Loading guest reviews…</p>
       <div id="approved-reviews-list"></div>
     </div>
   </div>
@@ -291,13 +581,13 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
     <div class="section-heading">
       <div class="eyebrow">Find Us</div>
       <h2>Discover Addu Atoll</h2>
-      <p>Addu Dive Hub invites you to explore the reefs, marine life and island beauty of Addu Atoll in the southern Maldives.</p>
+      <p>Explore the reefs, marine life and island beauty of Addu Atoll in the southern Maldives.</p>
     </div>
     <div class="contact-panel">
       <p><strong>Destination:</strong> Addu Atoll, Maldives</p>
       <p>Contact us to confirm meeting points, availability and arrangements for your chosen experience.</p>
-      <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20please%20share%20your%20location%20and%20meeting%20point." target="_blank" rel="noopener">Ask for Our Location</a>
-      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Atoll+Maldives" target="_blank" rel="noopener">View Addu Atoll Map</a>
+      <a class="btn btn-primary" href="https://wa.me/9609373383?text=Hello%20Addu%20Dive%20Hub%2C%20please%20share%20your%20location%20and%20meeting%20point." target="_blank" rel="noopener noreferrer">Ask for Our Location</a>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Addu+Atoll+Maldives" target="_blank" rel="noopener noreferrer">View Addu Atoll Map</a>
     </div>
   </div>
 </section>
@@ -312,7 +602,7 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
     <div class="video-wrap">
       <iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/kBRiUVAQ-jo" title="Addu Dive Hub YouTube video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
-    <p class="video-link"><a class="btn btn-outline" href="https://www.youtube.com/shorts/kBRiUVAQ-jo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+    <p class="video-link"><a class="btn" href="https://www.youtube.com/shorts/kBRiUVAQ-jo" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>
   </div>
 </section>
 
@@ -324,14 +614,13 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
       <p>Contact us to plan your next ocean adventure in Addu Atoll.</p>
     </div>
     <div class="contact-panel">
-      <p><strong>WhatsApp:</strong> <a href="https://wa.me/9609373383" target="_blank" rel="noopener">+960 937 3383</a></p>
+      <p><strong>WhatsApp:</strong> <a href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer">+960 937 3383</a></p>
       <p><strong>Email:</strong> <a href="mailto:hishamdipu@gmail.com">hishamdipu@gmail.com</a></p>
-      <a class="btn btn-primary" href="https://wa.me/9609373383" target="_blank" rel="noopener">Contact Us on WhatsApp</a>
+      <a class="btn btn-primary" href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer">Contact Us on WhatsApp</a>
       <h3>Follow Us</h3>
-      <p>Replace these general links with your actual business profile URLs when available.</p>
       <div class="social-links">
-        <a class="btn btn-outline" href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
-        <a class="btn btn-outline" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a class="btn" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
       </div>
     </div>
   </div>
@@ -341,12 +630,11 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
   <div class="container">
     <div class="contact-panel">
       <h2>Stay Connected</h2>
-      <p>Enter your email to prepare a newsletter subscription request.</p>
+      <p>This form prepares a newsletter request in your email app; it does not automatically subscribe you to a mailing list.</p>
       <form id="newsletter-form">
         <label for="newsletter-email">Your email address</label><br>
-        <input id="newsletter-email" type="email" placeholder="you@example.com" required>
-        <br>
-        <button class="btn btn-primary" type="submit">Subscribe</button>
+        <input id="newsletter-email" type="email" placeholder="you@example.com" required><br>
+        <button class="btn btn-primary" type="submit">Request Subscription</button>
       </form>
       <p id="newsletter-status" role="status" aria-live="polite"></p>
     </div>
@@ -361,192 +649,160 @@ body.adh-theme-gold .btn-primary{background:linear-gradient(135deg,#f7dca1,#c49a
   </div>
 </footer>
 
-<!-- Button configurator panel -->
-<button id="adh-config-open" type="button" aria-controls="adh-config-panel" aria-expanded="false">
-  ⚙ Button Settings
-</button>
-
-<aside id="adh-config-panel" aria-label="Button settings" aria-hidden="true">
-  <button id="adh-config-close" type="button" aria-label="Close settings">×</button>
-  <h2>Button Configuration</h2>
-  <p>Customize the button appearance on this website.</p>
-
-  <label for="adh-shape">Button shape</label>
-  <select id="adh-shape">
-    <option value="rounded">Rounded</option>
-    <option value="square">Square</option>
-    <option value="pill">Pill</option>
-  </select>
-
-  <label for="adh-theme">Button colour</label>
-  <select id="adh-theme">
-    <option value="gold">Ocean Gold</option>
-    <option value="cyan">Lagoon Cyan</option>
-    <option value="emerald">Emerald</option>
-  </select>
-
-  <label>
-    <input id="adh-glow" type="checkbox" checked>
-    Enable glowing effect
-  </label>
-
-  <button id="adh-config-reset" type="button">Reset settings</button>
-</aside>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+"use strict";
+
 document.getElementById("current-year").textContent = new Date().getFullYear();
 
-/* Supabase public configuration */
 const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
 const PHOTO_BUCKET = "Dive-photo";
 
-let supabaseClient = null;
+const client = window.supabase?.createClient
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+  : null;
 
-if (window.supabase && window.supabase.createClient) {
-  supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+const allowedImageTypes = new Set([
+  "image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"
+]);
+
+function isImage(item) {
+  return !!(
+    item?.id &&
+    item?.name &&
+    item.name !== ".emptyFolderPlaceholder" &&
+    (!item.metadata?.mimetype || allowedImageTypes.has(item.metadata.mimetype))
   );
 }
 
-/* Public gallery */
+/* Load uploaded gallery photos from Supabase Storage. */
 const gallery = document.getElementById("adh-public-gallery");
 const galleryStatus = document.getElementById("gallery-status");
 
-async function loadSupabasePhotos() {
+async function loadGallery() {
   try {
-    if (!supabaseClient) throw new Error("Supabase library did not load.");
+    if (!client) throw new Error("Supabase library unavailable");
 
-    const { data, error } = await supabaseClient.storage
+    const { data, error } = await client.storage
       .from(PHOTO_BUCKET)
       .list("", { limit: 100, sortBy: { column: "created_at", order: "desc" } });
 
     if (error) throw error;
 
-    const photos = (data || []).filter(function(file) {
-      return file.id && file.name &&
-        file.name !== ".emptyFolderPlaceholder" &&
-        (!file.metadata || !file.metadata.mimetype ||
-         file.metadata.mimetype.startsWith("image/"));
-    });
+    const photos = (data || []).filter(isImage);
 
-    if (photos.length === 0) {
+    if (!photos.length) {
       galleryStatus.textContent = "No uploaded gallery photos found yet. Default photos are displayed.";
       return;
     }
 
     gallery.replaceChildren();
 
-    photos.forEach(function(photo, index) {
+    photos.forEach((photo, i) => {
       const img = document.createElement("img");
-      img.src = supabaseClient.storage.from(PHOTO_BUCKET).getPublicUrl(photo.name).data.publicUrl;
-      img.alt = "Addu Dive Hub gallery photo " + (index + 1);
+      img.src = client.storage.from(PHOTO_BUCKET).getPublicUrl(photo.name).data.publicUrl;
+      img.alt = "Addu Dive Hub gallery photo " + (i + 1);
       img.loading = "lazy";
+      img.onerror = () => { img.alt = "Gallery photo could not be displayed"; };
       gallery.appendChild(img);
     });
 
     galleryStatus.textContent = photos.length + " gallery photo(s) loaded.";
   } catch (error) {
     console.error("Gallery loading error:", error);
-    galleryStatus.textContent = "Gallery photos could not be loaded. Check the Supabase bucket and storage read policy.";
+    galleryStatus.textContent = "Gallery photos could not be loaded. Default images remain displayed.";
   }
 }
 
-/* Experience images are loaded from the experiences/ folder */
-async function loadExperiencePhotos() {
-  const experienceIds = ["experience-photo-1", "experience-photo-2", "experience-photo-3"];
+/* Load experience images from the experiences folder in Supabase Storage. */
+async function loadExperiences() {
+  const ids = ["experience-photo-1", "experience-photo-2", "experience-photo-3"];
 
   try {
-    if (!supabaseClient) throw new Error("Supabase library did not load.");
+    if (!client) throw new Error("Supabase library unavailable");
 
-    const { data, error } = await supabaseClient.storage
+    const { data, error } = await client.storage
       .from(PHOTO_BUCKET)
-      .list("experiences", { limit: 100, sortBy: { column: "created_at", order: "desc" } });
+      .list("experiences", { limit: 100, sortBy: { column: "name", order: "asc" } });
 
     if (error) throw error;
 
-    const photos = (data || []).filter(function(file) {
-      return file.id && file.name &&
-        file.name !== ".emptyFolderPlaceholder" &&
-        (!file.metadata || !file.metadata.mimetype ||
-         file.metadata.mimetype.startsWith("image/"));
-    });
+    const photos = (data || []).filter(isImage);
 
-    experienceIds.forEach(function(id, index) {
-      const img = document.getElementById(id);
-      const photo = photos[index];
-      if (!img || !photo) return;
-
-      img.src = supabaseClient.storage
-        .from(PHOTO_BUCKET)
-        .getPublicUrl("experiences/" + photo.name).data.publicUrl;
+    ids.forEach((id, i) => {
+      if (photos[i]) {
+        document.getElementById(id).src = client.storage
+          .from(PHOTO_BUCKET)
+          .getPublicUrl("experiences/" + photos[i].name).data.publicUrl;
+      }
     });
   } catch (error) {
     console.error("Experience photo loading error:", error);
   }
 }
 
-loadSupabasePhotos();
-loadExperiencePhotos();
+loadGallery();
+loadExperiences();
 
-/* Guest reviews */
+/* Guest reviews. Supabase policies control which reviews can be submitted and read. */
 const reviewForm = document.getElementById("guest-review-form");
 const reviewStatus = document.getElementById("review-status");
 const reviewSubmit = document.getElementById("guest-review-submit");
-const approvedReviewsList = document.getElementById("approved-reviews-list");
+const reviewList = document.getElementById("approved-reviews-list");
 const reviewsListStatus = document.getElementById("reviews-list-status");
 
-function showReviewStars(rating) {
-  const value = Math.max(0, Math.min(5, Number(rating) || 0));
-  return "★".repeat(value) + "☆".repeat(5 - value);
+function stars(rating) {
+  const n = Math.max(0, Math.min(5, Number(rating) || 0));
+  return "★".repeat(n) + "☆".repeat(5 - n);
 }
 
-function displayReviews(data) {
-  approvedReviewsList.replaceChildren();
+function renderReviews(rows) {
+  reviewList.replaceChildren();
 
-  if (!data || data.length === 0) {
-    reviewsListStatus.textContent = "No guest reviews yet. Be the first to share your experience.";
+  if (!rows?.length) {
+    reviewsListStatus.textContent = "No approved guest reviews yet.";
     return;
   }
 
-  data.forEach(function(item) {
+  rows.forEach(item => {
     const article = document.createElement("article");
     article.className = "review-item";
 
     const name = document.createElement("div");
     name.className = "review-name";
-    name.textContent = item.name;
+    name.textContent = item.name || "Guest";
 
-    const stars = document.createElement("div");
-    stars.className = "review-stars";
-    stars.setAttribute("aria-label", item.rating + " out of 5 stars");
-    stars.textContent = showReviewStars(item.rating);
+    const star = document.createElement("div");
+    star.className = "review-stars";
+    star.textContent = stars(item.rating);
+    star.setAttribute("aria-label", item.rating + " out of 5 stars");
 
     const date = document.createElement("div");
     date.className = "review-date";
-    const parsedDate = new Date(item.created_at);
-    date.textContent = Number.isNaN(parsedDate.getTime()) ? "" : parsedDate.toLocaleDateString();
+    const dateValue = new Date(item.created_at);
+    date.textContent = Number.isNaN(dateValue.getTime())
+      ? ""
+      : dateValue.toLocaleDateString();
 
-    const review = document.createElement("p");
-    review.textContent = item.review;
+    const reviewText = document.createElement("p");
+    reviewText.textContent = item.review || "";
 
-    article.append(name, stars, date, review);
-    approvedReviewsList.appendChild(article);
+    article.append(name, star, date, reviewText);
+    reviewList.appendChild(article);
   });
 
-  reviewsListStatus.textContent = data.length + " guest review(s).";
+  reviewsListStatus.textContent = rows.length + " approved guest review(s).";
 }
 
-async function loadApprovedReviews() {
-  if (!supabaseClient) {
-    reviewsListStatus.textContent = "Reviews could not load because the Supabase library is unavailable.";
+async function loadReviews() {
+  if (!client) {
+    reviewsListStatus.textContent = "Reviews are unavailable because the service did not load.";
     return;
   }
 
   try {
-    const { data, error } = await supabaseClient
+    const { data, error } = await client
       .from("reviews")
       .select("id,name,rating,review,created_at")
       .eq("approved", true)
@@ -554,19 +810,18 @@ async function loadApprovedReviews() {
       .limit(50);
 
     if (error) throw error;
-    displayReviews(data);
+    renderReviews(data);
   } catch (error) {
     console.error("Review loading error:", error);
-    reviewsListStatus.textContent = "Guest reviews could not load. Check the reviews table and its Supabase security policies.";
+    reviewsListStatus.textContent = "Guest reviews could not load. Check the reviews table and its read policy.";
   }
 }
 
-reviewForm.addEventListener("submit", async function(event) {
+reviewForm.addEventListener("submit", async event => {
   event.preventDefault();
-  reviewStatus.textContent = "";
 
-  if (!supabaseClient) {
-    reviewStatus.textContent = "Could not connect to the review service. Please try again later.";
+  if (!client) {
+    reviewStatus.textContent = "Review service unavailable. Please try later.";
     return;
   }
 
@@ -575,190 +830,114 @@ reviewForm.addEventListener("submit", async function(event) {
   const review = document.getElementById("guest-review-text").value.trim();
 
   if (name.length < 2 || name.length > 80) {
-    reviewStatus.textContent = "Your name must be between 2 and 80 characters.";
+    reviewStatus.textContent = "Name must be 2–80 characters.";
     return;
   }
 
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    reviewStatus.textContent = "Please choose a rating from 1 to 5 stars.";
+    reviewStatus.textContent = "Choose a rating from 1 to 5.";
     return;
   }
 
   if (review.length < 8 || review.length > 1200) {
-    reviewStatus.textContent = "Your review must be between 8 and 1200 characters.";
+    reviewStatus.textContent = "Review must be 8–1200 characters.";
     return;
   }
 
   reviewSubmit.disabled = true;
-  reviewSubmit.textContent = "Submitting...";
-  reviewStatus.textContent = "Submitting your review...";
+  reviewSubmit.textContent = "Submitting…";
+  reviewStatus.textContent = "Submitting your review…";
 
   try {
-    const { data, error } = await supabaseClient
+    const { error } = await client
       .from("reviews")
-      .insert([{ name: name, rating: rating, review: review, approved: true }])
-      .select("id,name,rating,review,created_at,approved")
-      .single();
+      .insert([{ name, rating, review, approved: true }]);
 
     if (error) throw error;
 
-    const article = document.createElement("article");
-    article.className = "review-item";
-
-    const newName = document.createElement("div");
-    newName.className = "review-name";
-    newName.textContent = data.name;
-
-    const stars = document.createElement("div");
-    stars.className = "review-stars";
-    stars.setAttribute("aria-label", data.rating + " out of 5 stars");
-    stars.textContent = showReviewStars(data.rating);
-
-    const date = document.createElement("div");
-    date.className = "review-date";
-    const parsedDate = new Date(data.created_at);
-    date.textContent = Number.isNaN(parsedDate.getTime()) ? "" : parsedDate.toLocaleDateString();
-
-    const reviewText = document.createElement("p");
-    reviewText.textContent = data.review;
-
-    article.append(newName, stars, date, reviewText);
-    approvedReviewsList.prepend(article);
-
-    while (approvedReviewsList.children.length > 50) {
-      approvedReviewsList.lastElementChild.remove();
-    }
-
-    reviewsListStatus.textContent = approvedReviewsList.children.length + " guest review(s).";
     reviewForm.reset();
-    reviewStatus.textContent = "Thank you! Your review is now published and visible on the website.";
+    reviewStatus.textContent = "Thank you! Your review was submitted.";
+    await loadReviews();
   } catch (error) {
     console.error("Review submission error:", error);
-    reviewStatus.textContent = "Your review could not be saved. Check the Supabase reviews table and its INSERT and SELECT policies.";
+    reviewStatus.textContent = "Your review could not be saved. Please check the reviews table and its insert policy.";
   } finally {
     reviewSubmit.disabled = false;
     reviewSubmit.textContent = "Submit Review";
   }
 });
 
-loadApprovedReviews();
+loadReviews();
 
-/* Local photo preview only; it does not upload photos to the website */
+/* Local photo preview. Use Photo Admin to upload images to the website. */
 const photoInput = document.getElementById("adh-photo-input");
 const preview = document.getElementById("adh-photo-preview");
 const photoStatus = document.getElementById("adh-photo-status");
-const clearButton = document.getElementById("adh-clear-photos");
-let photoUrls = [];
+let objectUrls = [];
 
-function clearPhotoPreview() {
-  photoUrls.forEach(function(url) { URL.revokeObjectURL(url); });
-  photoUrls = [];
+function clearPreview() {
+  objectUrls.forEach(url => URL.revokeObjectURL(url));
+  objectUrls = [];
   preview.replaceChildren();
   photoStatus.textContent = "No photos selected yet.";
 }
 
-photoInput.addEventListener("change", function() {
-  clearPhotoPreview();
+if (photoInput) {
+  photoInput.addEventListener("change", () => {
+    clearPreview();
+    const files = Array.from(photoInput.files || []);
 
-  const files = Array.from(photoInput.files || []).filter(function(file) {
-    return file.type.startsWith("image/");
+    if (!files.length) {
+      photoStatus.textContent = "Choose photos to preview.";
+      return;
+    }
+
+    if (files.some(file => !allowedImageTypes.has(file.type))) {
+      photoStatus.textContent = "Use JPEG, PNG, WebP, AVIF or GIF images.";
+      photoInput.value = "";
+      return;
+    }
+
+    files.forEach(file => {
+      const url = URL.createObjectURL(file);
+      objectUrls.push(url);
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = file.name;
+      img.loading = "lazy";
+      preview.appendChild(img);
+    });
+
+    photoStatus.textContent = files.length + " photo(s) selected for local preview only.";
   });
 
-  if (!files.length) {
-    photoStatus.textContent = "Choose one or more image files to preview.";
-    return;
-  }
-
-  files.forEach(function(file) {
-    const url = URL.createObjectURL(file);
-    photoUrls.push(url);
-
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = file.name;
-    img.loading = "lazy";
-    preview.appendChild(img);
+  document.getElementById("adh-clear-photos").addEventListener("click", () => {
+    clearPreview();
+    photoInput.value = "";
   });
 
-  photoStatus.textContent = files.length + " photo(s) selected for local preview only.";
-});
+  window.addEventListener("pagehide", () => {
+    objectUrls.forEach(url => URL.revokeObjectURL(url));
+  });
+}
 
-clearButton.addEventListener("click", function() {
-  clearPhotoPreview();
-  photoInput.value = "";
-});
-
-window.addEventListener("pagehide", function() {
-  photoUrls.forEach(function(url) { URL.revokeObjectURL(url); });
-});
-
-/* Newsletter: opens the visitor's email application */
-document.getElementById("newsletter-form").addEventListener("submit", function(event) {
+/* Newsletter request opens an email draft; it does not auto-subscribe anyone. */
+document.getElementById("newsletter-form").addEventListener("submit", event => {
   event.preventDefault();
 
   const email = document.getElementById("newsletter-email").value.trim();
   const subject = encodeURIComponent("Addu Dive Hub Newsletter Subscription");
-  const body = encodeURIComponent("Please add this email to the Addu Dive Hub newsletter list:\n\n" + email);
+  const body = encodeURIComponent(
+    "Please contact me about the Addu Dive Hub newsletter.\n\nEmail: " + email
+  );
 
   document.getElementById("newsletter-status").textContent =
-    "Opening your email app to send the subscription request.";
+    "Opening your email app. The request is not sent until you send the email.";
 
-  window.location.href = "mailto:hishamdipu@gmail.com?subject=" + subject + "&body=" + body;
+  window.location.href =
+    "mailto:hishamdipu@gmail.com?subject=" + subject + "&body=" + body;
 });
-
-/* Button configurator interactions */
-const configPanel = document.getElementById("adh-config-panel");
-const configOpen = document.getElementById("adh-config-open");
-const configClose = document.getElementById("adh-config-close");
-const shapeSelect = document.getElementById("adh-shape");
-const themeSelect = document.getElementById("adh-theme");
-const glowCheckbox = document.getElementById("adh-glow");
-const resetConfig = document.getElementById("adh-config-reset");
-
-function toggleConfig(open) {
-  configPanel.classList.toggle("adh-open", open);
-  configPanel.setAttribute("aria-hidden", String(!open));
-  configOpen.setAttribute("aria-expanded", String(open));
-}
-
-configOpen.addEventListener("click", function() { toggleConfig(true); });
-configClose.addEventListener("click", function() { toggleConfig(false); });
-
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Escape") toggleConfig(false);
-});
-
-shapeSelect.addEventListener("change", function() {
-  document.body.classList.remove("adh-square-buttons", "adh-pill-buttons");
-  if (shapeSelect.value === "square") {
-    document.body.classList.add("adh-square-buttons");
-  } else if (shapeSelect.value === "pill") {
-    document.body.classList.add("adh-pill-buttons");
-  }
-});
-
-themeSelect.addEventListener("change", function() {
-  document.body.classList.remove("adh-theme-gold", "adh-theme-cyan", "adh-theme-emerald");
-  document.body.classList.add("adh-theme-" + themeSelect.value);
-});
-
-glowCheckbox.addEventListener("change", function() {
-  document.body.classList.toggle("adh-glow-enabled", glowCheckbox.checked);
-});
-
-resetConfig.addEventListener("click", function() {
-  shapeSelect.value = "rounded";
-  themeSelect.value = "gold";
-  glowCheckbox.checked = true;
-
-  document.body.classList.remove(
-    "adh-square-buttons", "adh-pill-buttons",
-    "adh-theme-cyan", "adh-theme-emerald"
-  );
-  document.body.classList.add("adh-theme-gold", "adh-glow-enabled");
-});
-
-document.body.classList.add("adh-theme-gold", "adh-glow-enabled");
 </script>
 </body>
 </html>
