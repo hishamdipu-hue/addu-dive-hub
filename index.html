@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -220,4 +221,260 @@ a,button{touch-action:manipulation}
 <section id="about" class="section">
   <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
     <div><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">About us</p><h2 class="section-title mb-6">YOUR GATEWAY TO ADDU</h2><p class="text-gray-300 leading-7">Addu Dive Hub welcomes divers and ocean lovers to explore the underwater world of Addu Atoll in the southern Maldives. From reefs to historic wrecks, our aim is to help you plan an unforgettable ocean experience.</p><p class="text-gray-400 leading-7 mt-4">Ask us about dive conditions, suitable sites, courses and availability before booking.</p><a href="#contact" class="gold-btn inline-block rounded-full px-6 py-3 mt-7">Contact Our Team</a></div>
-    <img class="w-full h-80 object-cover rounded-2xl gold-border" src="https://images
+    <img class="w-full h-80 object-cover rounded-2xl gold-border" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80" alt="Diving in the Maldives" loading="lazy">
+  </div>
+</section>
+
+<section id="contact" class="section bg-ocean-dark border-t border-gold/10">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Let's plan your adventure</p><h2 class="section-title">CONTACT ADDU DIVE HUB</h2>
+    <p class="text-gray-400 mt-4 mb-8">Contact us directly to ask about bookings, courses and availability.</p>
+    <div class="grid sm:grid-cols-3 gap-4 mb-8 text-sm">
+      <a class="card p-5 hover:border-gold/70" href="https://wa.me/9609373383" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp text-2xl text-gold mb-3"></i><span class="block text-gold-light">WhatsApp</span><span class="block text-gray-400 mt-2">+960 9373383</span></a>
+      <a class="card p-5 hover:border-gold/70" href="mailto:hishamdipu@gmail.com"><i class="fa-solid fa-envelope text-2xl text-gold mb-3"></i><span class="block text-gold-light">Email</span><span class="block text-gray-400 mt-2">hishamdipu@gmail.com</span></a>
+      <div class="card p-5"><i class="fa-solid fa-location-dot text-2xl text-gold mb-3"></i><span class="block text-gold-light">Location</span><span class="block text-gray-400 mt-2">Feydhoo, Addu City, Maldives</span></div>
+    </div>
+    <form id="contact-form" class="card p-6 text-left grid sm:grid-cols-2 gap-4">
+      <div><label for="contact-name" class="block text-sm text-gray-300 mb-2">Your name</label><input id="contact-name" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Full name"></div>
+      <div><label for="contact-email" class="block text-sm text-gray-300 mb-2">Your email</label><input id="contact-email" type="email" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com"></div>
+      <div class="sm:col-span-2"><label for="contact-message" class="block text-sm text-gray-300 mb-2">Message</label><textarea id="contact-message" required rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="How can we help?"></textarea></div>
+      <div class="sm:col-span-2"><button class="gold-btn rounded-full px-7 py-3 text-gold-light" type="submit">Send Inquiry by Email</button><p class="text-xs text-gray-500 mt-3">This opens your email app with your message prepared; it does not send automatically.</p></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="border-t border-gold/20 bg-ocean-deep py-8">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+    <div><p class="font-cinzel gold-gradient-text font-bold">ADDU DIVE HUB</p><p class="text-xs text-gray-500 mt-2">Feydhoo, Addu City, Maldives</p></div>
+    <div class="flex gap-5 text-sm"><a href="#sites" class="hover:text-gold">Dive Sites</a><a href="#courses" class="hover:text-gold">Courses</a><a href="admin.html" class="hover:text-gold">Photo Admin</a></div>
+    <p class="text-xs text-gray-500">© 2026 Addu Dive Hub</p>
+  </div>
+</footer>
+
+<div id="booking-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-4 flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="booking-title" onclick="if(event.target===this)closeBookingModal()">
+  <div class="card w-full max-w-lg p-6 sm:p-8 relative" onclick="event.stopPropagation()">
+    <button type="button" onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gold" aria-label="Close booking form"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <h2 id="booking-title" class="font-cinzel text-2xl text-gold-light mb-2">BOOKING ENQUIRY</h2>
+    <p class="text-sm text-gray-400 mb-6">Send us your preferred activity and details through WhatsApp.</p>
+    <form id="booking-form" class="space-y-4">
+      <div><label for="booking-activity" class="block text-sm mb-2">Activity or course</label><select id="booking-activity" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"><option>British Loyalty Wreck Dive</option><option>Manta Ray Dive</option><option>Guided Coral Reef Dive</option><option>Channel Drift Dive</option><option>Discover Scuba Diving</option><option>Open Water Diver Course</option><option>Advanced Open Water Course</option><option>Wreck Diving Course</option></select></div>
+      <div><label for="booking-date" class="block text-sm mb-2">Preferred date</label><input id="booking-date" type="date" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+      <div><label for="booking-people" class="block text-sm mb-2">Number of divers</label><input id="booking-people" type="number" min="1" max="10" value="1" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+      <div><label for="booking-name" class="block text-sm mb-2">Your name</label><input id="booking-name" required maxlength="100" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Full name"></div>
+      <button type="submit" class="gold-btn rounded-full w-full py-3 text-gold-light">Continue to WhatsApp</button>
+    </form>
+  </div>
+</div>
+
+<div id="lightbox-modal" class="hidden fixed inset-0 z-[60] bg-black/95 p-4 flex items-center justify-center" onclick="closeLightbox()">
+  <button type="button" class="absolute top-5 right-5 text-white text-3xl" aria-label="Close image" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[85vh] rounded-xl object-contain" onclick="event.stopPropagation()">
+</div>
+
+<script>
+"use strict";
+
+/* Site settings */
+const WHATSAPP_NUMBER = "9609373383";
+const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
+const SUPABASE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
+const STORAGE_BUCKET = "Dive-photo";
+
+let supabaseClient = null;
+if (window.supabase && SUPABASE_URL && SUPABASE_KEY) {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+}
+
+/* Mobile navigation */
+function toggleMenu() {
+  const menu = document.getElementById("mobile-menu");
+  if (menu) menu.classList.toggle("hidden");
+}
+
+/* Booking modal */
+function openBookingModal(activity) {
+  const modal = document.getElementById("booking-modal");
+  if (!modal) return;
+  if (activity) document.getElementById("booking-activity").value = activity;
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+function closeBookingModal() {
+  const modal = document.getElementById("booking-modal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+/* Booking enquiry opens WhatsApp with the details filled in */
+document.getElementById("booking-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const activity = document.getElementById("booking-activity").value;
+  const date = document.getElementById("booking-date").value || "Flexible";
+  const people = document.getElementById("booking-people").value;
+  const name = document.getElementById("booking-name").value.trim();
+  const message = `Hello Addu Dive Hub! I would like to enquire about:\nActivity: ${activity}\nPreferred date: ${date}\nDivers: ${people}\nName: ${name}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+});
+
+/* Dive site filters */
+function filterSites(category, button) {
+  document.querySelectorAll(".site-card").forEach(card => {
+    card.hidden = !(category === "all" || card.classList.contains(category));
+  });
+  document.querySelectorAll(".site-filter-btn").forEach(btn => {
+    btn.classList.remove("gold-btn");
+  });
+  if (button) button.classList.add("gold-btn");
+}
+
+/* Gallery lightbox */
+function openLightbox(src, alt) {
+  const modal = document.getElementById("lightbox-modal");
+  const img = document.getElementById("lightbox-image");
+  if (!modal || !img) return;
+  img.src = src;
+  img.alt = alt || "Gallery image";
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  document.getElementById("lightbox-modal").classList.add("hidden");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeLightbox();
+    closeBookingModal();
+  }
+});
+
+/* Contact form: prepares an email for the visitor to send */
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  const name = document.getElementById("contact-name").value.trim();
+  const email = document.getElementById("contact-email").value.trim();
+  const message = document.getElementById("contact-message").value.trim();
+  const subject = encodeURIComponent("Website enquiry - Addu Dive Hub");
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+  window.location.href = `mailto:hishamdipu@gmail.com?subject=${subject}&body=${body}`;
+});
+
+/* Supabase gallery. If storage policies block listing, the sample gallery remains visible. */
+async function loadGallery() {
+  const status = document.getElementById("gallery-status");
+  const grid = document.getElementById("gallery-grid");
+  if (!supabaseClient) {
+    status.textContent = "Showing sample gallery photos.";
+    return;
+  }
+  try {
+    const { data, error } = await supabaseClient.storage.from(STORAGE_BUCKET).list("", {
+      limit: 100,
+      sortBy: { column: "created_at", order: "desc" }
+    });
+    if (error) throw error;
+    const photos = (data || []).filter(file =>
+      file.name && !file.name.startsWith(".") &&
+      /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
+    );
+    if (!photos.length) {
+      status.textContent = "Showing sample photos. Upload images using Photo Admin.";
+      return;
+    }
+    grid.innerHTML = "";
+    photos.forEach(file => {
+      const { data: urlData } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(file.name);
+      const img = document.createElement("img");
+      img.className = "gallery-img rounded-xl";
+      img.loading = "lazy";
+      img.src = urlData.publicUrl;
+      img.alt = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
+      img.addEventListener("click", () => openLightbox(img.src, img.alt));
+      grid.appendChild(img);
+    });
+    status.textContent = `Showing ${photos.length} uploaded photo(s).`;
+  } catch (error) {
+    console.warn("Gallery could not load from storage:", error);
+    status.textContent = "Showing sample photos. Check Supabase storage permissions if uploads are missing.";
+  }
+}
+
+/* Guest reviews. Supabase policies control which reviews can be read or submitted. */
+async function loadReviews() {
+  const list = document.getElementById("reviews-list");
+  if (!supabaseClient) {
+    list.innerHTML = '<p class="text-gray-400 text-sm">Reviews are temporarily unavailable.</p>';
+    return;
+  }
+  try {
+    const { data, error } = await supabaseClient
+      .from("reviews")
+      .select("*")
+      .eq("approved", true)
+      .order("created_at", { ascending: false })
+      .limit(20);
+    if (error) throw error;
+    list.replaceChildren();
+    if (!data || data.length === 0) {
+      list.innerHTML = '<p class="text-gray-400 text-sm">No approved reviews yet. Be the first to share your experience.</p>';
+      return;
+    }
+    data.forEach(review => {
+      const card = document.createElement("article");
+      card.className = "card p-5";
+      const name = document.createElement("h3");
+      name.className = "font-cinzel text-gold-light mb-2";
+      name.textContent = review.name || review.author || "Guest";
+      const rating = document.createElement("p");
+      rating.className = "text-gold mb-3";
+      const score = Math.max(1, Math.min(5, Number(review.rating) || 5));
+      rating.textContent = "★".repeat(score) + "☆".repeat(5-score);
+      const message = document.createElement("p");
+      message.className = "text-sm text-gray-300 leading-6";
+      message.textContent = review.message || review.review || "";
+      card.append(name, rating, message);
+      list.appendChild(card);
+    });
+  } catch (error) {
+    console.warn("Reviews could not be loaded:", error);
+    list.innerHTML = '<p class="text-gray-400 text-sm">Reviews could not be loaded. Check the Supabase reviews table and its read policy.</p>';
+  }
+}
+
+document.getElementById("review-form").addEventListener("submit", async function(event) {
+  event.preventDefault();
+  const status = document.getElementById("review-status");
+  const name = document.getElementById("review-name").value.trim();
+  const rating = Number(document.getElementById("review-rating").value);
+  const message = document.getElementById("review-message").value.trim();
+
+  if (!supabaseClient) {
+    status.textContent = "Review service is unavailable. Please contact us by WhatsApp.";
+    return;
+  }
+
+  status.textContent = "Submitting review…";
+  try {
+    /* New reviews are not automatically approved. Database policies must permit this insert. */
+    const { error } = await supabaseClient.from("reviews").insert([{
+      name,
+      rating,
+      message,
+      approved: false
+    }]);
+    if (error) throw error;
+    status.textContent = "Thank you! Your review was submitted for approval.";
+    this.reset();
+  } catch (error) {
+    console.error("Review submission failed:", error);
+    status.textContent = "Review could not be submitted. The Supabase table or security policy may need configuration.";
+  }
+});
+
+loadGallery();
+loadReviews();
+</script>
+</body>
+</html>
