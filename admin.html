@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,8 +12,8 @@ main{width:min(760px,calc(100% - 28px));margin:35px auto}
 .panel{background:#09181e;border:1px solid #594d36;border-radius:16px;padding:22px;margin:18px 0}
 h1,h2{color:#f7dca1}
 p{color:#b4c9cd}
-input,button{font:inherit;padding:12px;border-radius:8px}
-input{display:block;width:100%;margin:9px 0 16px;background:#061319;color:white;border:1px solid #65777a}
+input,select,button{font:inherit;padding:12px;border-radius:8px}
+input,select{display:block;width:100%;margin:9px 0 16px;background:#061319;color:white;border:1px solid #65777a}
 button{border:0;cursor:pointer;font-weight:bold;margin:5px 5px 5px 0}
 .primary{background:#f7dca1;color:#071b20}
 .secondary{background:#17323b;color:white;border:1px solid #49616a}
@@ -35,7 +34,7 @@ a{color:#f7dca1}
 
   <section class="panel" id="login-panel">
     <h2>Admin Sign In</h2>
-    <p>Sign in with the email and password.</p>
+    <p>Sign in with your administrator email and password.</p>
     <form id="login-form">
       <label for="email">Email address</label>
       <input id="email" type="email" autocomplete="username" required>
@@ -46,15 +45,29 @@ a{color:#f7dca1}
   </section>
 
   <section class="panel hidden" id="manager-panel">
-    <h2>Your Photos</h2>
-    <p>Choose photos from your phone to upload to Supabase.</p>
+    <h2>Manage Website Photos</h2>
+
     <form id="upload-form">
-      <label for="files">Select photo files</label>
+      <label for="photo-target"><strong>Choose where the photo should appear</strong></label>
+      <select id="photo-target" required>
+        <option value="gallery">Gallery Photos</option>
+        <option value="experiences">Experience Section Photos</option>
+      </select>
+
+      <p id="target-help">
+        Gallery photos appear in the main Gallery section.
+      </p>
+
+      <label for="files">Select photos from your phone</label>
       <input id="files" type="file" accept="image/*" multiple required>
+
       <button class="primary" type="submit">Upload Photos</button>
     </form>
+
     <button class="secondary" id="refresh" type="button">Refresh Photos</button>
     <button class="secondary" id="logout" type="button">Sign Out</button>
+
+    <h2>Photos in Selected Section</h2>
     <div id="photo-list"></div>
   </section>
 
@@ -77,9 +90,12 @@ a{color:#f7dca1}
   const photoList = document.getElementById("photo-list");
   const uploadForm = document.getElementById("upload-form");
   const loginForm = document.getElementById("login-form");
+  const photoTarget = document.getElementById("photo-target");
+  const targetHelp = document.getElementById("target-help");
+  const fileInput = document.getElementById("files");
 
   if (!window.supabase) {
-    status.textContent = "Could not load Supabase. Check your internet connection and reload.";
+    status.textContent = "Supabase could not load. Check your internet connection and reload.";
     return;
   }
 
@@ -93,6 +109,21 @@ a{color:#f7dca1}
   function setStatus(message) {
     status.textContent = message;
   }
+
+  function selectedFolder() {
+    return photoTarget.value === "experiences" ? "experiences" : "";
+  }
+
+  photoTarget.addEventListener("change", () => {
+    const experiences = photoTarget.value === "experiences";
+
+    targetHelp.textContent = experiences
+      ? "These photos are stored in the experiences folder and used by the three Experience cards. Upload three photos to replace all three cards."
+      : "These photos appear in the main Gallery section.";
+
+    fileInput.value = "";
+    loadPhotos();
+  });
 
   function showSignedIn(user) {
     currentUser = user;
@@ -135,42 +166,53 @@ a{color:#f7dca1}
   async function loadPhotos() {
     if (!currentUser) return;
 
+    const folder = selectedFolder();
     setStatus("Loading photos…");
     photoList.replaceChildren();
 
     const { data, error } = await client.storage
       .from(BUCKET)
-      .list("", {
+      .list(folder, {
         limit: 100,
         sortBy: { column: "created_at", order: "desc" }
       });
 
     if (error) {
       setStatus("Could not list photos: " + error.message +
-        ". Check your Storage SELECT policies.");
+        ". Check your Supabase Storage read policy.");
       return;
     }
 
     const photos = (data || []).filter(item =>
-      item.name && item.name !== ".emptyFolderPlaceholder"
+      item.id &&
+      item.name &&
+      item.name !== ".emptyFolderPlaceholder" &&
+      (!item.metadata ||
+        !item.metadata.mimetype ||
+        item.metadata.mimetype.startsWith("image/"))
     );
 
     if (!photos.length) {
-      setStatus("No photos found in the Dive-photo bucket yet.");
+      setStatus(folder
+        ? "No Experience photos found. Upload photos to this section."
+        : "No Gallery photos found in the bucket root.");
       return;
     }
 
-    setStatus(photos.length + " photo(s) found.");
+    setStatus(photos.length + (
+      folder ? " Experience photo(s) found." : " Gallery photo(s) found."
+    ));
 
     photos.forEach(item => {
-      const path = item.name;
-      const urlResult = client.storage.from(BUCKET).getPublicUrl(path);
+      const path = folder ? folder + "/" + item.name : item.name;
+      const publicUrl = client.storage.from(BUCKET).getPublicUrl(path)
+        .data.publicUrl;
 
       const card = document.createElement("article");
       card.className = "photo";
 
       const image = document.createElement("img");
-      image.src = urlResult.data.publicUrl;
+      image.src = publicUrl;
       image.alt = path;
       image.loading = "lazy";
 
@@ -221,7 +263,7 @@ a{color:#f7dca1}
       return;
     }
 
-    const files = Array.from(document.getElementById("files").files || []);
+    const files = Array.from(fileInput.files || []);
     const button = uploadForm.querySelector("button");
 
     if (!files.length) {
@@ -238,13 +280,17 @@ a{color:#f7dca1}
     let uploaded = 0;
 
     try {
+      const folder = selectedFolder();
+
       for (const file of files) {
         const safeName = file.name
           .normalize("NFKD")
           .replace(/[^a-zA-Z0-9._-]/g, "-");
 
-        const path = Date.now() + "-" +
+        const fileName = Date.now() + "-" +
           Math.random().toString(36).slice(2, 8) + "-" + safeName;
+
+        const path = folder ? folder + "/" + fileName : fileName;
 
         setStatus("Uploading " + file.name + "…");
 
@@ -261,7 +307,15 @@ a{color:#f7dca1}
       }
 
       uploadForm.reset();
-      setStatus(uploaded + " photo(s) uploaded successfully.");
+
+      targetHelp.textContent = selectedFolder()
+        ? "Experience photos are stored separately from the Gallery."
+        : "Gallery photos appear in the main Gallery section.";
+
+      setStatus(uploaded + (
+        folder ? " Experience photo(s)" : " Gallery photo(s)"
+      ) + " uploaded successfully.");
+
       await loadPhotos();
     } catch (error) {
       setStatus(uploaded + " photo(s) uploaded. Upload error: " + error.message);
