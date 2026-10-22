@@ -1,3 +1,5 @@
+HTML
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -51,47 +53,17 @@ section{padding:60px 0;scroll-margin-top:90px}
 .gallery-grid img{width:100%;height:220px;object-fit:cover;border:1px solid var(--line);border-radius:12px}
 .gallery-status{font-size:14px;overflow-wrap:anywhere}
 
-/* Compact Photo Upload & Preview Tool */
+/* Compact local photo preview tool */
 #local-photo-tool{background:#071c24}
 #local-photo-tool .container{max-width:760px}
-.upload-panel{
-  padding:16px;
-  border:1px solid var(--gold);
-  border-radius:14px;
-  background:#09181e;
-}
+.upload-panel{padding:16px;border:1px solid var(--gold);border-radius:14px;background:#09181e}
 .upload-title{margin:4px 0 8px}
 .upload-note{font-size:13px}
-#local-photo-tool .btn{
-  padding:9px 15px;
-  margin:5px 4px 5px 0;
-  font-size:13px;
-}
-#adh-photo-input{
-  display:block;
-  width:100%;
-  margin:10px 0;
-  padding:9px;
-  color:var(--text);
-  background:#061319;
-  border:1px solid var(--line);
-  border-radius:8px;
-}
+#local-photo-tool .btn{padding:9px 15px;margin:5px 4px 5px 0;font-size:13px}
+#adh-photo-input{display:block;width:100%;margin:10px 0;padding:9px;color:var(--text);background:#061319;border:1px solid var(--line);border-radius:8px}
 #adh-photo-status{font-size:13px;overflow-wrap:anywhere}
-#adh-photo-preview.gallery-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(90px,120px));
-  gap:10px;
-  margin-top:12px;
-}
-#adh-photo-preview img{
-  width:100%;
-  height:90px;
-  object-fit:cover;
-  background:#061319;
-  border:1px solid var(--line);
-  border-radius:8px;
-}
+#adh-photo-preview.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,120px));gap:10px;margin-top:12px}
+#adh-photo-preview img{width:100%;height:90px;object-fit:cover;background:#061319;border:1px solid var(--line);border-radius:8px}
 #adh-clear-photos{margin-top:6px}
 
 .reviews-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}
@@ -122,10 +94,7 @@ footer{padding:25px 0;border-top:1px solid var(--line);text-align:center}
   section{padding:45px 0}
   .upload-panel,.contact-panel,.review-panel{padding:18px}
   #local-photo-tool .upload-panel{padding:14px}
-  #adh-photo-preview.gallery-grid{
-    grid-template-columns:repeat(auto-fill,minmax(80px,1fr));
-    gap:8px;
-  }
+  #adh-photo-preview.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
   #adh-photo-preview img{height:80px}
 }
 </style>
@@ -376,7 +345,11 @@ if (window.supabase && window.supabase.createClient) {
   );
 }
 
-/* Public photo gallery: existing Supabase storage integration. */
+/*
+  GALLERY:
+  Reads images from the root of Dive-photo.
+  Example: Dive-photo/my-gallery-photo.jpg
+*/
 const gallery = document.getElementById("adh-public-gallery");
 const galleryStatus = document.getElementById("gallery-status");
 
@@ -395,64 +368,117 @@ async function loadSupabasePhotos() {
 
     if (error) throw error;
 
+    // Ignore folders and show only image files in the bucket root.
     const photos = (data || []).filter(function(file) {
-      return file.name &&
+      return file.id &&
+        file.name &&
         file.name !== ".emptyFolderPlaceholder" &&
         (!file.metadata ||
           !file.metadata.mimetype ||
           file.metadata.mimetype.startsWith("image/"));
     });
 
+    // Preserve the default gallery images when no uploads exist.
     if (photos.length === 0) {
       galleryStatus.textContent =
-        "No uploaded photos found. Please upload photos through the Admin page.";
+        "No uploaded gallery photos found yet. Default photos are displayed.";
       return;
     }
 
-    const photoItems = photos.map(function(file) {
-      const publicUrl = supabaseClient.storage
-        .from(PHOTO_BUCKET)
-        .getPublicUrl(file.name).data.publicUrl;
-
-      return { name: file.name, url: publicUrl };
-    });
-
     gallery.replaceChildren();
 
-    photoItems.forEach(function(photo, index) {
+    photos.forEach(function(photo, index) {
       const img = document.createElement("img");
-      img.src = photo.url;
-      img.alt = "Addu Dive Hub photo " + (index + 1);
+
+      img.src = supabaseClient.storage
+        .from(PHOTO_BUCKET)
+        .getPublicUrl(photo.name).data.publicUrl;
+
+      img.alt = "Addu Dive Hub gallery photo " + (index + 1);
       img.loading = "lazy";
+
       img.onerror = function() {
-        img.alt = "Photo could not be displayed: " + photo.name;
+        img.alt = "Gallery photo could not be displayed: " + photo.name;
       };
+
       gallery.appendChild(img);
     });
 
-    [
-      "experience-photo-1",
-      "experience-photo-2",
-      "experience-photo-3"
-    ].forEach(function(id, index) {
-      const img = document.getElementById(id);
-      if (photoItems[index]) img.src = photoItems[index].url;
-    });
-
     galleryStatus.textContent =
-      photos.length + " photo(s) loaded from Addu Dive Hub storage.";
+      photos.length + " gallery photo(s) loaded.";
 
   } catch (error) {
-    console.error("Supabase photo loading error:", error);
+    console.error("Gallery loading error:", error);
     galleryStatus.textContent =
-      "Photos could not be loaded. Check the Supabase bucket name and read-only storage policy.";
+      "Gallery photos could not be loaded. Check the Supabase bucket and storage read policy.";
+  }
+}
+
+/*
+  OUR EXPERIENCES:
+  Reads images only from the experiences/ folder.
+  Example: Dive-photo/experiences/try-diving.jpg
+
+  Gallery uploads in the root folder will never replace these images.
+*/
+async function loadExperiencePhotos() {
+  const experienceIds = [
+    "experience-photo-1",
+    "experience-photo-2",
+    "experience-photo-3"
+  ];
+
+  try {
+    if (!supabaseClient) {
+      throw new Error("Supabase library did not load.");
+    }
+
+    const { data, error } = await supabaseClient.storage
+      .from(PHOTO_BUCKET)
+      .list("experiences", {
+        limit: 100,
+        sortBy: { column: "created_at", order: "desc" }
+      });
+
+    if (error) throw error;
+
+    const experiencePhotos = (data || []).filter(function(file) {
+      return file.id &&
+        file.name &&
+        file.name !== ".emptyFolderPlaceholder" &&
+        (!file.metadata ||
+          !file.metadata.mimetype ||
+          file.metadata.mimetype.startsWith("image/"));
+    });
+
+    experienceIds.forEach(function(id, index) {
+      const img = document.getElementById(id);
+      const photo = experiencePhotos[index];
+
+      if (!img || !photo) return;
+
+      const path = "experiences/" + photo.name;
+
+      img.src = supabaseClient.storage
+        .from(PHOTO_BUCKET)
+        .getPublicUrl(path).data.publicUrl;
+    });
+
+    console.info(
+      "Experience photos loaded:",
+      experiencePhotos.length
+    );
+
+  } catch (error) {
+    console.error("Experience photo loading error:", error);
+    // If the folder is empty, the default experience images remain visible.
   }
 }
 
 loadSupabasePhotos();
+loadExperiencePhotos();
 
-/* Guest reviews: use the public.reviews table created in Supabase.
-   The database policy permits public insertion only when approved=true. */
+/* Guest reviews */
 const reviewForm = document.getElementById("guest-review-form");
 const reviewStatus = document.getElementById("review-status");
 const reviewSubmit = document.getElementById("guest-review-submit");
@@ -500,8 +526,7 @@ function displayReviews(data) {
     approvedReviewsList.appendChild(article);
   });
 
-  reviewsListStatus.textContent =
-    data.length + " guest review(s).";
+  reviewsListStatus.textContent = data.length + " guest review(s).";
 }
 
 async function loadApprovedReviews() {
@@ -520,13 +545,12 @@ async function loadApprovedReviews() {
       .limit(50);
 
     if (error) throw error;
-
     displayReviews(data);
 
   } catch (error) {
     console.error("Review loading error:", error);
     reviewsListStatus.textContent =
-      "Guest reviews could not load. Please check the reviews table and its Supabase security policies.";
+      "Guest reviews could not load. Check the reviews table and its Supabase security policies.";
   }
 }
 
@@ -553,8 +577,7 @@ reviewForm.addEventListener("submit", async function(event) {
   }
 
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    reviewStatus.textContent =
-      "Please choose a rating from 1 to 5 stars.";
+    reviewStatus.textContent = "Please choose a rating from 1 to 5 stars.";
     return;
   }
 
@@ -591,10 +614,7 @@ reviewForm.addEventListener("submit", async function(event) {
 
     const newStars = document.createElement("div");
     newStars.className = "review-stars";
-    newStars.setAttribute(
-      "aria-label",
-      data.rating + " out of 5 stars"
-    );
+    newStars.setAttribute("aria-label", data.rating + " out of 5 stars");
     newStars.textContent = showReviewStars(data.rating);
 
     const newDate = document.createElement("div");
@@ -623,9 +643,8 @@ reviewForm.addEventListener("submit", async function(event) {
 
   } catch (error) {
     console.error("Review submission error:", error);
-
     reviewStatus.textContent =
-      "Your review could not be saved. Please check the Supabase reviews table and its INSERT and SELECT policies, then try again.";
+      "Your review could not be saved. Check the Supabase reviews table and its INSERT and SELECT policies.";
   } finally {
     reviewSubmit.disabled = false;
     reviewSubmit.textContent = "Submit Review";
@@ -634,7 +653,7 @@ reviewForm.addEventListener("submit", async function(event) {
 
 loadApprovedReviews();
 
-/* Local-only photo preview; this does not upload anything. */
+/* Local photo preview only; it does not upload photos to the website. */
 const photoInput = document.getElementById("adh-photo-input");
 const preview = document.getElementById("adh-photo-preview");
 const photoStatus = document.getElementById("adh-photo-status");
@@ -645,6 +664,7 @@ function clearPhotoPreview() {
   photoUrls.forEach(function(url) {
     URL.revokeObjectURL(url);
   });
+
   photoUrls = [];
   preview.replaceChildren();
   photoStatus.textContent = "No photos selected yet.";
