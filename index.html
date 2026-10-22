@@ -1,916 +1,223 @@
-```html
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Addu Dive Hub | Official PADI Dive Center in Addu Atoll, Maldives</title>
-    <meta name="description" content="Official PADI Dive Center in Addu Atoll, Maldives. Explore the historic British Loyalty Wreck, year-round Manta Rays, and pristine coral reefs. Book your dive today.">
-    <meta name="keywords" content="Addu Dive Hub, Maldives diving, British Loyalty Wreck, PADI courses Maldives, Addu Atoll scuba diving, Manta Rays Addu">
-    
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="Addu Dive Hub | Official PADI Dive Center">
-    <meta property="og:description" content="Unrivaled ocean adventures in the southernmost atoll of the Maldives. Home to the British Loyalty Wreck and year-round Manta Rays.">
-    <meta property="og:type" content="website">
-
-    <!-- Google Fonts: Cinzel for luxury serif headings, Inter for clean body text -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            DEFAULT: '#C5A059',
-                            light: '#E0C078',
-                            dark: '#9A7B3E',
-                            glow: 'rgba(197, 160, 89, 0.35)'
-                        },
-                        ocean: {
-                            deep: '#030B14',
-                            dark: '#081421',
-                            card: '#0D1E30',
-                            accent: '#132B45',
-                            light: '#1B3B5E'
-                        }
-                    },
-                    fontFamily: {
-                        cinzel: ['Cinzel', 'serif'],
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        /* Custom Glowing & Gold Border Styling */
-        .gold-border-glow {
-            border: 1px solid rgba(197, 160, 89, 0.4);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.15);
-            transition: all 0.3s ease;
-        }
-        .gold-border-glow:hover {
-            border-color: #E0C078;
-            box-shadow: 0 0 25px rgba(224, 192, 120, 0.35);
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #FFF0CA 0%, #C5A059 50%, #9A7B3E 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gold-btn {
-            background: linear-gradient(135deg, rgba(197, 160, 89, 0.2) 0%, rgba(154, 123, 62, 0.3) 100%);
-            border: 1px solid #C5A059;
-            box-shadow: 0 0 12px rgba(197, 160, 89, 0.2);
-            transition: all 0.3s ease;
-        }
-        .gold-btn:hover {
-            background: linear-gradient(135deg, rgba(224, 192, 120, 0.4) 0%, rgba(197, 160, 89, 0.5) 100%);
-            box-shadow: 0 0 20px rgba(224, 192, 120, 0.5);
-            transform: translateY(-2px);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #030B14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1B3B5E;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #C5A059;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#030b14">
+<title>Addu Dive Hub | Diving in Addu Atoll, Maldives</title>
+<meta name="description" content="Explore the British Loyalty Wreck, manta rays, coral reefs and scuba diving courses with Addu Dive Hub in the Maldives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        gold: {DEFAULT:"#C5A059",light:"#E0C078",dark:"#9A7B3E"},
+        ocean: {deep:"#030B14",dark:"#081421",card:"#0D1E30",accent:"#132B45"}
+      },
+      fontFamily: {cinzel:["Cinzel","serif"],sans:["Inter","sans-serif"]}
+    }
+  }
+};
+</script>
+<style>
+:root{color-scheme:dark}
+body{background:#030b14;color:#e5e7eb;font-family:Inter,sans-serif}
+.font-cinzel{font-family:Cinzel,serif}
+.gold-gradient-text{background:linear-gradient(135deg,#fff0ca,#c5a059,#9a7b3e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gold-btn{border:1px solid #c5a059;background:linear-gradient(135deg,#c5a05930,#9a7b3e30);transition:.25s}
+.gold-btn:hover{background:#c5a05935;box-shadow:0 0 22px #c5a05935;transform:translateY(-1px)}
+.gold-border{border:1px solid #c5a05940}
+.card{background:#0d1e30;border:1px solid #c5a05930;border-radius:16px;overflow:hidden}
+.card:hover{border-color:#c5a05990}
+.section{padding:84px 0}
+.section-title{font-family:Cinzel,serif;color:#e0c078;font-size:clamp(1.7rem,4vw,2.7rem);font-weight:700;letter-spacing:.07em}
+.hero{background:linear-gradient(90deg,#030b14ed 0%,#030b1480 55%,#030b1440),url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2000&q=85') center/cover no-repeat}
+.gallery-img{width:100%;height:220px;object-fit:cover;cursor:pointer;transition:transform .35s}
+.gallery-img:hover{transform:scale(1.035)}
+input,textarea,select{color:#f3f4f6}
+a,button{touch-action:manipulation}
+[hidden]{display:none!important}
+@media(max-width:640px){.section{padding:60px 0}.hero{background-position:60% center}}
+</style>
 </head>
-<body class="bg-ocean-deep text-gray-200 font-sans antialiased selection:bg-gold selection:text-ocean-deep">
 
-    <!-- BUTTON CONFIGURATION / CUSTOMIZER DRAWER -->
-    <div id="btn-config-drawer" class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
-        <!-- Toggle Button -->
-        <button onclick="toggleConfigPanel()" class="gold-btn px-4 py-3 rounded-full text-gold-light font-cinzel text-xs font-bold uppercase tracking-wider flex items-center space-x-2 shadow-2xl">
-            <i class="fa-solid fa-sliders text-base"></i>
-            <span>Button Configurator</span>
-        </button>
-
-        <!-- Configuration Panel -->
-        <div id="config-panel" class="hidden mt-3 w-80 bg-ocean-card/95 border border-gold/40 rounded-2xl p-5 shadow-2xl backdrop-blur-md text-xs">
-            <div class="flex justify-between items-center mb-4 border-b border-gold/20 pb-2">
-                <h3 class="font-cinzel text-sm font-bold text-gold-gradient-text uppercase">Button Style Config</h3>
-                <button onclick="toggleConfigPanel()" class="text-gray-400 hover:text-gold"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-
-            <!-- Shape preset -->
-            <div class="mb-4">
-                <label class="block text-gold mb-1 font-semibold">Border Radius</label>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setButtonShape('rounded-none')" class="bg-ocean-dark border border-gold/30 py-1 rounded hover:border-gold">Square</button>
-                    <button onclick="setButtonShape('rounded-lg')" class="bg-ocean-dark border border-gold/30 py-1 rounded hover:border-gold">Rounded</button>
-                    <button onclick="setButtonShape('rounded-full')" class="bg-ocean-dark border border-gold/30 py-1 rounded hover:border-gold">Pill</button>
-                </div>
-            </div>
-
-            <!-- Glow Effect Toggle -->
-            <div class="mb-4 flex justify-between items-center">
-                <label class="text-gold font-semibold">Glow Effect</label>
-                <input type="checkbox" id="glow-toggle" checked onchange="toggleGlow(this.checked)" class="accent-gold cursor-pointer w-4 h-4">
-            </div>
-
-            <!-- Gradient Theme Preset -->
-            <div class="mb-4">
-                <label class="block text-gold mb-1 font-semibold">Color Preset</label>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setButtonTheme('gold')" class="bg-gradient-to-r from-gold/30 to-gold-dark/40 border border-gold text-gold-light py-1 rounded text-[10px]">Royal Gold</button>
-                    <button onclick="setButtonTheme('cyan')" class="bg-gradient-to-r from-cyan-500/30 to-blue-600/40 border border-cyan-400 text-cyan-200 py-1 rounded text-[10px]">Deep Cyan</button>
-                    <button onclick="setButtonTheme('emerald')" class="bg-gradient-to-r from-emerald-500/30 to-teal-700/40 border border-emerald-400 text-emerald-200 py-1 rounded text-[10px]">Ocean Reef</button>
-                </div>
-            </div>
-
-            <button onclick="resetButtonConfig()" class="w-full mt-2 py-1.5 border border-gold/30 text-gray-400 hover:text-gold rounded text-[10px] uppercase font-cinzel">Reset Defaults</button>
-        </div>
+<body>
+<header class="sticky top-0 z-40 bg-ocean-deep/95 backdrop-blur border-b border-gold/20">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <a href="#home" class="min-w-0">
+      <span class="block text-[10px] uppercase tracking-[.3em] text-gold">Maldives · Addu Atoll</span>
+      <span class="font-cinzel text-lg sm:text-2xl font-bold gold-gradient-text">ADDU DIVE HUB</span>
+    </a>
+    <nav class="hidden lg:flex gap-5 text-xs uppercase tracking-wider">
+      <a href="#experience" class="hover:text-gold">Experiences</a>
+      <a href="#sites" class="hover:text-gold">Dive Sites</a>
+      <a href="#courses" class="hover:text-gold">Courses</a>
+      <a href="#gallery" class="hover:text-gold">Gallery</a>
+      <a href="#reviews" class="hover:text-gold">Reviews</a>
+      <a href="#contact" class="hover:text-gold">Contact</a>
+    </nav>
+    <button type="button" onclick="toggleMenu()" class="lg:hidden gold-btn rounded-lg px-3 py-2" aria-label="Open navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <a href="https://wa.me/9609373383" target="_blank" rel="noopener" class="hidden sm:inline-block gold-btn rounded-full px-4 py-2 text-xs text-gold-light">Book a Dive</a>
+  </div>
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-gold/20 p-4 bg-ocean-dark">
+    <div class="grid grid-cols-2 gap-4 text-sm">
+      <a onclick="toggleMenu()" href="#experience">Experiences</a>
+      <a onclick="toggleMenu()" href="#sites">Dive Sites</a>
+      <a onclick="toggleMenu()" href="#courses">Courses</a>
+      <a onclick="toggleMenu()" href="#gallery">Gallery</a>
+      <a onclick="toggleMenu()" href="#reviews">Reviews</a>
+      <a onclick="toggleMenu()" href="#contact">Contact</a>
     </div>
+  </nav>
+</header>
 
-    <!-- TOP NAVIGATION BAR -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-ocean-deep/90 backdrop-blur-md border-b border-gold/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <!-- Social Links & Brand -->
-            <div class="flex items-center space-x-4">
-                <div class="hidden md:flex space-x-3 text-gold/80 text-sm">
-                    <a href="#" class="hover:text-gold-light transition"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="hover:text-gold-light transition"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="hover:text-gold-light transition"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-            </div>
-
-            <!-- Main Title Logo -->
-            <a href="#home" class="text-center group">
-                <span class="block text-xs uppercase tracking-[0.3em] text-gold/80 font-medium">Dive Center</span>
-                <span class="font-cinzel text-xl sm:text-2xl font-bold tracking-widest text-gold-gradient-text">ADDU DIVE HUB</span>
-            </a>
-
-            <!-- Right CTA & Mobile Toggle -->
-        <div class="flex items-center space-x-4">
-            <button type="button" onclick="window.open('https://wa.me/9607316849?text=' + encodeURIComponent('Hello Addu Dive Hub! I would like to book a dive session.'), '_blank')" class="gold-btn config-target-btn text-gold-light font-cinzel text-xs sm:text-sm tracking-wider px-5 py-2.5 rounded-full uppercase font-semibold cursor-pointer">
-                <i class="fa-brands fa-whatsapp mr-1 text-emerald-400"></i> Book Now
-            </button>
-            <button id="menu-btn" onclick="toggleMenu()" class="md:hidden text-gold text-2xl focus:outline-none" aria-label="Toggle Navigation Menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
-        </div>
-
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden md:block bg-ocean-dark/60 border-t border-gold/10 py-2.5">
-            <div class="flex justify-center space-x-8 font-cinzel text-xs tracking-widest uppercase text-gray-300">
-                <a href="#home" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">Home</a>
-                <a href="#experience" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">The Experience</a>
-                <a href="#sites" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">Dive Sites</a>
-                <a href="#courses" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">PADI Courses</a>
-                <a href="#gallery" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">Gallery</a>
-                <a href="#about" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">About Us</a>
-                <a href="#contact" class="hover:text-gold transition py-1 border-b-2 border-transparent hover:border-gold">Contact</a>
-            </div>
-        </nav>
-
-        <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="hidden md:hidden bg-ocean-card border-b border-gold/30 px-6 py-4 space-y-3 font-cinzel text-sm uppercase tracking-wider text-center">
-            <a href="#home" onclick="toggleMenu()" class="block py-2 text-gold hover:text-gold-light">Home</a>
-            <a href="#experience" onclick="toggleMenu()" class="block py-2 hover:text-gold">The Experience</a>
-            <a href="#sites" onclick="toggleMenu()" class="block py-2 hover:text-gold">Dive Sites</a>
-            <a href="#courses" onclick="toggleMenu()" class="block py-2 hover:text-gold">PADI Courses</a>
-            <a href="#gallery" onclick="toggleMenu()" class="block py-2 hover:text-gold">Gallery</a>
-            <a href="#about" onclick="toggleMenu()" class="block py-2 hover:text-gold">About Us</a>
-            <a href="#contact" onclick="toggleMenu()" class="block py-2 hover:text-gold">Contact</a>
-            <div class="pt-2 flex justify-center space-x-6 text-gold">
-                <a href="https://facebook.com" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://wa.me/9607316849" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-        </div>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Background Dark Ocean Image with Overlay Gradient -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2000&q=80" 
-                 alt="Underwater Deep Ocean" 
-                 class="w-full h-full object-cover object-center scale-105 animate-pulse opacity-40" style="animation-duration: 8s;">
-            <div class="absolute inset-0 bg-gradient-to-b from-ocean-deep/60 via-ocean-deep/75 to-ocean-deep"></div>
-            <!-- Subtle Water Light Rays Effect -->
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-cyan-500/10 via-gold/5 to-transparent blur-3xl pointer-events-none"></div>
-        </div>
-
-        <div class="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 py-24 flex flex-col items-center">
-            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-ocean-card/80 border border-gold/30 mb-8 backdrop-blur-sm">
-                <i class="fa-solid fa-compass text-gold text-xs"></i>
-                <span class="text-xs uppercase tracking-widest text-gold-light">Maldives’ Southernmost Atoll</span>
-            </div>
-
-            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-extrabold text-gold-gradient-text leading-tight tracking-wider mb-6 drop-shadow-lg">
-                EXPLORE THE DEEP.<br/>DISCOVER ADDU HUB.
-            </h1>
-
-            <p class="font-sans text-lg sm:text-2xl text-gray-300 font-light tracking-wide max-w-2xl mb-10">
-                Unrivaled ocean adventures.
-            </p>
-
-            <a href="#sites" class="gold-btn config-target-btn group flex items-center space-x-3 px-8 py-4 rounded-full text-gold-light font-cinzel text-sm sm:text-base tracking-widest uppercase font-bold">
-                <span>Explore Expeditions</span>
-                <span class="w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center group-hover:bg-gold/40 transition">
-                    <i class="fa-solid fa-anchor text-xs"></i>
-                </span>
-            </a>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <a href="#experience" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-gold/60 hover:text-gold transition">
-            <span class="text-[10px] uppercase tracking-widest mb-2 font-cinzel">Scroll</span>
-            <div class="w-5 h-9 rounded-full border border-gold/40 flex justify-center p-1">
-                <div class="w-1 h-2 bg-gold rounded-full animate-bounce"></div>
-            </div>
-        </a>
-    </section>
-
-    <!-- SECTION DIVIDER ICON -->
-    <div class="relative z-20 -mt-6 flex justify-center">
-        <div class="w-12 h-12 rounded-full bg-ocean-card border border-gold/50 flex items-center justify-center shadow-lg text-gold">
-            <i class="fa-solid fa-water text-lg"></i>
-        </div>
+<main>
+<section id="home" class="hero min-h-[78vh] flex items-center">
+  <div class="max-w-7xl mx-auto w-full px-5 py-20">
+    <p class="uppercase tracking-[.28em] text-gold text-xs sm:text-sm mb-5">Discover the southern Maldives</p>
+    <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl">
+      <span class="gold-gradient-text">BEYOND THE</span><br>BLUE HORIZON
+    </h1>
+    <p class="max-w-xl text-gray-300 leading-7 mt-6">
+      Discover remarkable reefs, graceful manta rays and the historic British Loyalty wreck with Addu Dive Hub.
+    </p>
+    <div class="flex flex-wrap gap-3 mt-8">
+      <button type="button" onclick="openBookingModal()" class="gold-btn rounded-full px-7 py-3 text-gold-light">Book Your Experience</button>
+      <a href="#sites" class="rounded-full border border-white/30 px-7 py-3 hover:border-gold">Explore Dive Sites</a>
     </div>
-
-    <!-- THE ADDU EXPERIENCE SECTION -->
-    <section id="experience" class="py-24 bg-ocean-deep relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold tracking-widest text-gold-gradient-text uppercase mb-4">
-                    THE ADDU EXPERIENCE
-                </h2>
-                <p class="text-gray-400 font-light text-base sm:text-lg">
-                    Discover our southern atoll.
-                </p>
-                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4"></div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                <!-- Wreck Feature Highlight Photo (British Loyalty Wreck Image) -->
-                <div class="lg:col-span-7">
-                    <div class="relative rounded-2xl overflow-hidden gold-border-glow group cursor-pointer" onclick="openLightbox('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80', 'British Loyalty Wreck', 'Historical WW2 Oil Tanker resting at 33 meters depth in Addu Atoll.')">
-                        <img id="main-wreck-img" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80" 
-                             alt="British Loyalty Wreck Addu" 
-                             class="w-full h-[380px] sm:h-[450px] object-cover group-hover:scale-105 transition duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-ocean-deep via-transparent to-transparent opacity-80"></div>
-                        <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                            <div>
-                                <span class="bg-gold/80 text-ocean-deep font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-sm mb-2 inline-block">Featured Wreck</span>
-                                <h3 class="font-cinzel text-2xl text-white font-semibold">British Loyalty Wreck</h3>
-                                <p class="text-xs text-gray-300 flex items-center mt-1"><i class="fa-solid fa-location-dot text-gold mr-1.5"></i> Addu Atoll Lagoon (33m Depth)</p>
-                            </div>
-                            <span class="w-10 h-10 rounded-full bg-ocean-card/90 border border-gold/50 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-ocean-deep transition">
-                                <i class="fa-solid fa-expand"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Key Short Highlights -->
-                <div class="lg:col-span-5 space-y-8">
-                    <!-- Highlight Item 1 -->
-                    <div class="bg-ocean-card/60 p-6 rounded-xl border border-gold/20 hover:border-gold/50 transition duration-300">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-4 h-4 rounded-full bg-gold/30 border-2 border-gold flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-cinzel text-lg font-bold text-gold-light mb-2">British Loyalty Wreck</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">
-                                    Explore the historic WW2 tanker, now a thriving artificial reef.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Highlight Item 2 -->
-                    <div class="bg-ocean-card/60 p-6 rounded-xl border border-gold/20 hover:border-gold/50 transition duration-300">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-4 h-4 rounded-full bg-gold/30 border-2 border-gold flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-cinzel text-lg font-bold text-gold-light mb-2">Coral Excellence</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">
-                                    Dive vibrant natural reefs packed with diverse marine life.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Highlight Item 3 -->
-                    <div class="bg-ocean-card/60 p-6 rounded-xl border border-gold/20 hover:border-gold/50 transition duration-300">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-4 h-4 rounded-full bg-gold/30 border-2 border-gold flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-cinzel text-lg font-bold text-gold-light mb-2">Year-Round Mantas</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">
-                                    Encounter majestic reef manta rays at famous cleaning stations.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- UNMATCHED DIVE SITES SECTION -->
-    <section id="sites" class="py-24 bg-ocean-dark border-t border-b border-gold/10 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold tracking-widest text-gold-gradient-text uppercase mb-3">
-                    UNMATCHED DIVE SITES
-                </h2>
-                <p class="text-gray-400 font-light text-sm sm:text-base">
-                    Discover world-class underwater topographies across Addu Atoll.
-                </p>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button onclick="filterSites('all')" class="site-filter-btn active gold-btn text-xs font-cinzel tracking-wider px-5 py-2 rounded-full uppercase">All Sites</button>
-                <button onclick="filterSites('wreck')" class="site-filter-btn px-5 py-2 rounded-full border border-gold/20 text-xs font-cinzel tracking-wider hover:border-gold text-gray-300 uppercase">Wrecks</button>
-                <button onclick="filterSites('manta')" class="site-filter-btn px-5 py-2 rounded-full border border-gold/20 text-xs font-cinzel tracking-wider hover:border-gold text-gray-300 uppercase">Mantas & Pelagics</button>
-                <button onclick="filterSites('reef')" class="site-filter-btn px-5 py-2 rounded-full border border-gold/20 text-xs font-cinzel tracking-wider hover:border-gold text-gray-300 uppercase">Coral Reefs</button>
-            </div>
-
-            <!-- Dive Sites Grid -->
-            <div id="sites-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Card 1: British Loyalty Wreck -->
-                <div class="site-card wreck bg-ocean-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/60 transition duration-300 flex flex-col">
-                    <div class="relative h-52 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" alt="British Loyalty Wreck" class="w-full h-full object-cover hover:scale-110 transition duration-500">
-                        <span class="absolute top-4 right-4 bg-ocean-deep/90 text-gold text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-gold/30">16m - 33m</span>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-cinzel text-xl font-bold text-gold-light">British Loyalty Wreck</h3>
-                                <span class="text-xs text-cyan-400 font-semibold">Advanced</span>
-                            </div>
-                            <p class="text-sm text-gray-300 mb-4 line-clamp-3">
-                                Torpedoed in 1946, this 140m tanker is the largest shipwreck in the Maldives. Encrusted with soft corals, black corals, and home to large groupers.
-                            </p>
-                        </div>
-                        <div class="pt-4 border-t border-gold/10 flex justify-between items-center text-xs text-gray-400">
-                            <span><i class="fa-solid fa-skull-crossbones text-gold mr-1"></i> WW2 Wreck</span>
-                            <button type="button" onclick="openWhatsApp('British Loyalty Wreck Dive')" class="text-gold hover:text-gold-light font-bold font-cinzel uppercase tracking-wider cursor-pointer"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> Book Dive &rarr;</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Demonstration Point / Manta Point -->
-                <div class="site-card manta bg-ocean-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/60 transition duration-300 flex flex-col">
-                    <div class="relative h-52 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="Manta Point" class="w-full h-full object-cover hover:scale-110 transition duration-500">
-                        <span class="absolute top-4 right-4 bg-ocean-deep/90 text-gold text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-gold/30">15m - 25m</span>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-cinzel text-xl font-bold text-gold-light">Manta Point</h3>
-                                <span class="text-xs text-emerald-400 font-semibold">All Levels</span>
-                            </div>
-                            <p class="text-sm text-gray-300 mb-4 line-clamp-3">
-                                World-famous cleaning station where Giant Oceanic and Reef Manta Rays hover gracefully over coral blocks throughout the entire year.
-                            </p>
-                        </div>
-                        <div class="pt-4 border-t border-gold/10 flex justify-between items-center text-xs text-gray-400">
-                            <span><i class="fa-solid fa-fish text-gold mr-1"></i> Manta Rays</span>
-                            <button type="button" onclick="openWhatsApp('Manta Point Guided Dive')" class="text-gold hover:text-gold-light font-bold font-cinzel uppercase tracking-wider cursor-pointer"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> Book Dive &rarr;</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Kottey Outer Reef -->
-                <div class="site-card reef bg-ocean-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/60 transition duration-300 flex flex-col">
-                    <div class="relative h-52 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=800&q=80" alt="Kottey Outer Reef" class="w-full h-full object-cover hover:scale-110 transition duration-500">
-                        <span class="absolute top-4 right-4 bg-ocean-deep/90 text-gold text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-gold/30">10m - 30m</span>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-cinzel text-xl font-bold text-gold-light">Kottey Outer Reef</h3>
-                                <span class="text-xs text-emerald-400 font-semibold">All Levels</span>
-                            </div>
-                            <p class="text-sm text-gray-300 mb-4 line-clamp-3">
-                                Pristine outer wall diving featuring healthy hard coral gardens, green sea turtles, eagle rays, and vibrant schooling reef fish.
-                            </p>
-                        </div>
-                        <div class="pt-4 border-t border-gold/10 flex justify-between items-center text-xs text-gray-400">
-                            <span><i class="fa-solid fa-gem text-gold mr-1"></i> Coral Reef</span>
-                            <button type="button" onclick="openWhatsApp('Kottey Outer Reef Dive')" class="text-gold hover:text-gold-light font-bold font-cinzel uppercase tracking-wider cursor-pointer"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> Book Dive &rarr;</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: Shark Point (Gan Channel) -->
-                <div class="site-card manta bg-ocean-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/60 transition duration-300 flex flex-col">
-                    <div class="relative h-52 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=800&q=80" alt="Shark Point" class="w-full h-full object-cover hover:scale-110 transition duration-500">
-                        <span class="absolute top-4 right-4 bg-ocean-deep/90 text-gold text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-gold/30">20m - 40m</span>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-cinzel text-xl font-bold text-gold-light">Gan Shark Point</h3>
-                                <span class="text-xs text-red-400 font-semibold">Experienced</span>
-                            </div>
-                            <p class="text-sm text-gray-300 mb-4 line-clamp-3">
-                                Exciting drift dive along the channel drop-off. Frequent sightings of Grey Reef Sharks, White-tip Sharks, and schooling Barracudas.
-                            </p>
-                        </div>
-                        <div class="pt-4 border-t border-gold/10 flex justify-between items-center text-xs text-gray-400">
-                            <span><i class="fa-solid fa-water text-gold mr-1"></i> Drift Dive</span>
-                            <button type="button" onclick="openWhatsApp('Gan Shark Point Drift Dive')" class="text-gold hover:text-gold-light font-bold font-cinzel uppercase tracking-wider cursor-pointer"><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> Book Dive &rarr;</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- PADI COURSES SECTION -->
-    <section id="courses" class="py-24 bg-ocean-deep relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold tracking-widest text-gold-gradient-text uppercase mb-3">
-                    PADI COURSES & CERTIFICATIONS
-                </h2>
-                <p class="text-gray-400 font-light text-sm sm:text-base">
-                    Learn to dive or advance your skills with certified multilingual PADI Instructors.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <!-- Course 1 -->
-                <div class="bg-ocean-card p-6 rounded-2xl border border-gold/20 flex flex-col justify-between hover:border-gold/60 transition duration-300">
-                    <div>
-                        <span class="text-xs uppercase font-cinzel tracking-widest text-gold">Beginner</span>
-                        <h3 class="font-cinzel text-xl font-bold text-white mt-1 mb-3">Discover Scuba</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed mb-6">
-                            First time diving? Experience breathing underwater under direct instruction in calm lagoon waters.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-gold/10">
-                        <div class="flex justify-between items-baseline mb-4">
-                            <span class="text-xs text-gray-400">Half Day</span>
-                            <span class="font-cinzel text-xl font-bold text-gold-light">$120</span>
-                        </div>
-                        <button type="button" onclick="openWhatsApp('Discover Scuba Diving ($120)')" class="w-full py-2.5 rounded-lg border border-gold/50 text-gold hover:bg-gold hover:text-ocean-deep transition font-cinzel text-xs font-bold uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer">
-                            <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i>
-                            <span>Enroll via WhatsApp</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Course 2 -->
-                <div class="bg-ocean-card p-6 rounded-2xl border border-gold/20 flex flex-col justify-between hover:border-gold/60 transition duration-300 relative">
-                    <span class="absolute -top-3 right-4 bg-gold text-ocean-deep text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Popular</span>
-                    <div>
-                        <span class="text-xs uppercase font-cinzel tracking-widest text-gold">Certification</span>
-                        <h3 class="font-cinzel text-xl font-bold text-white mt-1 mb-3">Open Water Diver</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed mb-6">
-                            Get fully certified to dive down to 18 meters worldwide. Includes theory, confined water & 4 open water dives.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-gold/10">
-                        <div class="flex justify-between items-baseline mb-4">
-                            <span class="text-xs text-gray-400">3-4 Days</span>
-                            <span class="font-cinzel text-xl font-bold text-gold-light">$580</span>
-                        </div>
-                        <button type="button" onclick="openWhatsApp('Open Water Diver Course ($580)')" class="w-full py-2.5 rounded-lg border border-gold/50 text-gold hover:bg-gold hover:text-ocean-deep transition font-cinzel text-xs font-bold uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer">
-                            <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i>
-                            <span>Enroll via WhatsApp</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Course 3 -->
-                <div class="bg-ocean-card p-6 rounded-2xl border border-gold/20 flex flex-col justify-between hover:border-gold/60 transition duration-300">
-                    <div>
-                        <span class="text-xs uppercase font-cinzel tracking-widest text-gold">Advanced</span>
-                        <h3 class="font-cinzel text-xl font-bold text-white mt-1 mb-3">Advanced Open Water</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed mb-6">
-                            Enhance your confidence, master deep navigation, and explore deep reefs up to 30 meters depth.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-gold/10">
-                        <div class="flex justify-between items-baseline mb-4">
-                            <span class="text-xs text-gray-400">2-3 Days</span>
-                            <span class="font-cinzel text-xl font-bold text-gold-light">$460</span>
-                        </div>
-                        <button type="button" onclick="openWhatsApp('Advanced Open Water Course ($460)')" class="w-full py-2.5 rounded-lg border border-gold/50 text-gold hover:bg-gold hover:text-ocean-deep transition font-cinzel text-xs font-bold uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer">
-                            <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i>
-                            <span>Enroll via WhatsApp</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Course 4 -->
-                <div class="bg-ocean-card p-6 rounded-2xl border border-gold/20 flex flex-col justify-between hover:border-gold/60 transition duration-300">
-                    <div>
-                        <span class="text-xs uppercase font-cinzel tracking-widest text-gold">Specialty</span>
-                        <h3 class="font-cinzel text-xl font-bold text-white mt-1 mb-3">Wreck Specialty</h3>
-                        <p class="text-xs text-gray-300 leading-relaxed mb-6">
-                            Master wreck navigation, safety protocols, and mapping techniques on the famous British Loyalty Wreck.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-gold/10">
-                        <div class="flex justify-between items-baseline mb-4">
-                            <span class="text-xs text-gray-400">2 Days</span>
-                            <span class="font-cinzel text-xl font-bold text-gold-light">$390</span>
-                        </div>
-                        <button type="button" onclick="openWhatsApp('PADI Wreck Specialist Course ($390)')" class="w-full py-2.5 rounded-lg border border-gold/50 text-gold hover:bg-gold hover:text-ocean-deep transition font-cinzel text-xs font-bold uppercase tracking-wider flex items-center justify-center space-x-2 cursor-pointer">
-                            <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i>
-                            <span>Enroll via WhatsApp</span>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- PHOTO GALLERY LIGHTBOX SECTION -->
-    <section id="gallery" class="py-24 bg-ocean-dark border-t border-gold/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold tracking-widest text-gold-gradient-text uppercase mb-3">
-                    UNDERWATER GALLERY
-                </h2>
-                <p class="text-gray-400 font-light text-sm sm:text-base">
-                    Snapshots of underwater wonder captured in Addu Atoll.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="relative rounded-xl overflow-hidden group h-60 cursor-pointer gold-border-glow" onclick="openLightbox('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80', 'Shipwreck Exploration', 'Addu Atoll historic wreck site')">
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery 1">
-                    <div class="absolute inset-0 bg-ocean-deep/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-gold"><i class="fa-solid fa-magnifying-glass-plus text-2xl"></i></div>
-                </div>
-                <div class="relative rounded-xl overflow-hidden group h-60 cursor-pointer gold-border-glow" onclick="openLightbox('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80', 'Manta Ray Soaring', 'Cleaning station in Addu')">
-                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery 2">
-                    <div class="absolute inset-0 bg-ocean-deep/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-gold"><i class="fa-solid fa-magnifying-glass-plus text-2xl"></i></div>
-                </div>
-                <div class="relative rounded-xl overflow-hidden group h-60 cursor-pointer gold-border-glow" onclick="openLightbox('https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=1200&q=80', 'Vibrant Coral Garden', 'Outer reef corals')">
-                    <img src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery 3">
-                    <div class="absolute inset-0 bg-ocean-deep/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-gold"><i class="fa-solid fa-magnifying-glass-plus text-2xl"></i></div>
-                </div>
-                <div class="relative rounded-xl overflow-hidden group h-60 cursor-pointer gold-border-glow" onclick="openLightbox('https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=1200&q=80', 'Reef Shark Encounter', 'Channel drift dive')">
-                    <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery 4">
-                    <div class="absolute inset-0 bg-ocean-deep/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-gold"><i class="fa-solid fa-magnifying-glass-plus text-2xl"></i></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ABOUT US SECTION -->
-    <section id="about" class="py-24 bg-ocean-deep border-t border-gold/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <span class="text-xs font-cinzel text-gold uppercase tracking-widest">About Addu Dive Hub</span>
-                    <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mt-2 mb-6">
-                        YOUR GATEWAY TO MALDIVES' SOUTHERN FRONTIER
-                    </h2>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-4">
-                        Addu Dive Hub is situated in the pristine Addu Atoll, the southernmost tip of the Maldives. Unlike northern atolls, Addu was unaffected by coral bleaching, preserving lush hard corals and vibrant biodiversity.
-                    </p>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-6">
-                        Our local dive guides and PADI Instructors carry decades of local expertise, offering safe, eco-conscious, and unforgettable underwater journeys.
-                    </p>
-                    <div class="grid grid-cols-3 gap-4 text-center py-4 border-t border-b border-gold/20">
-                        <div>
-                            <span class="font-cinzel text-2xl font-bold text-gold">100%</span>
-                            <span class="block text-[11px] text-gray-400 uppercase tracking-wider">Year-Round Mantas</span>
-                        </div>
-                        <div>
-                            <span class="font-cinzel text-2xl font-bold text-gold">30+</span>
-                            <span class="block text-[11px] text-gray-400 uppercase tracking-wider">Dive Sites</span>
-                        </div>
-                        <div>
-                            <span class="font-cinzel text-2xl font-bold text-gold">140m</span>
-                            <span class="block text-[11px] text-gray-400 uppercase tracking-wider">Wreck Length</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative rounded-2xl overflow-hidden gold-border-glow h-[400px]">
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80" alt="Dive Center Boat" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT & DIRECT ENQUIRY SECTION -->
-    <section id="quick-contact" class="py-20 bg-ocean-card/40 border-t border-gold/10">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-            <span class="text-xs font-cinzel text-gold uppercase tracking-widest">Get In Touch Directly</span>
-            <h2 class="font-cinzel text-3xl font-bold text-white mt-1 mb-4">HAVE QUESTIONS BEFORE BOOKING?</h2>
-            <p class="text-xs text-gray-300 mb-8 max-w-xl mx-auto">Send an official inquiry directly to our management team at <span class="text-gold font-semibold">hishamdipu@gmail.com</span>.</p>
-
-            <form action="https://formsubmit.co/hishamdipu@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                <!-- FormSubmit Configuration -->
-                <input type="hidden" name="_subject" value="New Direct Inquiry - Addu Dive Hub Website">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
-
-                <div>
-                    <label class="block text-xs font-cinzel text-gold mb-1">Your Name</label>
-                    <input type="text" name="Name" required placeholder="Full Name" class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-4 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                </div>
-                <div>
-                    <label class="block text-xs font-cinzel text-gold mb-1">Your Email</label>
-                    <input type="email" name="Email" required placeholder="your.email@example.com" class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-4 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block text-xs font-cinzel text-gold mb-1">Message / Inquiry</label>
-                    <textarea name="Message" rows="4" required placeholder="How can we assist your diving experience in Addu?" class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-4 py-2.5 text-xs text-gray-200 focus:outline-none focus:border-gold"></textarea>
-                </div>
-                <div class="md:col-span-2 text-center mt-2">
-                    <button type="submit" class="gold-btn px-8 py-3 rounded-full text-gold-light font-cinzel text-xs font-bold uppercase tracking-wider">
-                        Send Official Inquiry
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- CONTACT & FOOTER SECTION -->
-    <footer id="contact" class="bg-ocean-dark border-t border-gold/20 pt-16 pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-                
-                <div class="md:col-span-2">
-                    <a href="#home" class="inline-block mb-4">
-                        <span class="block text-xs uppercase tracking-[0.3em] text-gold/80">Dive Center</span>
-                        <span class="font-cinzel text-2xl font-bold text-gold-gradient-text">ADDU DIVE HUB</span>
-                    </a>
-                    <p class="text-xs text-gray-400 leading-relaxed max-w-sm mb-6">
-                        Premier PADI Dive Center in Feydhoo, Addu Atoll, Republic of Maldives. Experiencing nature in its purest underwater form.
-                    </p>
-                    <div class="flex space-x-4 text-gold">
-                        <a href="https://facebook.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-ocean-card border border-gold/30 flex items-center justify-center hover:bg-gold hover:text-ocean-deep transition" aria-label="Facebook"><i class="fa-brands fa-facebook-f text-sm"></i></a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-ocean-card border border-gold/30 flex items-center justify-center hover:bg-gold hover:text-ocean-deep transition" aria-label="Instagram"><i class="fa-brands fa-instagram text-sm"></i></a>
-                        <a href="https://wa.me/9607789000?text=Hello%20Addu%20Dive%20Hub,%20I%20would%20like%20to%20inquire%20about%20diving." target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-ocean-card border border-gold/30 flex items-center justify-center hover:bg-gold hover:text-ocean-deep transition" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-sm"></i></a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="font-cinzel text-sm font-bold text-gold uppercase tracking-wider mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-xs text-gray-300">
-                        <li><a href="#home" class="hover:text-gold transition">Home</a></li>
-                        <li><a href="#experience" class="hover:text-gold transition">British Loyalty Wreck</a></li>
-                        <li><a href="#sites" class="hover:text-gold transition">Addu Dive Sites</a></li>
-                        <li><a href="#courses" class="hover:text-gold transition">PADI Certifications</a></li>
-                        <li><a href="#gallery" class="hover:text-gold transition">Underwater Gallery</a></li>
-                        <li><a href="#about" class="hover:text-gold transition">About Us</a></li>
-                        <li><a href="#quick-contact" class="hover:text-gold transition">Direct Inquiry</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-cinzel text-sm font-bold text-gold uppercase tracking-wider mb-4">Official Contact</h4>
-                    <ul class="space-y-3 text-xs text-gray-300">
-                        <li class="flex items-start space-x-3">
-                            <i class="fa-solid fa-location-dot text-gold mt-0.5"></i>
-                            <span>Main Road, Feydhoo, Addu City, Maldives</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
-                            <a href="https://wa.me/9607316849" target="_blank" rel="noopener" class="hover:text-gold transition">+960 731-6849 (WhatsApp)</a>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <i class="fa-solid fa-envelope text-gold"></i>
-                            <a href="mailto:hishamdipu@gmail.com" class="hover:text-gold transition">hishamdipu@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="border-t border-gold/10 pt-8 text-center text-xs text-gray-500">
-                <p>&copy; 2026 Addu Dive Hub Maldives. All Rights Reserved. Official Site Manager: <a href="mailto:hishamdipu@gmail.com" class="text-gold/80 hover:text-gold">Hisham Dipu</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- INTERACTIVE BOOKING MODAL -->
-    <div id="booking-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 px-4">
-        <div class="bg-ocean-card border border-gold/40 rounded-2xl p-6 sm:p-8 max-w-lg w-full relative shadow-2xl">
-            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gold text-xl" aria-label="Close Modal">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <h3 class="font-cinzel text-2xl font-bold text-gold-gradient-text mb-1">OFFICIAL BOOKING REQUEST</h3>
-            <p class="text-xs text-gray-400 mb-6">Reservations will be submitted directly to <span class="text-gold">hishamdipu@gmail.com</span>.</p>
-
-            <form id="booking-form" action="https://formsubmit.co/hishamdipu@gmail.com" method="POST" onsubmit="handleBookingSubmit(event)" class="space-y-4">
-                <!-- FormSubmit Email Setup -->
-                <input type="hidden" name="_subject" value="Official Dive Booking Request - Addu Dive Hub">
-                <input type="hidden" name="_captcha" value="false">
-
-                <div>
-                    <label class="block text-xs font-cinzel text-gold mb-1">Select Dive Activity / Course</label>
-                    <select id="booking-activity" name="Activity" class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                        <option value="British Loyalty Wreck Dive">British Loyalty Wreck Dive</option>
-                        <option value="Manta Point Guided Dive">Manta Point Guided Dive</option>
-                        <option value="Discover Scuba Diving">Discover Scuba Diving ($120)</option>
-                        <option value="Open Water Diver Course">PADI Open Water Diver ($580)</option>
-                        <option value="Advanced Open Water Course">PADI Advanced Open Water ($460)</option>
-                        <option value="PADI Wreck Specialist Course">PADI Wreck Specialist ($390)</option>
-                    </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-cinzel text-gold mb-1">Preferred Date</label>
-                        <input type="date" name="Preferred Date" required class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-cinzel text-gold mb-1">Divers Count</label>
-                        <input type="number" name="Divers Count" min="1" max="10" value="1" required class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-cinzel text-gold mb-1">Full Name</label>
-                    <input type="text" name="Full Name" placeholder="John Doe" required class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-cinzel text-gold mb-1">Email Address</label>
-                    <input type="email" name="Email" placeholder="john@example.com" required class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-cinzel text-gold mb-1">WhatsApp / Phone Number</label>
-                    <input type="tel" name="Phone" placeholder="+123456789" required class="w-full bg-ocean-dark border border-gold/30 rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-gold">
-                </div>
-
-                <button type="submit" class="w-full gold-btn py-3 rounded-lg text-gold-light font-cinzel text-xs uppercase font-bold tracking-wider mt-4">
-                    Send Reservation Request
-                </button>
-            </form>
-            
-            <div id="booking-success" class="hidden text-center py-8 space-y-3">
-                <i class="fa-solid fa-circle-check text-4xl text-gold"></i>
-                <h4 class="font-cinzel text-xl font-bold text-white">Reservation Request Sent!</h4>
-                <p class="text-xs text-gray-300">Your details have been dispatched to <strong>hishamdipu@gmail.com</strong>. We will confirm your dive reservation shortly.</p>
-                <button onclick="closeBookingModal()" class="gold-btn px-6 py-2 rounded-full text-xs font-cinzel text-gold-light">Close</button>
-            </div>
-        </div>
+    <div class="flex flex-wrap gap-6 mt-12 text-sm text-gray-300">
+      <span><i class="fa-solid fa-water text-gold mr-2"></i>Addu Atoll</span>
+      <span><i class="fa-solid fa-fish text-gold mr-2"></i>Marine Encounters</span>
+      <span><i class="fa-solid fa-compass text-gold mr-2"></i>Guided Adventures</span>
     </div>
+  </div>
+</section>
 
-    <!-- LIGHTBOX MODAL FOR GALLERY -->
-    <div id="lightbox-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 px-4" onclick="closeLightbox()">
-        <div class="max-w-4xl w-full relative" onclick="event.stopPropagation()">
-            <button onclick="closeLightbox()" class="absolute -top-10 right-0 text-gray-300 hover:text-gold text-2xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <img id="lightbox-img" src="" alt="" class="w-full h-auto max-h-[75vh] object-contain rounded-lg gold-border-glow">
-            <div class="mt-4 text-center">
-                <h4 id="lightbox-title" class="font-cinzel text-xl font-bold text-gold-light"></h4>
-                <p id="lightbox-desc" class="text-xs text-gray-400 mt-1"></p>
-            </div>
-        </div>
+<section id="experience" class="section">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Your journey begins here</p>
+      <h2 class="section-title">THE ADDU EXPERIENCE</h2>
+      <p class="text-gray-400 mt-4">Explore the ocean, discover local wonders and create unforgettable memories.</p>
     </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <article class="card">
+        <img class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Scuba diver exploring underwater">
+        <div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Scuba Diving</h3><p class="text-sm text-gray-400 leading-6">Discover reefs and historic wrecks with a local dive team.</p><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Explore Diving</button></div>
+      </article>
+      <article class="card">
+        <img class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&fit=crop&w=900&q=80" alt="Tropical ocean adventure">
+        <div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Ocean Adventures</h3><p class="text-sm text-gray-400 leading-6">Ask about guided dives and marine-life encounters around Addu.</p><button onclick="openBookingModal('Guided Ocean Adventure')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Plan an Adventure</button></div>
+      </article>
+      <article class="card">
+        <img class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Turquoise tropical sea">
+        <div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Island Experiences</h3><p class="text-sm text-gray-400 leading-6">Discover the beauty and welcoming island culture of the southern Maldives.</p><a href="#contact" class="gold-btn inline-block rounded-full px-5 py-2 mt-5 text-sm">Ask Us</a></div>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <!-- JAVASCRIPT FOR INTERACTIVITY -->
-    <script>
-        // Direct WhatsApp launch
-        function openWhatsApp(activityName) {
-            const phone = "9607316849";
-            const text = activityName 
-                ? "Hello Addu Dive Hub! I would like to book/inquire about: " + activityName
-                : "Hello Addu Dive Hub! I would like to inquire about your diving trips and PADI courses.";
-            
-            const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
-            window.open(url, '_blank');
-        }
+<section id="sites" class="section bg-ocean-dark border-y border-gold/10">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Explore beneath the surface</p>
+      <h2 class="section-title">DIVE SITES OF ADDU</h2>
+      <p class="text-gray-400 mt-4">Choose a site to learn more and ask about a guided dive.</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-2 mb-9">
+      <button class="site-filter-btn gold-btn rounded-full px-5 py-2 text-sm" onclick="filterSites('all',this)">All Sites</button>
+      <button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('wreck',this)">Wrecks</button>
+      <button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('manta',this)">Mantas & Pelagics</button>
+      <button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('reef',this)">Coral Reefs</button>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="site-card wreck card">
+        <img class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Underwater wreck diving">
+        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Historic wreck</p><h3 class="font-cinzel text-xl text-gold-light">British Loyalty Wreck</h3><p class="text-sm text-gray-400 leading-6 mt-3">Explore the famous tanker wreck resting in Addu Atoll. Depth, conditions and suitability depend on certification and conditions.</p><button onclick="openBookingModal('British Loyalty Wreck Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
+      </article>
+      <article class="site-card manta card">
+        <img class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=900&q=80" alt="Manta ray underwater">
+        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Marine encounters</p><h3 class="font-cinzel text-xl text-gold-light">Manta Encounters</h3><p class="text-sm text-gray-400 leading-6 mt-3">Ask our team about suitable sites, recent sightings and conditions for manta-ray encounters.</p><button onclick="openBookingModal('Manta Ray Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
+      </article>
+      <article class="site-card reef card">
+        <img class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=900&q=80" alt="Colorful coral reef">
+        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Reef exploration</p><h3 class="font-cinzel text-xl text-gold-light">Coral Gardens</h3><p class="text-sm text-gray-400 leading-6 mt-3">Discover coral formations and reef fish with a guide who can recommend a site for your experience level.</p><button onclick="openBookingModal('Guided Coral Reef Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
+      </article>
+      <article class="site-card manta card">
+        <img class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=900&q=80" alt="Ocean wildlife">
+        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Channel diving</p><h3 class="font-cinzel text-xl text-gold-light">Channel Drift Dives</h3><p class="text-sm text-gray-400 leading-6 mt-3">Channel dives can involve currents and are planned according to conditions and diver experience.</p><button onclick="openBookingModal('Channel Drift Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
+      </article>
+    </div>
+  </div>
+</section>
 
-        function toggleConfigPanel() {
-            const panel = document.getElementById('config-panel');
-            if (panel) {
-                panel.classList.toggle('hidden');
-            }
-        }
+<section id="courses" class="section">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Start or continue your journey</p>
+      <h2 class="section-title">DIVING COURSES</h2>
+      <p class="text-gray-400 mt-4">Contact us to confirm course availability, requirements and current prices.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Beginner</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Discover Scuba</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">A first underwater experience with professional guidance.</p><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Certification</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Open Water</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Build the knowledge and skills to become a certified diver.</p><button onclick="openBookingModal('Open Water Diver Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Advanced</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Advanced Open Water</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Develop your diving skills through supervised adventure dives.</p><button onclick="openBookingModal('Advanced Open Water Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Specialty</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Wreck Diving</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Ask about wreck-diving training and prerequisites.</p><button onclick="openBookingModal('Wreck Diving Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+    </div>
+  </div>
+</section>
 
-        function setButtonShape(shapeClass) {
-            const targets = document.querySelectorAll('.config-target-btn');
-            targets.forEach(btn => {
-                btn.classList.remove('rounded-none', 'rounded-lg', 'rounded-full');
-                btn.classList.add(shapeClass);
-            });
-        }
+<section id="gallery" class="section bg-ocean-dark border-y border-gold/10">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Moments below the surface</p><h2 class="section-title">UNDERWATER GALLERY</h2><p class="text-gray-400 mt-4">Explore photos from our diving experiences.</p></div>
+    <p id="gallery-status" class="text-center text-sm text-gray-500 mb-5">Loading gallery photos…</p>
+    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80" alt="Underwater diving" onclick="openLightbox(this.src,this.alt)">
+      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=700&q=80" alt="Coral reef" onclick="openLightbox(this.src,this.alt)">
+      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=700&q=80" alt="Manta ray" onclick="openLightbox(this.src,this.alt)">
+      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80" alt="Tropical ocean" onclick="openLightbox(this.src,this.alt)">
+    </div>
+    <div class="text-center mt-8"><a href="admin.html" class="gold-btn inline-block rounded-full px-6 py-3 text-sm">Open Photo Admin</a><p class="text-xs text-gray-500 mt-3">Use the admin page to manage uploaded photos.</p></div>
+  </div>
+</section>
 
-        function toggleGlow(enabled) {
-            const targets = document.querySelectorAll('.config-target-btn');
-            targets.forEach(btn => {
-                btn.style.boxShadow = enabled ? '' : 'none';
-            });
-        }
+<section id="video" class="section">
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">See the ocean for yourself</p>
+    <h2 class="section-title mb-8">DIVE WITH US</h2>
+    <div class="relative w-full overflow-hidden rounded-2xl gold-border" style="aspect-ratio:16/9">
+      <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/kBRiUVAQ-jo" title="Addu Dive Hub diving video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="text-sm text-gray-500 mt-4">If the video is unavailable, it may have been removed or restricted on YouTube.</p>
+  </div>
+</section>
 
-        function setButtonTheme(theme) {
-            const targets = document.querySelectorAll('.config-target-btn');
-            targets.forEach(btn => {
-                if (theme === 'cyan') {
-                    btn.style.background = 'linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, rgba(37, 99, 235, 0.4) 100%)';
-                    btn.style.borderColor = '#22d3ee';
-                    btn.style.color = '#cff';
-                } else if (theme === 'emerald') {
-                    btn.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(15, 118, 110, 0.4) 100%)';
-                    btn.style.borderColor = '#34d399';
-                    btn.style.color = '#d1fae5';
-                } else {
-                    btn.style.background = '';
-                    btn.style.borderColor = '';
-                    btn.style.color = '';
-                }
-            });
-        }
+<section id="reviews" class="section bg-ocean-dark border-y border-gold/10">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Guest experiences</p><h2 class="section-title">GUEST REVIEWS</h2></div>
+    <div id="reviews-list" class="grid md:grid-cols-2 gap-4 mb-10"><p class="text-gray-500 text-sm">Loading approved reviews…</p></div>
+    <form id="review-form" class="card p-6 max-w-2xl mx-auto">
+      <h3 class="font-cinzel text-xl text-gold-light mb-5">Share Your Experience</h3>
+      <label class="block text-sm text-gray-300 mb-2" for="review-name">Your name</label>
+      <input id="review-name" name="name" required maxlength="80" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3 mb-4" placeholder="Your name">
+      <label class="block text-sm text-gray-300 mb-2" for="review-rating">Rating</label>
+      <select id="review-rating" name="rating" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3 mb-4"><option value="5">★★★★★ — Excellent</option><option value="4">★★★★ — Very good</option><option value="3">★★★ — Good</option><option value="2">★★ — Fair</option><option value="1">★ — Poor</option></select>
+      <label class="block text-sm text-gray-300 mb-2" for="review-message">Your review</label>
+      <textarea id="review-message" name="message" required maxlength="1500" rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3 mb-4" placeholder="Tell us about your experience"></textarea>
+      <button type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Submit Review</button>
+      <p id="review-status" role="status" class="text-sm text-gray-400 mt-4"></p>
+    </form>
+  </div>
+</section>
 
-        function resetButtonConfig() {
-            setButtonShape('rounded-full');
-            const toggle = document.getElementById('glow-toggle');
-            if (toggle) toggle.checked = true;
-            toggleGlow(true);
-            setButtonTheme('gold');
-        }
-
-        function openLightbox(imgUrl, title, desc) {
-            const modal = document.getElementById('lightbox-modal');
-            const img = document.getElementById('lightbox-img');
-            const t = document.getElementById('lightbox-title');
-            const d = document.getElementById('lightbox-desc');
-            
-            if (img) img.src = imgUrl;
-            if (t) t.innerText = title;
-            if (d) d.innerText = desc;
-            
-            if (modal) {
-                modal.classList.remove('hidden');
-                setTimeout(() => modal.classList.remove('opacity-0'), 10);
-            }
-        }
-
-        function closeLightbox() {
-            const modal = document.getElementById('lightbox-modal');
-            if (modal) {
-                modal.classList.add('opacity-0');
-                setTimeout(() => modal.classList.add('hidden'), 300);
-            }
-        }
-
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            if (menu) {
-                menu.classList.toggle('hidden');
-            }
-        }
-
-        function filterSites(category) {
-            const cards = document.querySelectorAll('.site-card');
-            const btns = document.querySelectorAll('.site-filter-btn');
-            
-            btns.forEach(btn => btn.classList.remove('gold-btn'));
-            if (window.event && window.event.target) {
-                window.event.target.classList.add('gold-btn');
-            }
-
-            cards.forEach(card => {
-                if (category === 'all' || card.classList.contains(category)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
-</body>
-</html>
-```
+<section id="about" class="section">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+    <div><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">About us</p><h2 class="section-title mb-6">YOUR GATEWAY TO ADDU</h2><p class="text-gray-300 leading-7">Addu Dive Hub welcomes divers and ocean lovers to explore the underwater world of Addu Atoll in the southern Maldives. From reefs to historic wrecks, our aim is to help you plan an unforgettable ocean experience.</p><p class="text-gray-400 leading-7 mt-4">Ask us about dive conditions, suitable sites, courses and availability before booking.</p><a href="#contact" class="gold-btn inline-block rounded-full px-6 py-3 mt-7">Contact Our Team</a></div>
+    <img class="w-full h-80 object-cover rounded-2xl gold-border" src="https://images
