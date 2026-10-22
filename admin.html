@@ -1,355 +1,667 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#020d13">
-<title>Addu Dive Hub | Photo Admin</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#020d13;color:#edf7f7;font-family:Arial,sans-serif;line-height:1.5}
-main{width:min(760px,calc(100% - 28px));margin:35px auto}
-.panel{background:#09181e;border:1px solid #594d36;border-radius:16px;padding:22px;margin:18px 0}
-h1,h2{color:#f7dca1}
-p{color:#b4c9cd}
-input,select,button{font:inherit;padding:12px;border-radius:8px}
-input,select{display:block;width:100%;margin:9px 0 16px;background:#061319;color:white;border:1px solid #65777a}
-button{border:0;cursor:pointer;font-weight:bold;margin:5px 5px 5px 0}
-.primary{background:#f7dca1;color:#071b20}
-.secondary{background:#17323b;color:white;border:1px solid #49616a}
-.danger{background:#7e2d2d;color:white}
-button:disabled{opacity:.5;cursor:wait}
-#status{overflow-wrap:anywhere}
-.photo{border:1px solid #40545a;border-radius:10px;padding:10px;margin:12px 0}
-.photo img{width:100%;max-height:260px;object-fit:contain;background:#000;border-radius:8px}
-.photo-name{overflow-wrap:anywhere}
-.hidden{display:none}
-a{color:#f7dca1}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#020d13">
+  <title>Addu Dive Hub | Admin Dashboard</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root {
+      --bg: #041219;
+      --panel: #0b2029;
+      --panel2: #102b35;
+      --gold: #d7b36a;
+      --text: #edf5f6;
+      --muted: #9bb1b9;
+      --line: #25424c;
+      --red: #ff7777;
+      --green: #80e0b0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      padding: 25px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg,#09232d,#061219);
+    }
+    .wrap { max-width: 1100px; margin: auto; }
+    h1 { margin: 0 0 7px; font-size: clamp(25px,5vw,38px); }
+    h2 { margin-top: 0; font-size: 21px; }
+    h3 { margin: 0 0 8px; font-size: 17px; }
+    p { color: var(--muted); }
+    .gold { color: var(--gold); }
+    main { max-width: 1100px; margin: auto; padding: 20px 14px 50px; }
+    .panel {
+      padding: 20px;
+      margin: 0 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr));
+      gap: 15px;
+    }
+    .slot {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--panel2);
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #c8d9de;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 9px;
+      border: 1px solid #35535e;
+      background: #06151c;
+      color: var(--text);
+      font: inherit;
+    }
+    input[type="file"] { padding: 9px; font-size: 13px; }
+    button, .button {
+      display: inline-block;
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 15px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+    .primary { color: #10150f; background: var(--gold); }
+    .secondary { color: var(--text); background: #25424c; }
+    .danger { color: white; background: #8c3038; }
+    button:disabled { opacity: .5; cursor: wait; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .preview {
+      display: block;
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      border-radius: 9px;
+      background: #06151c;
+      border: 1px solid var(--line);
+    }
+    .status {
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 9px;
+      background: #102b35;
+      overflow-wrap: anywhere;
+    }
+    .status.error { color: #ffd0d0; border: 1px solid #8c3038; }
+    .status.success { color: var(--green); border: 1px solid #287957; }
+    .small { font-size: 12px; color: var(--muted); }
+    .hidden { display: none !important; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(145px,1fr));
+      gap: 12px;
+    }
+    .gallery-item {
+      min-width: 0;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--panel2);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 7px;
+    }
+    .gallery-item p { font-size: 11px; overflow-wrap: anywhere; }
+    .toplinks { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    a { color: var(--gold); }
+    .note { font-size: 13px; }
+    footer { padding: 20px; text-align: center; color: var(--muted); }
+  </style>
 </head>
 <body>
+<header>
+  <div class="wrap">
+    <h1><span class="gold">ADDU</span> DIVE HUB</h1>
+    <p style="margin:0">Website administration · Photos and gallery</p>
+    <div class="toplinks">
+      <a href="./index.html">← View website</a>
+      <a href="./admin.html">Refresh dashboard</a>
+    </div>
+  </div>
+</header>
+
 <main>
-  <h1>Addu Dive Hub</h1>
-  <p>Administrator photo manager</p>
+  <div class="panel">
+    <h2>Admin sign-in</h2>
+    <p class="note">Sign in using a Supabase Auth account that has permission to upload and delete files in the <strong>Dive-photo</strong> bucket. The public key in this page is not an admin password.</p>
+    <div id="authStatus" class="status">Checking session…</div>
 
-  <section class="panel" id="login-panel">
-    <h2>Admin Sign In</h2>
-    <p>Sign in with your administrator email and password.</p>
-    <form id="login-form">
-      <label for="email">Email address</label>
-      <input id="email" type="email" autocomplete="username" required>
+    <div id="loginForm">
+      <label for="email">Admin email</label>
+      <input id="email" type="email" autocomplete="username" placeholder="Your admin email">
       <label for="password">Password</label>
-      <input id="password" type="password" autocomplete="current-password" required>
-      <button class="primary" type="submit">Sign In</button>
-    </form>
-  </section>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Your password">
+      <div class="actions">
+        <button class="primary" id="loginBtn" type="button">Sign in</button>
+        <button class="secondary" id="resetBtn" type="button">Reset password</button>
+      </div>
+    </div>
+    <div id="signedInActions" class="hidden">
+      <p id="signedInEmail" class="small"></p>
+      <button id="logoutBtn" class="secondary" type="button">Sign out</button>
+    </div>
+  </div>
 
-  <section class="panel hidden" id="manager-panel">
-    <h2>Manage Website Photos</h2>
+  <div id="dashboard" class="hidden">
+    <div class="panel">
+      <h2>Change photos on every section</h2>
+      <p>Choose a section, select a photo, and upload it. The new photo is stored in the matching section folder so the connected homepage can find it.</p>
+      <div id="uploadStatus" class="status">Ready.</div>
 
-    <form id="upload-form">
-      <label for="photo-target"><strong>Choose where the photo should appear</strong></label>
-      <select id="photo-target" required>
-        <option value="gallery">Gallery Photos</option>
-        <option value="experiences">Experience Section Photos</option>
-      </select>
+      <div class="grid">
+        <div class="slot">
+          <h3>Homepage hero</h3>
+          <p class="small">Main homepage image</p>
+          <img class="preview" id="preview-home" alt="Homepage photo preview">
+          <label for="file-home">Choose photo</label>
+          <input id="file-home" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="home" type="button">Upload homepage photo</button>
+        </div>
 
-      <p id="target-help">
-        Gallery photos appear in the main Gallery section.
-      </p>
+        <div class="slot">
+          <h3>Experience: Diving</h3>
+          <img class="preview" id="preview-experience-diving" alt="Diving experience preview">
+          <label for="file-experience-diving">Choose photo</label>
+          <input id="file-experience-diving" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="experience-diving" type="button">Upload diving photo</button>
+        </div>
 
-      <label for="files">Select photos from your phone</label>
-      <input id="files" type="file" accept="image/*" multiple required>
+        <div class="slot">
+          <h3>Experience: Adventures</h3>
+          <img class="preview" id="preview-experience-adventures" alt="Adventures preview">
+          <label for="file-experience-adventures">Choose photo</label>
+          <input id="file-experience-adventures" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="experience-adventures" type="button">Upload adventures photo</button>
+        </div>
 
-      <button class="primary" type="submit">Upload Photos</button>
-    </form>
+        <div class="slot">
+          <h3>Experience: Island</h3>
+          <img class="preview" id="preview-experience-island" alt="Island experience preview">
+          <label for="file-experience-island">Choose photo</label>
+          <input id="file-experience-island" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="experience-island" type="button">Upload island photo</button>
+        </div>
 
-    <button class="secondary" id="refresh" type="button">Refresh Photos</button>
-    <button class="secondary" id="logout" type="button">Sign Out</button>
+        <div class="slot">
+          <h3>Dive site: Wreck</h3>
+          <img class="preview" id="preview-site-wreck" alt="Wreck dive site preview">
+          <label for="file-site-wreck">Choose photo</label>
+          <input id="file-site-wreck" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="site-wreck" type="button">Upload wreck photo</button>
+        </div>
 
-    <h2>Photos in Selected Section</h2>
-    <div id="photo-list"></div>
-  </section>
+        <div class="slot">
+          <h3>Dive site: Manta</h3>
+          <img class="preview" id="preview-site-manta" alt="Manta dive site preview">
+          <label for="file-site-manta">Choose photo</label>
+          <input id="file-site-manta" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="site-manta" type="button">Upload manta photo</button>
+        </div>
 
-  <section class="panel">
-    <p id="status" role="status" aria-live="polite">Connecting to photo storage…</p>
-    <p><a href="./index.html">Return to the public website</a></p>
-  </section>
+        <div class="slot">
+          <h3>Dive site: Reef</h3>
+          <img class="preview" id="preview-site-reef" alt="Reef dive site preview">
+          <label for="file-site-reef">Choose photo</label>
+          <input id="file-site-reef" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="site-reef" type="button">Upload reef photo</button>
+        </div>
+
+        <div class="slot">
+          <h3>Dive site: Channel</h3>
+          <img class="preview" id="preview-site-channel" alt="Channel dive site preview">
+          <label for="file-site-channel">Choose photo</label>
+          <input id="file-site-channel" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="site-channel" type="button">Upload channel photo</button>
+        </div>
+
+        <div class="slot">
+          <h3>Courses section</h3>
+          <img class="preview" id="preview-courses" alt="Courses preview">
+          <label for="file-courses">Choose photo</label>
+          <input id="file-courses" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="courses" type="button">Upload courses photo</button>
+        </div>
+
+        <div class="slot">
+          <h3>Video section background</h3>
+          <img class="preview" id="preview-video" alt="Video background preview">
+          <label for="file-video">Choose photo</label>
+          <input id="file-video" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="video" type="button">Upload video background</button>
+        </div>
+
+        <div class="slot">
+          <h3>Reviews section background</h3>
+          <img class="preview" id="preview-reviews" alt="Reviews background preview">
+          <label for="file-reviews">Choose photo</label>
+          <input id="file-reviews" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="reviews" type="button">Upload reviews background</button>
+        </div>
+
+        <div class="slot">
+          <h3>About section</h3>
+          <img class="preview" id="preview-about" alt="About section preview">
+          <label for="file-about">Choose photo</label>
+          <input id="file-about" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="about" type="button">Upload about photo</button>
+        </div>
+
+        <div class="slot">
+          <h3>Contact section background</h3>
+          <img class="preview" id="preview-contact" alt="Contact background preview">
+          <label for="file-contact">Choose photo</label>
+          <input id="file-contact" type="file" accept="image/*">
+          <button class="primary upload-btn" data-slot="contact" type="button">Upload contact background</button>
+        </div>
+      </div>
+      <p class="note">Tip: Use JPG, PNG, or WebP images. Large images take longer to upload. Uploading a new photo for a section replaces that section's previous image when the homepage loads the newest file.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Gallery manager</h2>
+      <p>Upload photos to the main gallery, view the existing gallery images, or delete a photo. Deleting a photo is permanent for this storage bucket.</p>
+      <label for="galleryFiles">Choose gallery photos</label>
+      <input id="galleryFiles" type="file" accept="image/*" multiple>
+      <div class="actions">
+        <button class="primary" id="galleryUploadBtn" type="button">Upload selected photos</button>
+        <button class="secondary" id="refreshGalleryBtn" type="button">Refresh gallery</button>
+      </div>
+      <div id="galleryStatus" class="status">Sign in to manage the gallery.</div>
+      <div id="galleryGrid" class="gallery-grid"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Important setup notes</h2>
+    <ul class="note">
+      <li>This page uses Supabase Authentication and Storage. It does not create an admin account automatically.</li>
+      <li>Your Supabase Storage policies must permit authenticated administrators to upload, list, update, and delete files.</li>
+      <li>Never put a Supabase <strong>service-role key</strong> or secret key in this HTML file.</li>
+      <li>After uploading, open the website and refresh it to check the changes.</li>
+    </ul>
+  </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(() => {
-  const PROJECT_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
-  const PUBLISHABLE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
+<footer>Addu Dive Hub · Admin dashboard</footer>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
   const BUCKET = "Dive-photo";
 
-  const status = document.getElementById("status");
-  const loginPanel = document.getElementById("login-panel");
-  const managerPanel = document.getElementById("manager-panel");
-  const photoList = document.getElementById("photo-list");
-  const uploadForm = document.getElementById("upload-form");
-  const loginForm = document.getElementById("login-form");
-  const photoTarget = document.getElementById("photo-target");
-  const targetHelp = document.getElementById("target-help");
-  const fileInput = document.getElementById("files");
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  if (!window.supabase) {
-    status.textContent = "Supabase could not load. Check your internet connection and reload.";
-    return;
+  const $ = (id) => document.getElementById(id);
+  const slots = [
+    "home",
+    "experience-diving",
+    "experience-adventures",
+    "experience-island",
+    "site-wreck",
+    "site-manta",
+    "site-reef",
+    "site-channel",
+    "courses",
+    "video",
+    "reviews",
+    "about",
+    "contact"
+  ];
+
+  function setStatus(id, message, kind = "") {
+    const el = $(id);
+    el.textContent = message;
+    el.className = "status" + (kind ? " " + kind : "");
   }
 
-  const client = window.supabase.createClient(
-    PROJECT_URL,
-    PUBLISHABLE_KEY
-  );
-
-  let currentUser = null;
-
-  function setStatus(message) {
-    status.textContent = message;
+  function safeName(name) {
+    return name
+      .normalize("NFKD")
+      .replace(/[^a-zA-Z0-9._-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(-100) || "photo";
   }
 
-  function selectedFolder() {
-    return photoTarget.value === "experiences" ? "experiences" : "";
+  function extensionFor(file) {
+    const typeMap = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/webp": "webp",
+      "image/gif": "gif",
+      "image/avif": "avif"
+    };
+    if (typeMap[file.type]) return typeMap[file.type];
+    const match = file.name.match(/\.([a-zA-Z0-9]+)$/);
+    return match ? match[1].toLowerCase() : "jpg";
   }
 
-  photoTarget.addEventListener("change", () => {
-    const experiences = photoTarget.value === "experiences";
-
-    targetHelp.textContent = experiences
-      ? "These photos are stored in the experiences folder and used by the three Experience cards. Upload three photos to replace all three cards."
-      : "These photos appear in the main Gallery section.";
-
-    fileInput.value = "";
-    loadPhotos();
-  });
-
-  function showSignedIn(user) {
-    currentUser = user;
-    loginPanel.classList.toggle("hidden", !!user);
-    managerPanel.classList.toggle("hidden", !user);
-
-    if (user) {
-      setStatus("Signed in as " + user.email);
-      loadPhotos();
-    } else {
-      photoList.replaceChildren();
-      setStatus("Please sign in to manage photos.");
+  function validateImage(file) {
+    if (!file) throw new Error("Please select an image first.");
+    if (!file.type.startsWith("image/")) {
+      throw new Error("Please select an image file.");
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      throw new Error("Image is larger than 15 MB. Please choose a smaller image.");
     }
   }
 
-  loginForm.addEventListener("submit", async event => {
-    event.preventDefault();
+  async function requireSession() {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) throw error;
+    if (!data.session) throw new Error("Please sign in first.");
+    return data.session;
+  }
 
-    const button = loginForm.querySelector("button");
-    button.disabled = true;
-    setStatus("Signing in…");
+  async function uploadImage(path, file) {
+    validateImage(file);
+    await requireSession();
 
-    try {
-      const { data, error } = await client.auth.signInWithPassword({
-        email: document.getElementById("email").value.trim(),
-        password: document.getElementById("password").value
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(path, file, {
+        contentType: file.type || "image/jpeg",
+        cacheControl: "0",
+        upsert: true
       });
 
-      if (error) throw error;
+    if (error) throw error;
+  }
 
-      showSignedIn(data.user);
-      loginForm.reset();
-    } catch (error) {
-      setStatus("Sign-in failed: " + error.message);
-    } finally {
-      button.disabled = false;
-    }
-  });
-
-  async function loadPhotos() {
-    if (!currentUser) return;
-
-    const folder = selectedFolder();
-    setStatus("Loading photos…");
-    photoList.replaceChildren();
-
-    const { data, error } = await client.storage
+  async function newestImageInFolder(slot) {
+    const folder = "section-images/" + slot;
+    const { data, error } = await supabase.storage
       .from(BUCKET)
       .list(folder, {
         limit: 100,
         sortBy: { column: "created_at", order: "desc" }
       });
 
-    if (error) {
-      setStatus("Could not list photos: " + error.message +
-        ". Check your Supabase Storage read policy.");
-      return;
-    }
+    if (error) throw error;
+    const files = (data || [])
+      .filter(item => item.name && !item.name.startsWith("."))
+      .filter(item => /\.(jpe?g|png|webp|gif|avif)$/i.test(item.name))
+      .sort((a, b) =>
+        new Date(b.created_at || 0).getTime() -
+        new Date(a.created_at || 0).getTime()
+      );
 
-    const photos = (data || []).filter(item =>
-      item.id &&
-      item.name &&
-      item.name !== ".emptyFolderPlaceholder" &&
-      (!item.metadata ||
-        !item.metadata.mimetype ||
-        item.metadata.mimetype.startsWith("image/"))
-    );
-
-    if (!photos.length) {
-      setStatus(folder
-        ? "No Experience photos found. Upload photos to this section."
-        : "No Gallery photos found in the bucket root.");
-      return;
-    }
-
-    setStatus(photos.length + (
-      folder ? " Experience photo(s) found." : " Gallery photo(s) found."
-    ));
-
-    photos.forEach(item => {
-      const path = folder ? folder + "/" + item.name : item.name;
-      const publicUrl = client.storage.from(BUCKET).getPublicUrl(path)
-        .data.publicUrl;
-
-      const card = document.createElement("article");
-      card.className = "photo";
-
-      const image = document.createElement("img");
-      image.src = publicUrl;
-      image.alt = path;
-      image.loading = "lazy";
-
-      const name = document.createElement("p");
-      name.className = "photo-name";
-      name.textContent = path;
-
-      const remove = document.createElement("button");
-      remove.className = "danger";
-      remove.type = "button";
-      remove.textContent = "Delete Photo";
-
-      remove.addEventListener("click", async () => {
-        if (!currentUser) {
-          setStatus("Please sign in again.");
-          return;
-        }
-
-        if (!confirm("Permanently delete " + path + "?")) return;
-
-        remove.disabled = true;
-        setStatus("Deleting photo…");
-
-        const { error: deleteError } = await client.storage
-          .from(BUCKET)
-          .remove([path]);
-
-        if (deleteError) {
-          setStatus("Delete failed: " + deleteError.message);
-          remove.disabled = false;
-          return;
-        }
-
-        setStatus("Photo deleted.");
-        await loadPhotos();
-      });
-
-      card.append(image, name, remove);
-      photoList.appendChild(card);
-    });
+    return files.length ? folder + "/" + files[0].name : null;
   }
 
-  uploadForm.addEventListener("submit", async event => {
-    event.preventDefault();
-
-    if (!currentUser) {
-      setStatus("Please sign in before uploading.");
-      return;
+  async function refreshSectionPreviews() {
+    for (const slot of slots) {
+      const preview = $("preview-" + slot);
+      if (!preview) continue;
+      try {
+        const path = await newestImageInFolder(slot);
+        if (!path) {
+          preview.removeAttribute("src");
+          preview.alt = "No photo uploaded for this section yet";
+          continue;
+        }
+        const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+        preview.src = data.publicUrl;
+      } catch (error) {
+        console.warn("Preview could not load for " + slot, error);
+      }
     }
+  }
 
-    const files = Array.from(fileInput.files || []);
-    const button = uploadForm.querySelector("button");
+  async function uploadSectionPhoto(slot) {
+    const file = $("file-" + slot).files[0];
+    validateImage(file);
 
-    if (!files.length) {
-      setStatus("Choose at least one photo.");
-      return;
-    }
-
-    if (files.some(file => !file.type.startsWith("image/"))) {
-      setStatus("Please choose image files only.");
-      return;
-    }
-
+    const button = document.querySelector('.upload-btn[data-slot="' + slot + '"]');
     button.disabled = true;
-    let uploaded = 0;
+    setStatus("uploadStatus", "Uploading photo for " + slot + "…");
 
     try {
-      const folder = selectedFolder();
+      const extension = extensionFor(file);
+      const filename = "photo-" + Date.now() + "." + extension;
+      const path = "section-images/" + slot + "/" + filename;
 
-      for (const file of files) {
-        const safeName = file.name
-          .normalize("NFKD")
-          .replace(/[^a-zA-Z0-9._-]/g, "-");
-
-        const fileName = Date.now() + "-" +
-          Math.random().toString(36).slice(2, 8) + "-" + safeName;
-
-        const path = folder ? folder + "/" + fileName : fileName;
-
-        setStatus("Uploading " + file.name + "…");
-
-        const { error } = await client.storage
-          .from(BUCKET)
-          .upload(path, file, {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: file.type
-          });
-
-        if (error) throw error;
-        uploaded++;
-      }
-
-      uploadForm.reset();
-
-      targetHelp.textContent = selectedFolder()
-        ? "Experience photos are stored separately from the Gallery."
-        : "Gallery photos appear in the main Gallery section.";
-
-      setStatus(uploaded + (
-        folder ? " Experience photo(s)" : " Gallery photo(s)"
-      ) + " uploaded successfully.");
-
-      await loadPhotos();
+      await uploadImage(path, file);
+      setStatus("uploadStatus", "Photo uploaded for " + slot + ". Refresh your website to check it.", "success");
+      $("file-" + slot).value = "";
+      await refreshSectionPreviews();
     } catch (error) {
-      setStatus(uploaded + " photo(s) uploaded. Upload error: " + error.message);
+      setStatus("uploadStatus", "Upload failed: " + (error.message || String(error)), "error");
     } finally {
       button.disabled = false;
     }
-  });
+  }
 
-  document.getElementById("refresh").addEventListener("click", loadPhotos);
-
-  document.getElementById("logout").addEventListener("click", async () => {
-    const { error } = await client.auth.signOut();
-
-    if (error) {
-      setStatus("Sign-out failed: " + error.message);
+  async function uploadGalleryPhotos() {
+    const files = Array.from($("galleryFiles").files || []);
+    if (!files.length) {
+      setStatus("galleryStatus", "Choose one or more photos first.", "error");
       return;
     }
 
-    showSignedIn(null);
-  });
+    const button = $("galleryUploadBtn");
+    button.disabled = true;
+    let completed = 0;
 
-  client.auth.onAuthStateChange((_event, session) => {
-    showSignedIn(session ? session.user : null);
-  });
+    try {
+      await requireSession();
+      for (const file of files) {
+        validateImage(file);
+        const path = "gallery-" + Date.now() + "-" +
+          Math.random().toString(36).slice(2, 8) + "-" +
+          safeName(file.name);
 
-  client.auth.getSession().then(({ data, error }) => {
+        const { error } = await supabase.storage
+          .from(BUCKET)
+          .upload(path, file, {
+            contentType: file.type || "image/jpeg",
+            cacheControl: "3600",
+            upsert: false
+          });
+
+        if (error) throw error;
+        completed++;
+      }
+
+      $("galleryFiles").value = "";
+      setStatus("galleryStatus", completed + " photo(s) uploaded successfully.", "success");
+      await refreshGallery();
+    } catch (error) {
+      setStatus("galleryStatus", "Gallery upload failed after " + completed + " photo(s): " + (error.message || String(error)), "error");
+      await refreshGallery();
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function refreshGallery() {
+    const grid = $("galleryGrid");
+    grid.replaceChildren();
+    setStatus("galleryStatus", "Loading gallery…");
+
+    try {
+      await requireSession();
+      const { data, error } = await supabase.storage
+        .from(BUCKET)
+        .list("", {
+          limit: 200,
+          sortBy: { column: "created_at", order: "desc" }
+        });
+
+      if (error) throw error;
+
+      const images = (data || [])
+        .filter(item => item.name && !item.name.startsWith("."))
+        .filter(item => /\.(jpe?g|png|webp|gif|avif)$/i.test(item.name));
+
+      if (!images.length) {
+        setStatus("galleryStatus", "No gallery photos found in the bucket root.");
+        return;
+      }
+
+      setStatus("galleryStatus", images.length + " gallery photo(s) found.", "success");
+
+      for (const item of images) {
+        const path = item.name;
+        const { data: publicData } = supabase.storage
+          .from(BUCKET)
+          .getPublicUrl(path);
+
+        const card = document.createElement("div");
+        card.className = "gallery-item";
+
+        const img = document.createElement("img");
+        img.src = publicData.publicUrl;
+        img.alt = "Gallery photo";
+        img.loading = "lazy";
+
+        const filename = document.createElement("p");
+        filename.textContent = path;
+
+        const remove = document.createElement("button");
+        remove.className = "danger";
+        remove.type = "button";
+        remove.textContent = "Delete photo";
+        remove.addEventListener("click", async () => {
+          const confirmed = window.confirm("Permanently delete " + path + "?");
+          if (!confirmed) return;
+
+          remove.disabled = true;
+          try {
+            const { error: deleteError } = await supabase.storage
+              .from(BUCKET)
+              .remove([path]);
+
+            if (deleteError) throw deleteError;
+            setStatus("galleryStatus", "Deleted " + path + ".", "success");
+            await refreshGallery();
+          } catch (error) {
+            setStatus("galleryStatus", "Delete failed: " + (error.message || String(error)), "error");
+            remove.disabled = false;
+          }
+        });
+
+        card.append(img, filename, remove);
+        grid.append(card);
+      }
+    } catch (error) {
+      setStatus("galleryStatus", "Could not load gallery: " + (error.message || String(error)), "error");
+    }
+  }
+
+  async function refreshAuthUI() {
+    const { data, error } = await supabase.auth.getSession();
     if (error) {
-      setStatus("Could not check sign-in: " + error.message);
+      setStatus("authStatus", error.message, "error");
       return;
     }
 
-    showSignedIn(data.session ? data.session.user : null);
+    const session = data.session;
+    $("loginForm").classList.toggle("hidden", !!session);
+    $("signedInActions").classList.toggle("hidden", !session);
+    $("dashboard").classList.toggle("hidden", !session);
+
+    if (session) {
+      $("signedInEmail").textContent = "Signed in as " + (session.user.email || "admin");
+      setStatus("authStatus", "Signed in. Your storage permissions determine which actions are allowed.", "success");
+      await refreshSectionPreviews();
+      await refreshGallery();
+    } else {
+      setStatus("authStatus", "Please sign in with your admin account.");
+      setStatus("galleryStatus", "Sign in to manage the gallery.");
+    }
+  }
+
+  $("loginBtn").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    if (!email || !password) {
+      setStatus("authStatus", "Enter your email and password.", "error");
+      return;
+    }
+
+    $("loginBtn").disabled = true;
+    setStatus("authStatus", "Signing in…");
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      $("password").value = "";
+      await refreshAuthUI();
+    } catch (error) {
+      setStatus("authStatus", "Sign-in failed: " + (error.message || String(error)), "error");
+    } finally {
+      $("loginBtn").disabled = false;
+    }
   });
-})();
+
+  $("resetBtn").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    if (!email) {
+      setStatus("authStatus", "Enter your admin email first.", "error");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + window.location.pathname
+      });
+      if (error) throw error;
+      setStatus("authStatus", "If the email is registered, a password reset email has been requested.", "success");
+    } catch (error) {
+      setStatus("authStatus", "Password reset failed: " + (error.message || String(error)), "error");
+    }
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      setStatus("authStatus", "Sign-out failed: " + error.message, "error");
+      return;
+    }
+    await refreshAuthUI();
+  });
+
+  document.querySelectorAll(".upload-btn").forEach(button => {
+    button.addEventListener("click", () => uploadSectionPhoto(button.dataset.slot));
+  });
+
+  $("galleryUploadBtn").addEventListener("click", uploadGalleryPhotos);
+  $("refreshGalleryBtn").addEventListener("click", refreshGallery);
+
+  supabase.auth.onAuthStateChange(() => {
+    setTimeout(() => refreshAuthUI(), 0);
+  });
+
+  refreshAuthUI();
 </script>
 </body>
 </html>
