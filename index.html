@@ -12,17 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        gold: {DEFAULT:"#C5A059",light:"#E0C078",dark:"#9A7B3E"},
-        ocean: {deep:"#030B14",dark:"#081421",card:"#0D1E30",accent:"#132B45"}
-      },
-      fontFamily: {cinzel:["Cinzel","serif"],sans:["Inter","sans-serif"]}
-    }
-  }
-};
+tailwind.config={theme:{extend:{colors:{gold:{DEFAULT:"#C5A059",light:"#E0C078",dark:"#9A7B3E"},ocean:{deep:"#030B14",dark:"#081421",card:"#0D1E30"}},fontFamily:{cinzel:["Cinzel","serif"],sans:["Inter","sans-serif"]}}}};
 </script>
 <style>
 :root{color-scheme:dark}
@@ -30,797 +20,597 @@ body{background:#030b14;color:#e5e7eb;font-family:Inter,sans-serif}
 .font-cinzel{font-family:Cinzel,serif}
 .gold-gradient-text{background:linear-gradient(135deg,#fff0ca,#c5a059,#9a7b3e);-webkit-background-clip:text;background-clip:text;color:transparent}
 .gold-btn{border:1px solid #c5a059;background:linear-gradient(135deg,#c5a05930,#9a7b3e30);transition:.25s}
-.gold-btn:hover{background:#c5a05935;box-shadow:0 0 22px #c5a05935;transform:translateY(-1px)}
+.gold-btn:hover{background:#c5a05935;box-shadow:0 0 22px #c5a05935}
 .gold-border{border:1px solid #c5a05940}
 .card{background:#0d1e30;border:1px solid #c5a05930;border-radius:16px;overflow:hidden}
-.card:hover{border-color:#c5a05990}
-.section{padding:84px 0}
+.section{padding:78px 0}
 .section-title{font-family:Cinzel,serif;color:#e0c078;font-size:clamp(1.7rem,4vw,2.7rem);font-weight:700;letter-spacing:.07em}
 .hero{background:linear-gradient(90deg,#030b14ed 0%,#030b1480 55%,#030b1440),url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=2000&q=85') center/cover no-repeat}
-.gallery-img{width:100%;height:220px;object-fit:cover;cursor:pointer;transition:transform .35s}
-.gallery-img:hover{transform:scale(1.035)}
+.gallery-img{width:100%;height:220px;object-fit:cover;cursor:pointer;transition:transform .3s}
+.gallery-img:hover{transform:scale(1.025)}
 input,textarea,select{color:#f3f4f6}
-a,button{touch-action:manipulation}
 button:disabled{opacity:.55;cursor:not-allowed}
 [hidden]{display:none!important}
-@media(max-width:640px){.section{padding:60px 0}.hero{background-position:60% center}}
+@media(max-width:640px){.section{padding:56px 0}}
 </style>
 </head>
-
 <body>
 <header class="sticky top-0 z-40 bg-ocean-deep/95 backdrop-blur border-b border-gold/20">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="#home" class="min-w-0">
-      <span class="block text-[10px] uppercase tracking-[.3em] text-gold">Maldives · Addu Atoll</span>
-      <span class="font-cinzel text-lg sm:text-2xl font-bold gold-gradient-text">ADDU DIVE HUB</span>
-    </a>
-    <nav class="hidden lg:flex gap-5 text-xs uppercase tracking-wider">
-      <a href="#experience" class="hover:text-gold">Experiences</a>
-      <a href="#sites" class="hover:text-gold">Dive Sites</a>
-      <a href="#courses" class="hover:text-gold">Courses</a>
-      <a href="#gallery" class="hover:text-gold">Gallery</a>
-      <a href="#reviews" class="hover:text-gold">Reviews</a>
-      <a href="#contact" class="hover:text-gold">Contact</a>
-    </nav>
-    <button type="button" onclick="toggleMenu()" class="lg:hidden gold-btn rounded-lg px-3 py-2" aria-label="Open navigation">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-    <a href="https://wa.me/9609373383" target="_blank" rel="noopener" class="hidden sm:inline-block gold-btn rounded-full px-4 py-2 text-xs text-gold-light">Book a Dive</a>
-  </div>
-  <nav id="mobile-menu" class="hidden lg:hidden border-t border-gold/20 p-4 bg-ocean-dark">
-    <div class="grid grid-cols-2 gap-4 text-sm">
-      <a onclick="toggleMenu()" href="#experience">Experiences</a>
-      <a onclick="toggleMenu()" href="#sites">Dive Sites</a>
-      <a onclick="toggleMenu()" href="#courses">Courses</a>
-      <a onclick="toggleMenu()" href="#gallery">Gallery</a>
-      <a onclick="toggleMenu()" href="#reviews">Reviews</a>
-      <a onclick="toggleMenu()" href="#contact">Contact</a>
-    </div>
-  </nav>
+<div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+<a href="#home"><span class="block text-[10px] uppercase tracking-[.3em] text-gold">Maldives · Addu Atoll</span><span class="font-cinzel text-lg sm:text-2xl font-bold gold-gradient-text">ADDU DIVE HUB</span></a>
+<nav class="hidden lg:flex gap-5 text-xs uppercase tracking-wider"><a href="#experience">Experiences</a><a href="#sites">Dive Sites</a><a href="#courses">Courses</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a></nav>
+<button type="button" onclick="toggleMenu()" class="lg:hidden gold-btn rounded-lg px-3 py-2" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+<a href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-block gold-btn rounded-full px-4 py-2 text-xs text-gold-light">Book a Dive</a>
+</div>
+<nav id="mobile-menu" hidden class="lg:hidden border-t border-gold/20 p-4 bg-ocean-dark"><div class="grid grid-cols-2 gap-4 text-sm"><a onclick="toggleMenu()" href="#experience">Experiences</a><a onclick="toggleMenu()" href="#sites">Dive Sites</a><a onclick="toggleMenu()" href="#courses">Courses</a><a onclick="toggleMenu()" href="#gallery">Gallery</a><a onclick="toggleMenu()" href="#reviews">Reviews</a><a onclick="toggleMenu()" href="#contact">Contact</a></div></nav>
 </header>
 
 <main>
 <section id="home" class="hero min-h-[78vh] flex items-center" data-section-background="home">
-  <div class="max-w-7xl mx-auto w-full px-5 py-20">
-    <p class="uppercase tracking-[.28em] text-gold text-xs sm:text-sm mb-5">Discover the southern Maldives</p>
-    <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl">
-      <span class="gold-gradient-text">BEYOND THE</span><br>BLUE HORIZON
-    </h1>
-    <p class="max-w-xl text-gray-300 leading-7 mt-6">Discover remarkable reefs, graceful manta rays and the historic British Loyalty wreck with Addu Dive Hub.</p>
-    <div class="flex flex-wrap gap-3 mt-8">
-      <button type="button" onclick="openBookingModal()" class="gold-btn rounded-full px-7 py-3 text-gold-light">Book Your Experience</button>
-      <a href="#sites" class="rounded-full border border-white/30 px-7 py-3 hover:border-gold">Explore Dive Sites</a>
-    </div>
-    <div class="flex flex-wrap gap-6 mt-12 text-sm text-gray-300">
-      <span><i class="fa-solid fa-water text-gold mr-2"></i>Addu Atoll</span>
-      <span><i class="fa-solid fa-fish text-gold mr-2"></i>Marine Encounters</span>
-      <span><i class="fa-solid fa-compass text-gold mr-2"></i>Guided Adventures</span>
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto w-full px-5 py-20">
+<p class="uppercase tracking-[.28em] text-gold text-xs sm:text-sm mb-5">Discover the southern Maldives</p>
+<h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl"><span class="gold-gradient-text">BEYOND THE</span><br>BLUE HORIZON</h1>
+<p class="max-w-xl text-gray-300 leading-7 mt-6">Discover remarkable reefs, graceful manta rays and the historic British Loyalty wreck with Addu Dive Hub.</p>
+<div class="flex flex-wrap gap-3 mt-8"><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-7 py-3 text-gold-light">Book Your Experience</button><a href="#sites" class="rounded-full border border-white/30 px-7 py-3">Explore Dive Sites</a></div>
+<div class="flex flex-wrap gap-6 mt-12 text-sm text-gray-300"><span><i class="fa-solid fa-water text-gold mr-2"></i>Addu Atoll</span><span><i class="fa-solid fa-fish text-gold mr-2"></i>Marine Encounters</span><span><i class="fa-solid fa-compass text-gold mr-2"></i>Guided Adventures</span></div>
+</div>
 </section>
 
 <section id="experience" class="section">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Your journey begins here</p>
-      <h2 class="section-title">THE ADDU EXPERIENCE</h2>
-      <p class="text-gray-400 mt-4">Explore the ocean, discover local wonders and create unforgettable memories.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <article class="card">
-        <img data-section-image="experience-diving" class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Scuba diver exploring underwater">
-        <div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Scuba Diving</h3><p class="text-sm text-gray-400 leading-6">Discover reefs and historic wrecks with a local dive team.</p><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Explore Diving</button></div>
-      </article>
-      <article class="card">
-        <img data-section-image="experience-adventures" class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&fit=crop&w=900&q=80" alt="Tropical ocean adventure">
-        <div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Ocean Adventures</h3><p class="text-sm text-gray-400 leading-6">Ask about guided dives and marine-life encounters around Addu.</p><button onclick="openBookingModal('Guided Ocean Adventure')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Plan an Adventure</button></div>
-      </article>
-      <article class="card">
-        <img data-section-image="experience-island" class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Turquoise tropical sea">
-        <div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Island Experiences</h3><p class="text-sm text-gray-400 leading-6">Discover the beauty and welcoming island culture of the southern Maldives.</p><a href="#contact" class="gold-btn inline-block rounded-full px-5 py-2 mt-5 text-sm">Ask Us</a></div>
-      </article>
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-12"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Your journey begins here</p><h2 class="section-title">THE ADDU EXPERIENCE</h2><p class="text-gray-400 mt-4">Explore the ocean, discover local wonders and create unforgettable memories.</p></div>
+<div class="grid md:grid-cols-3 gap-6">
+<article class="card"><img data-section-image="experience-diving" class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Scuba diver exploring underwater"><div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Scuba Diving</h3><p class="text-sm text-gray-400 leading-6">Discover reefs and historic wrecks with a local dive team.</p><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Explore Diving</button></div></article>
+<article class="card"><img data-section-image="experience-adventures" class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&fit=crop&w=900&q=80" alt="Tropical ocean adventure"><div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Ocean Adventures</h3><p class="text-sm text-gray-400 leading-6">Ask about guided dives and marine-life encounters around Addu.</p><button onclick="openBookingModal('Guided Ocean Adventure')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Plan an Adventure</button></div></article>
+<article class="card"><img data-section-image="experience-island" class="w-full h-56 object-cover" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80" alt="Turquoise tropical sea"><div class="p-6"><h3 class="font-cinzel text-xl text-gold-light mb-3">Island Experiences</h3><p class="text-sm text-gray-400 leading-6">Discover the beauty and welcoming island culture of the southern Maldives.</p><a href="#contact" class="gold-btn inline-block rounded-full px-5 py-2 mt-5 text-sm">Ask Us</a></div></article>
+</div>
+</div>
 </section>
 
 <section id="sites" class="section bg-ocean-dark border-y border-gold/10">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-10">
-      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Explore beneath the surface</p>
-      <h2 class="section-title">DIVE SITES OF ADDU</h2>
-      <p class="text-gray-400 mt-4">Choose a site to learn more and ask about a guided dive.</p>
-    </div>
-    <div class="flex flex-wrap justify-center gap-2 mb-9">
-      <button class="site-filter-btn gold-btn rounded-full px-5 py-2 text-sm" onclick="filterSites('all',this)">All Sites</button>
-      <button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('wreck',this)">Wrecks</button>
-      <button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('manta',this)">Mantas & Pelagics</button>
-      <button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('reef',this)">Coral Reefs</button>
-    </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <article class="site-card wreck card">
-        <img data-section-image="site-wreck" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Underwater wreck diving">
-        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Historic wreck</p><h3 class="font-cinzel text-xl text-gold-light">British Loyalty Wreck</h3><p class="text-sm text-gray-400 leading-6 mt-3">Explore the famous tanker wreck resting in Addu Atoll. Depth, conditions and suitability depend on certification and conditions.</p><button onclick="openBookingModal('British Loyalty Wreck Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
-      </article>
-      <article class="site-card manta card">
-        <img data-section-image="site-manta" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=900&q=80" alt="Manta ray underwater">
-        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Marine encounters</p><h3 class="font-cinzel text-xl text-gold-light">Manta Encounters</h3><p class="text-sm text-gray-400 leading-6 mt-3">Ask our team about suitable sites, recent sightings and conditions for manta-ray encounters.</p><button onclick="openBookingModal('Manta Ray Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
-      </article>
-      <article class="site-card reef card">
-        <img data-section-image="site-reef" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=900&q=80" alt="Colorful coral reef">
-        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Reef exploration</p><h3 class="font-cinzel text-xl text-gold-light">Coral Gardens</h3><p class="text-sm text-gray-400 leading-6 mt-3">Discover coral formations and reef fish with a guide who can recommend a site for your experience level.</p><button onclick="openBookingModal('Guided Coral Reef Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
-      </article>
-      <article class="site-card manta card">
-        <img data-section-image="site-channel" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=900&q=80" alt="Ocean wildlife">
-        <div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Channel diving</p><h3 class="font-cinzel text-xl text-gold-light">Channel Drift Dives</h3><p class="text-sm text-gray-400 leading-6 mt-3">Channel dives can involve currents and are planned according to conditions and diver experience.</p><button onclick="openBookingModal('Channel Drift Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div>
-      </article>
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Explore beneath the surface</p><h2 class="section-title">DIVE SITES OF ADDU</h2><p class="text-gray-400 mt-4">Choose a site to learn more and ask about a guided dive.</p></div>
+<div class="flex flex-wrap justify-center gap-2 mb-9"><button class="site-filter-btn gold-btn rounded-full px-5 py-2 text-sm" onclick="filterSites('all',this)">All Sites</button><button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('wreck',this)">Wrecks</button><button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('manta',this)">Mantas & Pelagics</button><button class="site-filter-btn rounded-full border border-gold/30 px-5 py-2 text-sm" onclick="filterSites('reef',this)">Coral Reefs</button></div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+<article class="site-card wreck card"><img data-section-image="site-wreck" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Wreck diving"><div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Historic wreck</p><h3 class="font-cinzel text-xl text-gold-light">British Loyalty Wreck</h3><p class="text-sm text-gray-400 leading-6 mt-3">Explore the famous tanker wreck resting in Addu Atoll. Depth, conditions and suitability depend on certification and conditions.</p><button onclick="openBookingModal('British Loyalty Wreck Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div></article>
+<article class="site-card manta card"><img data-section-image="site-manta" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=900&q=80" alt="Manta ray underwater"><div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Marine encounters</p><h3 class="font-cinzel text-xl text-gold-light">Manta Encounters</h3><p class="text-sm text-gray-400 leading-6 mt-3">Ask our team about suitable sites, recent sightings and conditions for manta-ray encounters.</p><button onclick="openBookingModal('Manta Ray Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div></article>
+<article class="site-card reef card"><img data-section-image="site-reef" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=900&q=80" alt="Colorful coral reef"><div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Reef exploration</p><h3 class="font-cinzel text-xl text-gold-light">Coral Gardens</h3><p class="text-sm text-gray-400 leading-6 mt-3">Discover coral formations and reef fish with a guide who can recommend a site for your experience level.</p><button onclick="openBookingModal('Guided Coral Reef Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div></article>
+<article class="site-card manta card"><img data-section-image="site-channel" class="w-full h-52 object-cover" src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=900&q=80" alt="Ocean wildlife"><div class="p-6"><p class="text-xs uppercase tracking-widest text-gold mb-2">Channel diving</p><h3 class="font-cinzel text-xl text-gold-light">Channel Drift Dives</h3><p class="text-sm text-gray-400 leading-6 mt-3">Channel dives can involve currents and are planned according to conditions and diver experience.</p><button onclick="openBookingModal('Channel Drift Dive')" class="gold-btn rounded-full px-5 py-2 mt-5 text-sm">Ask About This Dive</button></div></article>
+</div>
+</div>
 </section>
 
 <section id="courses" class="section">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Start or continue your journey</p>
-      <h2 class="section-title">DIVING COURSES</h2>
-      <p class="text-gray-400 mt-4">Contact us to confirm course availability, requirements and current prices.</p>
-    </div>
-    <img data-section-image="courses" class="w-full h-56 object-cover rounded-2xl mb-8 gold-border" loading="lazy" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=80" alt="Scuba diving course in the ocean">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Beginner</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Discover Scuba</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">A first underwater experience with professional guidance.</p><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
-      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Certification</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Open Water</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Build the knowledge and skills to become a certified diver.</p><button onclick="openBookingModal('Open Water Diver Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
-      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Advanced</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Advanced Open Water</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Develop your diving skills through supervised adventure dives.</p><button onclick="openBookingModal('Advanced Open Water Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
-      <article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Specialty</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Wreck Diving</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Ask about wreck-diving training and prerequisites.</p><button onclick="openBookingModal('Wreck Diving Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-12"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Start or continue your journey</p><h2 class="section-title">DIVING COURSES</h2><p class="text-gray-400 mt-4">Contact us to confirm course availability, requirements and current prices.</p></div>
+<img data-section-image="courses" class="w-full h-56 object-cover rounded-2xl mb-8 gold-border" loading="lazy" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=80" alt="Scuba diving course">
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Beginner</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Discover Scuba</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">A first underwater experience with professional guidance.</p><button onclick="openBookingModal('Discover Scuba Diving')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+<article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Certification</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Open Water</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Build the knowledge and skills to become a certified diver.</p><button onclick="openBookingModal('Open Water Diver Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+<article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Advanced</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Advanced Open Water</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Develop your diving skills through supervised adventure dives.</p><button onclick="openBookingModal('Advanced Open Water Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+<article class="card p-6 flex flex-col"><span class="text-xs text-gold uppercase tracking-widest">Specialty</span><h3 class="font-cinzel text-lg text-gold-light mt-3">Wreck Diving</h3><p class="text-sm text-gray-400 leading-6 mt-3 flex-1">Ask about wreck-diving training and prerequisites.</p><button onclick="openBookingModal('Wreck Diving Course')" class="gold-btn rounded-full px-4 py-2 mt-5 text-sm">Enquire</button></article>
+</div>
+</div>
 </section>
 
 <section id="gallery" class="section bg-ocean-dark border-y border-gold/10">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Moments below the surface</p><h2 class="section-title">UNDERWATER GALLERY</h2><p class="text-gray-400 mt-4">Explore photos from our diving experiences.</p></div>
-    <p id="gallery-status" class="text-center text-sm text-gray-500 mb-5">Loading gallery photos…</p>
-    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80" alt="Underwater diving" onclick="openLightbox(this.src,this.alt)">
-      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=700&q=80" alt="Coral reef" onclick="openLightbox(this.src,this.alt)">
-      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=700&q=80" alt="Manta ray" onclick="openLightbox(this.src,this.alt)">
-      <img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80" alt="Tropical ocean" onclick="openLightbox(this.src,this.alt)">
-    </div>
-    <div class="text-center mt-8"><a href="admin.html" class="gold-btn inline-block rounded-full px-6 py-3 text-sm">Open Photo Admin</a><p class="text-xs text-gray-500 mt-3">Use the admin page to manage uploaded photos.</p></div>
-  </div>
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Moments below the surface</p><h2 class="section-title">UNDERWATER GALLERY</h2><p class="text-gray-400 mt-4">Explore photos from our diving experiences.</p></div>
+<p id="gallery-status" class="text-center text-sm text-gray-500 mb-5">Loading gallery photos…</p>
+<div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80" alt="Underwater diving" onclick="openLightbox(this.src,this.alt)">
+<img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=700&q=80" alt="Coral reef" onclick="openLightbox(this.src,this.alt)">
+<img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=700&q=80" alt="Manta ray" onclick="openLightbox(this.src,this.alt)">
+<img class="gallery-img rounded-xl" loading="lazy" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=700&q=80" alt="Tropical ocean" onclick="openLightbox(this.src,this.alt)">
+</div>
+<div class="text-center mt-8"><a href="admin.html" class="gold-btn inline-block rounded-full px-6 py-3 text-sm">Open Photo Admin</a><p class="text-xs text-gray-500 mt-3">Use the admin page to manage uploaded photos.</p></div>
+</div>
 </section>
 
 <section id="video" class="section" data-section-background="video">
-  <div class="max-w-5xl mx-auto px-4 text-center">
-    <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">See the ocean for yourself</p>
-    <h2 class="section-title mb-8">DIVE WITH US</h2>
-    <div class="relative w-full overflow-hidden rounded-2xl gold-border" style="aspect-ratio:16/9">
-      <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/kBRiUVAQ-jo" title="Addu Dive Hub diving video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <p class="text-sm text-gray-500 mt-4">If the video is unavailable, it may have been removed or restricted on YouTube.</p>
-  </div>
+<div class="max-w-5xl mx-auto px-4 text-center"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">See the ocean for yourself</p><h2 class="section-title mb-8">DIVE WITH US</h2><div class="relative w-full overflow-hidden rounded-2xl gold-border" style="aspect-ratio:16/9"><iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/kBRiUVAQ-jo" title="Addu Dive Hub diving video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div></div>
 </section>
 
-<!-- REVIEWS: members must sign in to submit; only approved reviews are public -->
 <section id="reviews" class="section bg-ocean-dark border-y border-gold/10" data-section-background="reviews">
-  <div class="max-w-5xl mx-auto px-4">
-    <div class="text-center mb-10">
-      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Guest experiences</p>
-      <h2 class="section-title">GUEST REVIEWS</h2>
-      <p class="text-gray-400 mt-4">Create an account or sign in to share your experience.</p>
-    </div>
-
-    <div id="reviews-list" class="grid md:grid-cols-2 gap-4 mb-10">
-      <p class="text-gray-500 text-sm">Loading approved reviews…</p>
-    </div>
-
-    <div class="card p-6 max-w-2xl mx-auto">
-      <div id="review-auth-panel">
-        <h3 class="font-cinzel text-xl text-gold-light mb-5">Member Access</h3>
-
-        <div class="flex flex-wrap gap-3 mb-6">
-          <button type="button" id="show-signin" class="gold-btn rounded-full px-5 py-2 text-sm">Sign In</button>
-          <button type="button" id="show-signup" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Create Account</button>
-        </div>
-
-        <form id="review-signin-form" class="space-y-4">
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="signin-email">Email address</label>
-            <input id="signin-email" type="email" autocomplete="email" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="signin-password">Password</label>
-            <input id="signin-password" type="password" autocomplete="current-password" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your password">
-          </div>
-          <button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In</button>
-        </form>
-
-        <form id="review-signup-form" class="space-y-4" hidden>
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="signup-name">Your name</label>
-            <input id="signup-name" type="text" autocomplete="name" maxlength="80" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="signup-email">Email address</label>
-            <input id="signup-email" type="email" autocomplete="email" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="signup-password">Create password</label>
-            <input id="signup-password" type="password" autocomplete="new-password" minlength="8" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="At least 8 characters">
-          </div>
-          <button id="signup-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Create Account</button>
-          <p class="text-xs text-gray-500">You may need to confirm your email before signing in.</p>
-        </form>
-
-        <p id="auth-status" role="status" aria-live="polite" class="text-sm text-gray-400 mt-4"></p>
-      </div>
-
-      <div id="review-member-panel" hidden>
-        <p class="text-gold-light mb-2">Signed in as <span id="member-name"></span></p>
-        <p class="text-sm text-gray-400 mb-4">You can now submit a review. It will remain private until the admin approves it.</p>
-        <button type="button" id="review-signout" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Sign Out</button>
-      </div>
-
-      <div id="review-write-panel" class="mt-8 pt-6 border-t border-gold/20" hidden>
-        <h3 class="font-cinzel text-xl text-gold-light mb-5">Share Your Experience</h3>
-        <form id="review-form" class="space-y-4">
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="review-name">Your name</label>
-            <input id="review-name" name="name" required maxlength="80" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="review-rating">Rating</label>
-            <select id="review-rating" name="rating" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3">
-              <option value="5">★★★★★ — Excellent</option>
-              <option value="4">★★★★ — Very good</option>
-              <option value="3">★★★ — Good</option>
-              <option value="2">★★ — Fair</option>
-              <option value="1">★ — Poor</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm text-gray-300 mb-2" for="review-message">Your review</label>
-            <textarea id="review-message" name="message" required maxlength="1500" rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Tell us about your experience"></textarea>
-          </div>
-          <button id="review-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Submit Review</button>
-          <p id="review-status" role="status" aria-live="polite" class="text-sm text-gray-400 mt-4"></p>
-        </form>
-      </div>
-    </div>
-  </div>
+<div class="max-w-5xl mx-auto px-4">
+<div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Guest experiences</p><h2 class="section-title">GUEST REVIEWS</h2><p class="text-gray-400 mt-4">Sign in with your BOLI account to share your experience. Reviews appear after admin approval.</p></div>
+<div id="reviews-list" class="grid md:grid-cols-2 gap-4 mb-10"><p class="text-gray-500 text-sm">Loading approved reviews…</p></div>
+<div class="card p-6 max-w-2xl mx-auto">
+<div id="review-auth-panel">
+<h3 class="font-cinzel text-xl text-gold-light mb-5">BOLI Member Access</h3>
+<div class="flex flex-wrap gap-3 mb-6"><button type="button" id="show-signin" class="gold-btn rounded-full px-5 py-2 text-sm">Sign In</button><button type="button" id="show-signup" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Create Account</button></div>
+<form id="review-signin-form" class="space-y-4">
+<div><label for="signin-email" class="block text-sm text-gray-300 mb-2">Email address</label><input id="signin-email" type="email" autocomplete="email" required maxlength="254" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com"></div>
+<div><label for="signin-password" class="block text-sm text-gray-300 mb-2">Password</label><input id="signin-password" type="password" autocomplete="current-password" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your password"></div>
+<button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In</button>
+</form>
+<form id="review-signup-form" hidden class="space-y-4">
+<div><label for="signup-name" class="block text-sm text-gray-300 mb-2">Full name</label><input id="signup-name" required maxlength="80" autocomplete="name" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name"></div>
+<div><label for="signup-email" class="block text-sm text-gray-300 mb-2">Email address</label><input id="signup-email" type="email" required maxlength="254" autocomplete="email" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com"></div>
+<div><label for="signup-password" class="block text-sm text-gray-300 mb-2">Password</label><input id="signup-password" type="password" required minlength="8" autocomplete="new-password" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="At least 8 characters"></div>
+<button id="signup-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Create Account</button>
+</form>
+<p id="auth-status" role="status" aria-live="polite" class="text-sm text-gray-300 mt-4"></p>
+</div>
+<div id="review-member-panel" hidden class="border-t border-gold/20 mt-5 pt-5"><div class="flex items-center justify-between gap-3"><p class="text-sm text-gray-300">Signed in as <strong id="member-name" class="text-gold-light"></strong></p><button type="button" id="review-signout" class="rounded-full border border-gold/30 px-4 py-2 text-sm">Sign Out</button></div></div>
+<div id="review-write-panel" hidden class="border-t border-gold/20 mt-6 pt-6">
+<h3 class="font-cinzel text-xl text-gold-light mb-4">Write a Review</h3>
+<form id="review-form" class="space-y-4">
+<div><label for="review-name" class="block text-sm text-gray-300 mb-2">Name to display</label><input id="review-name" required maxlength="80" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name"></div>
+<div><label for="review-rating" class="block text-sm text-gray-300 mb-2">Rating</label><select id="review-rating" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"><option value="5">5 — Excellent</option><option value="4">4 — Very good</option><option value="3">3 — Good</option><option value="2">2 — Fair</option><option value="1">1 — Poor</option></select></div>
+<div><label for="review-message" class="block text-sm text-gray-300 mb-2">Your review</label><textarea id="review-message" required maxlength="1500" rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Share your experience…"></textarea></div>
+<button id="review-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Submit Review</button>
+</form>
+<p id="review-status" role="status" aria-live="polite" class="text-sm text-gray-300 mt-4"></p>
+</div>
+</div>
+</div>
 </section>
 
-<section id="about" class="section">
-  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
-    <div>
-      <img data-section-image="about" class="w-full h-72 object-cover rounded-2xl mb-8 gold-border" loading="lazy" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80" alt="The ocean around the Maldives">
-      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">About us</p>
-      <h2 class="section-title mb-6">YOUR GATEWAY TO ADDU</h2>
-      <p class="text-gray-300 leading-7">Addu Dive Hub welcomes divers and ocean lovers to explore the underwater world of Addu Atoll in the southern Maldives. From reefs to historic wrecks, our aim is to help you plan an unforgettable ocean experience.</p>
-      <p class="text-gray-400 leading-7 mt-4">Ask us about dive conditions, suitable sites, courses and availability before booking.</p>
-      <a href="#contact" class="gold-btn inline-block rounded-full px-6 py-3 mt-7">Contact Our Team</a>
-    </div>
-    <img class="w-full h-80 object-cover rounded-2xl gold-border" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80" alt="Diving in the Maldives" loading="lazy">
-  </div>
+<section id="about" class="section" data-section-background="about">
+<div class="max-w-5xl mx-auto px-4 text-center"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Local knowledge · Ocean respect</p><h2 class="section-title">ABOUT ADDU DIVE HUB</h2><p class="max-w-3xl mx-auto text-gray-300 leading-7 mt-6">Discover the southern Maldives with a local team. We help divers explore Addu Atoll's reefs, channels and historic wrecks while respecting the ocean and its marine life.</p></div>
 </section>
 
-<section id="contact" class="section bg-ocean-dark border-t border-gold/10" data-section-background="contact">
-  <div class="max-w-4xl mx-auto px-4 text-center">
-    <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Let's plan your adventure</p>
-    <h2 class="section-title">CONTACT ADDU DIVE HUB</h2>
-    <p class="text-gray-400 mt-4 mb-8">Contact us directly to ask about bookings, courses and availability.</p>
-    <div class="grid sm:grid-cols-3 gap-4 mb-8 text-sm">
-      <a class="card p-5 hover:border-gold/70" href="https://wa.me/9609373383" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp text-2xl text-gold mb-3"></i><span class="block text-gold-light">WhatsApp</span><span class="block text-gray-400 mt-2">+960 9373383</span></a>
-      <a class="card p-5 hover:border-gold/70" href="mailto:hishamdipu@gmail.com"><i class="fa-solid fa-envelope text-2xl text-gold mb-3"></i><span class="block text-gold-light">Email</span><span class="block text-gray-400 mt-2">hishamdipu@gmail.com</span></a>
-      <div class="card p-5"><i class="fa-solid fa-location-dot text-2xl text-gold mb-3"></i><span class="block text-gold-light">Location</span><span class="block text-gray-400 mt-2">Feydhoo, Addu City, Maldives</span></div>
-    </div>
-    <form id="contact-form" class="card p-6 text-left grid sm:grid-cols-2 gap-4">
-      <div><label for="contact-name" class="block text-sm text-gray-300 mb-2">Your name</label><input id="contact-name" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Full name"></div>
-      <div><label for="contact-email" class="block text-sm text-gray-300 mb-2">Your email</label><input id="contact-email" type="email" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com"></div>
-      <div class="sm:col-span-2"><label for="contact-message" class="block text-sm text-gray-300 mb-2">Message</label><textarea id="contact-message" required rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="How can we help?"></textarea></div>
-      <div class="sm:col-span-2"><button class="gold-btn rounded-full px-7 py-3 text-gold-light" type="submit">Send Inquiry by Email</button><p class="text-xs text-gray-500 mt-3">This opens your email app with your message prepared; it does not send automatically.</p></div>
-    </form>
-  </div>
+<section id="contact" class="section bg-ocean-dark border-y border-gold/10" data-section-background="contact">
+<div class="max-w-4xl mx-auto px-4">
+<div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Plan your visit</p><h2 class="section-title">CONTACT US</h2><p class="text-gray-400 mt-4">Tell us what you would like to explore.</p></div>
+<form id="contact-form" class="card p-6 sm:p-8 space-y-4">
+<div><label for="contact-name" class="block text-sm mb-2">Your name</label><input id="contact-name" required maxlength="100" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+<div><label for="contact-email" class="block text-sm mb-2">Email address</label><input id="contact-email" type="email" required maxlength="254" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+<div><label for="contact-message" class="block text-sm mb-2">Message</label><textarea id="contact-message" required maxlength="3000" rows="5" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></textarea></div>
+<button type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Prepare Email</button>
+</form>
+<div class="text-center mt-6"><a class="text-gold-light hover:underline" href="https://wa.me/9609373383" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp mr-2"></i>Contact us on WhatsApp</a><p class="text-xs text-gray-500 mt-2">Feydhoo, Addu City, Maldives</p></div>
+</div>
 </section>
 </main>
 
 <footer class="border-t border-gold/20 bg-ocean-deep py-8">
-  <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-    <div><p class="font-cinzel gold-gradient-text font-bold">ADDU DIVE HUB</p><p class="text-xs text-gray-500 mt-2">Feydhoo, Addu City, Maldives</p></div>
-    <div class="flex gap-5 text-sm"><a href="#sites" class="hover:text-gold">Dive Sites</a><a href="#courses" class="hover:text-gold">Courses</a><a href="admin.html" class="hover:text-gold">Photo Admin</a></div>
-    <p class="text-xs text-gray-500">© 2026 Addu Dive Hub</p>
-  </div>
+<div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"><div><p class="font-cinzel gold-gradient-text font-bold">ADDU DIVE HUB</p><p class="text-xs text-gray-500 mt-2">Feydhoo, Addu City, Maldives</p></div><div class="flex gap-5 text-sm"><a href="#sites">Dive Sites</a><a href="#courses">Courses</a><a href="admin.html">Photo Admin</a></div><p class="text-xs text-gray-500">© 2026 Addu Dive Hub</p></div>
 </footer>
 
-<div id="booking-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-4 flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="booking-title" onclick="if(event.target===this)closeBookingModal()">
-  <div class="card w-full max-w-lg p-6 sm:p-8 relative" onclick="event.stopPropagation()">
-    <button type="button" onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gold" aria-label="Close booking form"><i class="fa-solid fa-xmark text-xl"></i></button>
-    <h2 id="booking-title" class="font-cinzel text-2xl text-gold-light mb-2">BOOKING ENQUIRY</h2>
-    <p class="text-sm text-gray-400 mb-6">Send us your preferred activity and details through WhatsApp.</p>
-    <form id="booking-form" class="space-y-4">
-      <div><label for="booking-activity" class="block text-sm mb-2">Activity or course</label><select id="booking-activity" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"><option>British Loyalty Wreck Dive</option><option>Manta Ray Dive</option><option>Guided Coral Reef Dive</option><option>Channel Drift Dive</option><option>Discover Scuba Diving</option><option>Open Water Diver Course</option><option>Advanced Open Water Course</option><option>Wreck Diving Course</option></select></div>
-      <div><label for="booking-date" class="block text-sm mb-2">Preferred date</label><input id="booking-date" type="date" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
-      <div><label for="booking-people" class="block text-sm mb-2">Number of divers</label><input id="booking-people" type="number" min="1" max="10" value="1" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
-      <div><label for="booking-name" class="block text-sm mb-2">Your name</label><input id="booking-name" required maxlength="100" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Full name"></div>
-      <button type="submit" class="gold-btn rounded-full w-full py-3 text-gold-light">Continue to WhatsApp</button>
-    </form>
-  </div>
+<div id="booking-modal" hidden class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-4 flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="booking-title" onclick="if(event.target===this)closeBookingModal()">
+<div class="card w-full max-w-lg p-6 sm:p-8 relative" onclick="event.stopPropagation()">
+<button type="button" onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400" aria-label="Close booking form"><i class="fa-solid fa-xmark text-xl"></i></button>
+<h2 id="booking-title" class="font-cinzel text-2xl text-gold-light mb-2">BOOKING ENQUIRY</h2><p class="text-sm text-gray-400 mb-6">Send your preferred activity and details through WhatsApp.</p>
+<form id="booking-form" class="space-y-4">
+<div><label for="booking-activity" class="block text-sm mb-2">Activity or course</label><select id="booking-activity" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"><option>British Loyalty Wreck Dive</option><option>Manta Ray Dive</option><option>Guided Coral Reef Dive</option><option>Channel Drift Dive</option><option>Discover Scuba Diving</option><option>Open Water Diver Course</option><option>Advanced Open Water Course</option><option>Wreck Diving Course</option></select></div>
+<div><label for="booking-date" class="block text-sm mb-2">Preferred date</label><input id="booking-date" type="date" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+<div><label for="booking-people" class="block text-sm mb-2">Number of divers</label><input id="booking-people" type="number" min="1" max="10" value="1" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+<div><label for="booking-name" class="block text-sm mb-2">Your name</label><input id="booking-name" required maxlength="100" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3"></div>
+<button type="submit" class="gold-btn rounded-full w-full py-3 text-gold-light">Continue to WhatsApp</button>
+</form>
+</div>
 </div>
 
-<div id="lightbox-modal" class="hidden fixed inset-0 z-[60] bg-black/95 p-4 flex items-center justify-center" onclick="closeLightbox()">
-  <button type="button" class="absolute top-5 right-5 text-white text-3xl" aria-label="Close image" onclick="closeLightbox()">&times;</button>
-  <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[85vh] rounded-xl object-contain" onclick="event.stopPropagation()">
-</div>
+<div id="lightbox-modal" hidden class="fixed inset-0 z-[60] bg-black/95 p-4 items-center justify-center" onclick="closeLightbox()"><button type="button" class="absolute top-5 right-5 text-white text-3xl" aria-label="Close image" onclick="closeLightbox()">&times;</button><img id="lightbox-image" src="" alt="" class="max-w-full max-h-[85vh] rounded-xl object-contain" onclick="event.stopPropagation()"></div>
 
 <script>
 "use strict";
 
-/* Site settings */
-const WHATSAPP_NUMBER = "9609373383";
-const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
-const SUPABASE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
-const STORAGE_BUCKET = "Dive-photo";
+const WHATSAPP_NUMBER="9609373383";
+const SUPABASE_URL="https://thffrtfkrarbccmyplpe.supabase.co";
+const SUPABASE_KEY="sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
+const STORAGE_BUCKET="Dive-photo";
+const BOLI_APP_ID="6a3d36bac1b3682f1ed1a2ce";
 
-let supabaseClient = null;
-if (window.supabase && SUPABASE_URL && SUPABASE_KEY) {
-  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let supabaseClient=null, boliClient=null, reviewSession=null;
+
+if(window.supabase) {
+  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 }
 
-/* Mobile navigation */
-function toggleMenu() {
-  const menu = document.getElementById("mobile-menu");
-  if (menu) menu.classList.toggle("hidden");
+function toggleMenu(){
+  const m=document.getElementById("mobile-menu");
+  m.hidden=!m.hidden;
 }
 
-/* Booking modal */
-function openBookingModal(activity) {
-  const modal = document.getElementById("booking-modal");
-  if (!modal) return;
-  if (activity) document.getElementById("booking-activity").value = activity;
-  modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
-}
-function closeBookingModal() {
-  const modal = document.getElementById("booking-modal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  document.body.style.overflow = "";
+function openBookingModal(activity){
+  const m=document.getElementById("booking-modal");
+  if(activity) document.getElementById("booking-activity").value=activity;
+  m.hidden=false;
+  document.body.style.overflow="hidden";
 }
 
-/* Booking enquiry opens WhatsApp with the details filled in */
-document.getElementById("booking-form").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const activity = document.getElementById("booking-activity").value;
-  const date = document.getElementById("booking-date").value || "Flexible";
-  const people = document.getElementById("booking-people").value;
-  const name = document.getElementById("booking-name").value.trim();
-  const message = `Hello Addu Dive Hub! I would like to enquire about:\nActivity: ${activity}\nPreferred date: ${date}\nDivers: ${people}\nName: ${name}`;
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+function closeBookingModal(){
+  document.getElementById("booking-modal").hidden=true;
+  document.body.style.overflow="";
+}
+
+document.getElementById("booking-form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const activity=document.getElementById("booking-activity").value;
+  const date=document.getElementById("booking-date").value||"Flexible";
+  const people=document.getElementById("booking-people").value;
+  const name=document.getElementById("booking-name").value.trim();
+  const msg=`Hello Addu Dive Hub! I would like to enquire about:\nActivity: ${activity}\nPreferred date: ${date}\nDivers: ${people}\nName: ${name}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank","noopener,noreferrer");
 });
 
-/* Dive site filters */
-function filterSites(category, button) {
-  document.querySelectorAll(".site-card").forEach(card => {
-    card.hidden = !(category === "all" || card.classList.contains(category));
+function filterSites(category,button){
+  document.querySelectorAll(".site-card").forEach(c=>{
+    c.hidden=!(category==="all"||c.classList.contains(category));
   });
-  document.querySelectorAll(".site-filter-btn").forEach(btn => {
-    btn.classList.remove("gold-btn");
-  });
-  if (button) button.classList.add("gold-btn");
+  document.querySelectorAll(".site-filter-btn").forEach(b=>b.classList.remove("gold-btn"));
+  if(button) button.classList.add("gold-btn");
 }
 
-/* Gallery lightbox */
-function openLightbox(src, alt) {
-  const modal = document.getElementById("lightbox-modal");
-  const img = document.getElementById("lightbox-image");
-  if (!modal || !img) return;
-  img.src = src;
-  img.alt = alt || "Gallery image";
-  modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
+function openLightbox(src,alt){
+  const m=document.getElementById("lightbox-modal");
+  const img=document.getElementById("lightbox-image");
+  img.src=src;
+  img.alt=alt||"Gallery image";
+  m.hidden=false;
+  m.style.display="flex";
+  document.body.style.overflow="hidden";
 }
-function closeLightbox() {
-  document.getElementById("lightbox-modal").classList.add("hidden");
-  document.body.style.overflow = "";
+
+function closeLightbox(){
+  const m=document.getElementById("lightbox-modal");
+  m.hidden=true;
+  m.style.display="";
+  document.body.style.overflow="";
 }
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
     closeLightbox();
     closeBookingModal();
   }
 });
 
-/* Contact form: prepares an email for the visitor to send */
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const name = document.getElementById("contact-name").value.trim();
-  const email = document.getElementById("contact-email").value.trim();
-  const message = document.getElementById("contact-message").value.trim();
-  const subject = encodeURIComponent("Website enquiry - Addu Dive Hub");
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-  window.location.href = `mailto:hishamdipu@gmail.com?subject=${subject}&body=${body}`;
+document.getElementById("contact-form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=document.getElementById("contact-name").value.trim();
+  const email=document.getElementById("contact-email").value.trim();
+  const message=document.getElementById("contact-message").value.trim();
+  const subject=encodeURIComponent("Website enquiry - Addu Dive Hub");
+  const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+  window.location.href=`mailto:hishamdipu@gmail.com?subject=${subject}&body=${body}`;
 });
 
-/* Supabase gallery. If storage policies block listing, the sample gallery remains visible. */
-async function loadGallery() {
-  const status = document.getElementById("gallery-status");
-  const grid = document.getElementById("gallery-grid");
-  if (!supabaseClient) {
-    status.textContent = "Showing sample gallery photos.";
+async function loadGallery(){
+  const status=document.getElementById("gallery-status");
+  const grid=document.getElementById("gallery-grid");
+
+  if(!supabaseClient){
+    status.textContent="Showing sample gallery photos.";
     return;
   }
-  try {
-    const { data, error } = await supabaseClient.storage.from(STORAGE_BUCKET).list("", {
-      limit: 100,
-      sortBy: { column: "created_at", order: "desc" }
+
+  try{
+    const {data,error}=await supabaseClient.storage.from(STORAGE_BUCKET).list("",{
+      limit:100,
+      sortBy:{column:"created_at",order:"desc"}
     });
-    if (error) throw error;
-    const photos = (data || []).filter(file =>
-      file.name && !file.name.startsWith(".") &&
-      /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
+
+    if(error) throw error;
+
+    const photos=(data||[]).filter(f=>
+      f.name&&!f.name.startsWith(".")&&/\.(jpg|jpeg|png|webp|gif|avif)$/i.test(f.name)
     );
-    if (!photos.length) {
-      status.textContent = "Showing sample photos. Upload images using Photo Admin.";
+
+    if(!photos.length){
+      status.textContent="Showing sample photos. Upload images using Photo Admin.";
       return;
     }
-    grid.innerHTML = "";
-    photos.forEach(file => {
-      const { data: urlData } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(file.name);
-      const img = document.createElement("img");
-      img.className = "gallery-img rounded-xl";
-      img.loading = "lazy";
-      img.src = urlData.publicUrl;
-      img.alt = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
-      img.addEventListener("click", () => openLightbox(img.src, img.alt));
+
+    grid.replaceChildren();
+
+    photos.forEach(f=>{
+      const {data:u}=supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(f.name);
+      const img=document.createElement("img");
+      img.className="gallery-img rounded-xl";
+      img.loading="lazy";
+      img.src=u.publicUrl;
+      img.alt=f.name.replace(/\.[^.]+$/,"").replace(/[-_]/g," ");
+      img.addEventListener("click",()=>openLightbox(img.src,img.alt));
       grid.appendChild(img);
     });
-    status.textContent = `Showing ${photos.length} uploaded photo(s).`;
-  } catch (error) {
-    console.warn("Gallery could not load from storage:", error);
-    status.textContent = "Showing sample photos. Check Supabase storage permissions if uploads are missing.";
+
+    status.textContent=`Showing ${photos.length} uploaded photo(s).`;
+  }catch(e){
+    console.warn("Gallery load failed:",e);
+    status.textContent="Showing sample photos. Check Supabase storage permissions if uploads are missing.";
   }
 }
 
-/* Section photos: newest photo in each section folder is active. */
-async function loadSectionPhoto(slot) {
-  if (!supabaseClient) return;
-  try {
-    const folder = "section-images/" + slot;
-    const { data, error } = await supabaseClient.storage.from(STORAGE_BUCKET).list(folder, {
-      limit: 50,
-      sortBy: { column: "created_at", order: "desc" }
+async function loadSectionPhoto(slot){
+  if(!supabaseClient) return;
+
+  try{
+    const folder="section-images/"+slot;
+    const {data,error}=await supabaseClient.storage.from(STORAGE_BUCKET).list(folder,{
+      limit:50,
+      sortBy:{column:"created_at",order:"desc"}
     });
-    if (error) throw error;
-    const photo = (data || []).find(file =>
-      file.name && !file.name.startsWith(".") && /\.(jpg|jpeg|png|webp|gif)$/i.test(file.name)
+
+    if(error) throw error;
+
+    const photo=(data||[]).find(f=>
+      f.name&&!f.name.startsWith(".")&&/\.(jpg|jpeg|png|webp|gif|avif)$/i.test(f.name)
     );
-    if (!photo) return;
-    const path = folder + "/" + photo.name;
-    const { data: publicData } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path);
-    const url = publicData.publicUrl;
-    const image = document.querySelector('[data-section-image="' + slot + '"]');
-    if (image) image.src = url;
-    const background = document.querySelector('[data-section-background="' + slot + '"]');
-    if (background) {
-      const overlay = slot === "home"
-        ? "linear-gradient(90deg,#030b14ed 0%,#030b1480 55%,#030b1440)"
-        : "linear-gradient(180deg,#030b14d9 0%,#030b14b8 100%)";
-      background.style.backgroundImage = overlay + ',url("' + url.replace(/"/g, "%22") + '")';
-      background.style.backgroundPosition = "center";
-      background.style.backgroundSize = "cover";
-      background.style.backgroundRepeat = "no-repeat";
+
+    if(!photo) return;
+
+    const {data:p}=supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(folder+"/"+photo.name);
+    const url=p.publicUrl;
+    const img=document.querySelector('[data-section-image="'+slot+'"]');
+
+    if(img) img.src=url;
+
+    const bg=document.querySelector('[data-section-background="'+slot+'"]');
+
+    if(bg){
+      const overlay=slot==="home"
+        ?"linear-gradient(90deg,#030b14ed 0%,#030b1480 55%,#030b1440)"
+        :"linear-gradient(180deg,#030b14d9 0%,#030b14b8 100%)";
+
+      bg.style.backgroundImage=overlay+',url("'+url.replace(/"/g,"%22")+'")';
+      bg.style.backgroundPosition="center";
+      bg.style.backgroundSize="cover";
+      bg.style.backgroundRepeat="no-repeat";
     }
-  } catch (error) {
-    console.warn("Section photo could not load for " + slot + ":", error);
+  }catch(e){
+    console.warn("Section photo failed:",slot,e);
   }
 }
 
 [
-  "home", "experience-diving", "experience-adventures", "experience-island",
-  "site-wreck", "site-manta", "site-reef", "site-channel", "courses",
-  "video", "reviews", "about", "contact"
+  "home","experience-diving","experience-adventures","experience-island",
+  "site-wreck","site-manta","site-reef","site-channel","courses",
+  "video","reviews","about","contact"
 ].forEach(loadSectionPhoto);
 
-/* Member authentication */
-let reviewSession = null;
-let authListenerRegistered = false;
+const authPanel=document.getElementById("review-auth-panel");
+const memberPanel=document.getElementById("review-member-panel");
+const writePanel=document.getElementById("review-write-panel");
+const signinForm=document.getElementById("review-signin-form");
+const signupForm=document.getElementById("review-signup-form");
+const authStatus=document.getElementById("auth-status");
+const reviewStatus=document.getElementById("review-status");
 
-const authPanel = document.getElementById("review-auth-panel");
-const memberPanel = document.getElementById("review-member-panel");
-const writePanel = document.getElementById("review-write-panel");
-const signinForm = document.getElementById("review-signin-form");
-const signupForm = document.getElementById("review-signup-form");
-const authStatus = document.getElementById("auth-status");
-const reviewStatus = document.getElementById("review-status");
-
-document.getElementById("show-signin").addEventListener("click", () => {
-  signinForm.hidden = false;
-  signupForm.hidden = true;
-  authStatus.textContent = "";
+document.getElementById("show-signin").addEventListener("click",()=>{
+  signinForm.hidden=false;
+  signupForm.hidden=true;
+  authStatus.textContent="";
 });
 
-document.getElementById("show-signup").addEventListener("click", () => {
-  signinForm.hidden = true;
-  signupForm.hidden = false;
-  authStatus.textContent = "";
+document.getElementById("show-signup").addEventListener("click",()=>{
+  signinForm.hidden=true;
+  signupForm.hidden=false;
+  authStatus.textContent="";
 });
 
-function updateReviewAuthUI() {
-  const signedIn = Boolean(reviewSession && reviewSession.user);
+function updateReviewAuthUI(){
+  const signed=Boolean(reviewSession&&reviewSession.email);
+  authPanel.hidden=signed;
+  memberPanel.hidden=!signed;
+  writePanel.hidden=!signed;
 
-  authPanel.hidden = signedIn;
-  memberPanel.hidden = !signedIn;
-  writePanel.hidden = !signedIn;
+  if(signed){
+    document.getElementById("member-name").textContent=
+      reviewSession.full_name||reviewSession.name||reviewSession.email;
 
-  if (signedIn) {
-    const user = reviewSession.user;
-    const profileName =
-      user.user_metadata?.full_name ||
-      user.user_metadata?.name ||
-      user.email ||
-      "Member";
-
-    document.getElementById("member-name").textContent = profileName;
-
-    const reviewNameInput = document.getElementById("review-name");
-    if (!reviewNameInput.value.trim()) {
-      reviewNameInput.value =
-        user.user_metadata?.full_name ||
-        user.user_metadata?.name ||
-        "";
-    }
-  } else {
-    document.getElementById("review-name").value = "";
+    const n=document.getElementById("review-name");
+    if(!n.value.trim()) n.value=reviewSession.full_name||reviewSession.name||"";
+  }else{
+    document.getElementById("review-name").value="";
   }
 }
 
-async function initReviewAuth() {
-  if (!supabaseClient) {
-    authStatus.textContent = "Member access is unavailable. Please try again later.";
+async function initReviewAuth(){
+  try{
+    const sdk=await import("https://esm.sh/@base44/sdk");
+    boliClient=sdk.createClient({appId:BOLI_APP_ID});
+
+    try{
+      const u=await boliClient.auth.me();
+      if(u&&u.email) reviewSession=u;
+    }catch(_){
+      reviewSession=null;
+    }
+
     updateReviewAuthUI();
-    return;
-  }
-
-  const { data, error } = await supabaseClient.auth.getSession();
-
-  if (error) {
-    console.error("Could not retrieve session:", error);
-    authStatus.textContent = "Could not check your sign-in status. Please try again.";
-  } else {
-    reviewSession = data.session;
-  }
-
-  updateReviewAuthUI();
-
-  if (!authListenerRegistered) {
-    authListenerRegistered = true;
-
-    supabaseClient.auth.onAuthStateChange((_event, session) => {
-      reviewSession = session;
-      updateReviewAuthUI();
-    });
+  }catch(e){
+    console.error("BOLI init failed:",e);
+    authStatus.textContent="BOLI member access is temporarily unavailable.";
+    updateReviewAuthUI();
   }
 }
 
-/* Create a member account */
-signupForm.addEventListener("submit", async function(event) {
-  event.preventDefault();
+signupForm.addEventListener("submit",async e=>{
+  e.preventDefault();
 
-  if (!supabaseClient) {
-    authStatus.textContent = "Member access is temporarily unavailable.";
+  if(!boliClient){
+    authStatus.textContent="Member access is temporarily unavailable.";
     return;
   }
 
-  const name = document.getElementById("signup-name").value.trim();
-  const email = document.getElementById("signup-email").value.trim();
-  const password = document.getElementById("signup-password").value;
-  const button = document.getElementById("signup-submit");
+  const name=document.getElementById("signup-name").value.trim();
+  const email=document.getElementById("signup-email").value.trim().toLowerCase();
+  const password=document.getElementById("signup-password").value;
+  const button=document.getElementById("signup-submit");
 
-  if (!name || password.length < 8) {
-    authStatus.textContent = "Enter your name and a password of at least 8 characters.";
+  if(!name||name.length>80||!email||password.length<8){
+    authStatus.textContent="Enter a valid email, a name up to 80 characters, and a password of at least 8 characters.";
     return;
   }
 
-  button.disabled = true;
-  authStatus.textContent = "Creating your account…";
+  button.disabled=true;
+  authStatus.textContent="Creating your account…";
 
-  try {
-    const { data, error } = await supabaseClient.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: name }
-      }
-    });
-
-    if (error) throw error;
-
+  try{
+    await boliClient.auth.register({email,password,full_name:name});
+    const u=await boliClient.auth.me();
+    reviewSession=u&&u.email?u:null;
     signupForm.reset();
+    updateReviewAuthUI();
 
-    if (data.session) {
-      reviewSession = data.session;
-      updateReviewAuthUI();
-      authStatus.textContent = "";
-    } else {
-      authStatus.textContent =
-        "Account created. Check your email for a confirmation link, then sign in.";
+    if(!reviewSession){
+      signinForm.hidden=false;
+      signupForm.hidden=true;
+      authStatus.textContent="Account created. Please sign in to continue.";
+    }else{
+      authStatus.textContent="";
     }
-  } catch (error) {
-    console.error("Sign-up failed:", error);
-    authStatus.textContent = error.message || "Could not create your account. Please try again.";
-  } finally {
-    button.disabled = false;
+  }catch(e){
+    console.error("BOLI sign-up failed:",e);
+    authStatus.textContent=e.message||"Could not create your account. Please try again.";
+  }finally{
+    button.disabled=false;
   }
 });
 
-/* Sign in existing members */
-signinForm.addEventListener("submit", async function(event) {
-  event.preventDefault();
+signinForm.addEventListener("submit",async e=>{
+  e.preventDefault();
 
-  if (!supabaseClient) {
-    authStatus.textContent = "Member access is temporarily unavailable.";
+  if(!boliClient){
+    authStatus.textContent="Member access is temporarily unavailable.";
     return;
   }
 
-  const email = document.getElementById("signin-email").value.trim();
-  const password = document.getElementById("signin-password").value;
-  const button = document.getElementById("signin-submit");
+  const email=document.getElementById("signin-email").value.trim().toLowerCase();
+  const password=document.getElementById("signin-password").value;
+  const button=document.getElementById("signin-submit");
 
-  button.disabled = true;
-  authStatus.textContent = "Signing in…";
+  button.disabled=true;
+  authStatus.textContent="Signing in…";
 
-  try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+  try{
+    await boliClient.auth.loginViaEmailPassword(email,password);
+    const u=await boliClient.auth.me();
 
-    if (error) throw error;
+    if(!u||!u.email) throw new Error("Sign-in could not be verified.");
 
-    reviewSession = data.session;
+    reviewSession=u;
     signinForm.reset();
     updateReviewAuthUI();
-    authStatus.textContent = "";
-    reviewStatus.textContent = "";
-  } catch (error) {
-    console.error("Sign-in failed:", error);
-    authStatus.textContent = error.message || "Sign-in failed. Check your email and password.";
-  } finally {
-    button.disabled = false;
+    authStatus.textContent="";
+    reviewStatus.textContent="";
+  }catch(e){
+    console.error("BOLI sign-in failed:",e);
+    authStatus.textContent=e.message||"Sign-in failed. Check your email and password.";
+  }finally{
+    button.disabled=false;
   }
 });
 
-/* Sign out */
-document.getElementById("review-signout").addEventListener("click", async () => {
-  if (!supabaseClient) return;
+document.getElementById("review-signout").addEventListener("click",async()=>{
+  if(!boliClient) return;
 
-  const button = document.getElementById("review-signout");
-  button.disabled = true;
+  const b=document.getElementById("review-signout");
+  b.disabled=true;
 
-  try {
-    const { error } = await supabaseClient.auth.signOut();
-    if (error) throw error;
-
-    reviewSession = null;
+  try{
+    await boliClient.auth.logout();
+    reviewSession=null;
     updateReviewAuthUI();
-    reviewStatus.textContent = "";
-    authStatus.textContent = "You have signed out.";
-  } catch (error) {
-    console.error("Sign-out failed:", error);
-    authStatus.textContent = "Could not sign out. Please try again.";
-  } finally {
-    button.disabled = false;
+    reviewStatus.textContent="";
+    authStatus.textContent="You have signed out.";
+  }catch(e){
+    console.error("Sign-out failed:",e);
+    authStatus.textContent="Could not sign out. Please try again.";
+  }finally{
+    b.disabled=false;
   }
 });
 
-/* Show only reviews approved by the administrator */
-async function loadReviews() {
-  const list = document.getElementById("reviews-list");
+async function loadReviews(){
+  const list=document.getElementById("reviews-list");
 
-  if (!supabaseClient) {
-    list.textContent = "Reviews are temporarily unavailable.";
+  if(!boliClient){
+    list.textContent="Reviews are temporarily unavailable.";
     return;
   }
 
-  try {
-    const { data, error } = await supabaseClient
-      .from("reviews")
-      .select("id,name,rating,message,created_at")
-      .eq("approved", true)
-      .order("created_at", { ascending: false })
-      .limit(20);
-
-    if (error) throw error;
+  try{
+    const reviews=await boliClient.entities.AdduDiveReview.filter(
+      {status:"approved"},"-created_date",20,0
+    );
 
     list.replaceChildren();
 
-    if (!data || data.length === 0) {
-      const empty = document.createElement("p");
-      empty.className = "text-gray-400 text-sm";
-      empty.textContent = "No approved reviews yet. Sign in to be the first to share your experience.";
-      list.appendChild(empty);
+    if(!Array.isArray(reviews)||!reviews.length){
+      const p=document.createElement("p");
+      p.className="text-gray-400 text-sm";
+      p.textContent="No approved reviews yet. Sign in to be the first to share your experience.";
+      list.appendChild(p);
       return;
     }
 
-    data.forEach(review => {
-      const card = document.createElement("article");
-      card.className = "card p-5";
+    reviews.forEach(r=>{
+      const card=document.createElement("article");
+      card.className="card p-5";
 
-      const name = document.createElement("h3");
-      name.className = "font-cinzel text-gold-light mb-2";
-      name.textContent = review.name || "Guest";
+      const n=document.createElement("h3");
+      n.className="font-cinzel text-gold-light mb-2";
+      n.textContent=r.name||"Guest";
 
-      const rating = document.createElement("p");
-      rating.className = "text-gold mb-3";
+      const score=Math.max(1,Math.min(5,Number(r.rating)||5));
+      const rating=document.createElement("p");
+      rating.className="text-gold mb-3";
+      rating.textContent="★".repeat(score)+"☆".repeat(5-score);
 
-      const score = Math.max(1, Math.min(5, Number(review.rating) || 5));
-      rating.textContent = "★".repeat(score) + "☆".repeat(5 - score);
+      const msg=document.createElement("p");
+      msg.className="text-sm text-gray-300 leading-6";
+      msg.textContent=r.message||"";
 
-      const message = document.createElement("p");
-      message.className = "text-sm text-gray-300 leading-6";
-      message.textContent = review.message || "";
-
-      card.append(name, rating, message);
+      card.append(n,rating,msg);
       list.appendChild(card);
     });
-  } catch (error) {
-    console.error("Reviews could not be loaded:", error);
-    list.textContent = "Reviews could not be loaded. Check the Supabase reviews table and its read policy.";
+  }catch(e){
+    console.error("BOLI reviews load failed:",e);
+    list.textContent="Reviews could not be loaded. Please try again later.";
   }
 }
 
-/* Only signed-in users may submit. New reviews await admin approval. */
-document.getElementById("review-form").addEventListener("submit", async function(event) {
-  event.preventDefault();
+document.getElementById("review-form").addEventListener("submit",async e=>{
+  e.preventDefault();
 
-  const user = reviewSession?.user;
-
-  if (!supabaseClient || !user) {
-    reviewStatus.textContent = "Please sign in before submitting a review.";
+  if(!boliClient||!reviewSession||!reviewSession.email){
+    reviewStatus.textContent="Please sign in with your BOLI account before submitting a review.";
     updateReviewAuthUI();
     return;
   }
 
-  const name = document.getElementById("review-name").value.trim();
-  const rating = Number(document.getElementById("review-rating").value);
-  const message = document.getElementById("review-message").value.trim();
-  const button = document.getElementById("review-submit");
+  const name=document.getElementById("review-name").value.trim();
+  const rating=Number(document.getElementById("review-rating").value);
+  const message=document.getElementById("review-message").value.trim();
+  const button=document.getElementById("review-submit");
 
-  if (!name || !message || !Number.isInteger(rating) || rating < 1 || rating > 5) {
-    reviewStatus.textContent = "Please enter your name, rating and review.";
+  if(!name||name.length>80||!message||message.length>1500||
+     !Number.isInteger(rating)||rating<1||rating>5){
+    reviewStatus.textContent="Enter your name (up to 80 characters), a rating, and a review up to 1,500 characters.";
     return;
   }
 
-  button.disabled = true;
-  reviewStatus.textContent = "Submitting your review…";
+  button.disabled=true;
+  reviewStatus.textContent="Submitting your review…";
 
-  try {
-    const { error } = await supabaseClient.from("reviews").insert([{
-      user_id: user.id,
+  try{
+    await boliClient.entities.AdduDiveReview.create({
       name,
       rating,
       message,
-      approved: false
-    }]);
+      status:"pending",
+      member_email:reviewSession.email.toLowerCase()
+    });
 
-    if (error) throw error;
-
-    reviewStatus.textContent =
-      "Thank you! Your review has been submitted and is awaiting admin approval.";
-
-    document.getElementById("review-message").value = "";
-    document.getElementById("review-rating").value = "5";
-  } catch (error) {
-    console.error("Review submission failed:", error);
-    reviewStatus.textContent =
-      "Your review could not be submitted. Check the reviews table and its security policies.";
-  } finally {
-    button.disabled = false;
+    reviewStatus.textContent="Thank you! Your review has been submitted and is awaiting admin approval.";
+    document.getElementById("review-message").value="";
+    document.getElementById("review-rating").value="5";
+    await loadReviews();
+  }catch(e){
+    console.error("Review submission failed:",e);
+    reviewStatus.textContent="Your review could not be submitted. Please sign in again or try later.";
+  }finally{
+    button.disabled=false;
   }
 });
 
-/* Start the website features */
-initReviewAuth();
+initReviewAuth().then(loadReviews);
 loadGallery();
-loadReviews();
 </script>
 </body>
 </html>
