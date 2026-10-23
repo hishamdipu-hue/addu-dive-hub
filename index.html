@@ -374,16 +374,16 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 
         <form id="review-signin-form" class="space-y-4">
           <div>
-            <label for="signin-email" class="block text-sm text-gray-300 mb-2">Email address</label>
+            <label for="signin-email" class="block text-sm text-gray-300 mb-2">BOLI email address</label>
             <input id="signin-email" type="email" autocomplete="email" required maxlength="254"
               class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
           </div>
           <div>
-            <label for="signin-password" class="block text-sm text-gray-300 mb-2">Password</label>
+            <label for="signin-password" class="block text-sm text-gray-300 mb-2">BOLI password</label>
             <input id="signin-password" type="password" autocomplete="current-password" required
-              class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your password">
+              class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your BOLI password">
           </div>
-          <button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In</button>
+          <button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In with BOLI</button>
         </form>
 
         <form id="review-signup-form" hidden class="space-y-4">
@@ -393,7 +393,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
               class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name">
           </div>
           <div>
-            <label for="signup-email" class="block text-sm text-gray-300 mb-2">Email address</label>
+            <label for="signup-email" class="block text-sm text-gray-300 mb-2">BOLI email address</label>
             <input id="signup-email" type="email" required maxlength="254" autocomplete="email"
               class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
           </div>
@@ -402,23 +402,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
             <input id="signup-password" type="password" required minlength="8" autocomplete="new-password"
               class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="At least 8 characters">
           </div>
-          <button id="signup-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Create Account</button>
-        </form>
-
-        <!-- Email verification form -->
-        <form id="review-verify-form" hidden class="space-y-4 mt-5">
-          <p class="text-sm text-gray-300 leading-6">
-            We have requested an email verification code. Check your inbox and spam folder, then enter the code below.
-          </p>
-          <div>
-            <label for="verify-code" class="block text-sm text-gray-300 mb-2">Verification code</label>
-            <input id="verify-code" inputmode="numeric" autocomplete="one-time-code" required
-              maxlength="8" class="rounded-lg bg-ocean-deep border border-gold/30 p-3"
-              placeholder="Enter email code">
-          </div>
-          <button id="verify-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Verify Email</button>
-          <button id="resend-code" type="button" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Resend Code</button>
-          <button id="cancel-verification" type="button" class="block text-sm text-gray-400 underline">Back to sign in</button>
+          <button id="signup-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Create BOLI Account</button>
         </form>
 
         <p id="auth-status" role="status" aria-live="polite" class="text-sm text-gray-300 mt-4"></p>
@@ -583,9 +567,6 @@ const BOLI_APP_ID = "6a3d36bac1b3682f1ed1a2ce";
 let supabaseClient = null;
 let boliClient = null;
 let reviewSession = null;
-let pendingVerificationEmail = "";
-let pendingVerificationPassword = "";
-let pendingVerificationName = "";
 
 if (window.supabase) {
   supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -815,32 +796,22 @@ const memberPanel = document.getElementById("review-member-panel");
 const writePanel = document.getElementById("review-write-panel");
 const signinForm = document.getElementById("review-signin-form");
 const signupForm = document.getElementById("review-signup-form");
-const verifyForm = document.getElementById("review-verify-form");
 const authStatus = document.getElementById("auth-status");
 const reviewStatus = document.getElementById("review-status");
 
 document.getElementById("show-signin").addEventListener("click", () => {
   signinForm.hidden = false;
   signupForm.hidden = true;
-  verifyForm.hidden = true;
   authStatus.textContent = "";
 });
 
 document.getElementById("show-signup").addEventListener("click", () => {
   signinForm.hidden = true;
   signupForm.hidden = false;
-  verifyForm.hidden = true;
   authStatus.textContent = "";
 });
 
-document.getElementById("cancel-verification").addEventListener("click", () => {
-  verifyForm.hidden = true;
-  signinForm.hidden = false;
-  signupForm.hidden = true;
-  authStatus.textContent = "";
-});
-
-/* Keep review-writing access hidden until an authenticated member exists */
+/* Keep review-writing access hidden until BOLI confirms a signed-in member */
 function updateReviewAuthUI() {
   const signedIn = Boolean(reviewSession && reviewSession.email);
 
@@ -877,17 +848,22 @@ async function initReviewAuth() {
     updateReviewAuthUI();
   } catch (error) {
     console.error("BOLI init failed:", error);
-    authStatus.textContent = "BOLI member access is temporarily unavailable.";
+    authStatus.textContent = "BOLI member access is temporarily unavailable. Please try again later.";
     updateReviewAuthUI();
   }
 }
 
-/* Sign up and request email verification */
+/*
+ * Sign up through BOLI.
+ * No separate website email-verification form is used.
+ * BOLI remains responsible for any verification or approval required
+ * by its own account settings.
+ */
 signupForm.addEventListener("submit", async event => {
   event.preventDefault();
 
   if (!boliClient) {
-    authStatus.textContent = "Member access is temporarily unavailable. Please try again later.";
+    authStatus.textContent = "BOLI member access is temporarily unavailable. Please try again later.";
     return;
   }
 
@@ -897,16 +873,12 @@ signupForm.addEventListener("submit", async event => {
   const button = document.getElementById("signup-submit");
 
   if (!name || name.length > 80 || !email || password.length < 8) {
-    authStatus.textContent = "Enter a valid email, your name, and a password of at least 8 characters.";
+    authStatus.textContent = "Enter your name, a valid email, and a password of at least 8 characters.";
     return;
   }
 
-  pendingVerificationName = name;
-  pendingVerificationEmail = email;
-  pendingVerificationPassword = password;
-
   button.disabled = true;
-  authStatus.textContent = "Creating your account…";
+  authStatus.textContent = "Creating your BOLI account…";
 
   try {
     await boliClient.auth.register({
@@ -915,111 +887,51 @@ signupForm.addEventListener("submit", async event => {
       full_name: name
     });
 
-    signupForm.hidden = true;
-    signinForm.hidden = true;
-    verifyForm.hidden = false;
+    signupForm.reset();
 
-    document.getElementById("verify-code").value = "";
+    /*
+     * Some BOLI configurations sign a new member in immediately.
+     * Others require approval or verification within BOLI.
+     * Try the normal BOLI login and let BOLI decide.
+     */
+    try {
+      await boliClient.auth.loginViaEmailPassword(email, password);
+      const user = await boliClient.auth.me();
+
+      if (user && user.email) {
+        reviewSession = user;
+        updateReviewAuthUI();
+        authStatus.textContent = "";
+        reviewStatus.textContent = "Your BOLI account is ready. You can now write a review.";
+        await loadReviews();
+        return;
+      }
+    } catch (loginError) {
+      console.info("BOLI registration succeeded; immediate sign-in may require BOLI approval or verification.", loginError);
+    }
+
+    signinForm.hidden = false;
+    signupForm.hidden = true;
+    document.getElementById("signin-email").value = email;
+    document.getElementById("signin-password").value = "";
+
     authStatus.textContent =
-      "Account registration started. Check your email for the verification code.";
+      "Your registration request was sent to BOLI. If BOLI requires account approval or verification, complete that process in BOLI, then sign in here using the same account.";
   } catch (error) {
     console.error("BOLI sign-up failed:", error);
     authStatus.textContent =
-      error.message || "Could not create your account. Check the email address or try signing in.";
+      error.message || "BOLI could not create your account. If you already have a BOLI account, try signing in instead.";
   } finally {
     button.disabled = false;
   }
 });
 
-/* Verify the email address, then sign in */
-verifyForm.addEventListener("submit", async event => {
-  event.preventDefault();
-
-  if (!boliClient) {
-    authStatus.textContent = "Member access is temporarily unavailable.";
-    return;
-  }
-
-  const code = document.getElementById("verify-code").value.trim();
-  const button = document.getElementById("verify-submit");
-
-  if (!code) {
-    authStatus.textContent = "Enter the verification code from your email.";
-    return;
-  }
-
-  button.disabled = true;
-  authStatus.textContent = "Verifying your email…";
-
-  try {
-    await boliClient.auth.verifyOtp({
-      email: pendingVerificationEmail,
-      otpCode: code
-    });
-
-    await boliClient.auth.loginViaEmailPassword(
-      pendingVerificationEmail,
-      pendingVerificationPassword
-    );
-
-    const user = await boliClient.auth.me();
-
-    if (!user || !user.email) {
-      throw new Error("Your email was verified, but automatic sign-in failed. Please sign in.");
-    }
-
-    reviewSession = user;
-    verifyForm.reset();
-    signupForm.reset();
-    signinForm.reset();
-    verifyForm.hidden = true;
-    updateReviewAuthUI();
-
-    pendingVerificationEmail = "";
-    pendingVerificationPassword = "";
-    pendingVerificationName = "";
-
-    authStatus.textContent = "";
-    reviewStatus.textContent = "Your email is verified. You can now write a review.";
-    await loadReviews();
-  } catch (error) {
-    console.error("Email verification failed:", error);
-    authStatus.textContent =
-      error.message || "Verification failed. Check the code and try again.";
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* Resend the verification code */
-document.getElementById("resend-code").addEventListener("click", async () => {
-  if (!boliClient || !pendingVerificationEmail) {
-    authStatus.textContent = "Please return to sign-up and enter your details again.";
-    return;
-  }
-
-  const button = document.getElementById("resend-code");
-  button.disabled = true;
-  authStatus.textContent = "Requesting another verification code…";
-
-  try {
-    await boliClient.auth.resendOtp(pendingVerificationEmail);
-    authStatus.textContent = "If your account supports a new code, it has been requested. Check your inbox and spam folder.";
-  } catch (error) {
-    console.error("Resending code failed:", error);
-    authStatus.textContent =
-      error.message || "Could not resend the code. Please wait a moment and try again.";
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* Sign in */
+/* Sign in using the existing BOLI account */
 signinForm.addEventListener("submit", async event => {
   event.preventDefault();
 
   if (!boliClient) {
-    authStatus.textContent = "Member access is temporarily unavailable.";
+    authStatus.textContent = "BOLI member access is temporarily unavailable.";
     return;
   }
 
@@ -1028,14 +940,14 @@ signinForm.addEventListener("submit", async event => {
   const button = document.getElementById("signin-submit");
 
   button.disabled = true;
-  authStatus.textContent = "Signing in…";
+  authStatus.textContent = "Signing in with BOLI…";
 
   try {
     await boliClient.auth.loginViaEmailPassword(email, password);
     const user = await boliClient.auth.me();
 
     if (!user || !user.email) {
-      throw new Error("Sign-in could not be verified.");
+      throw new Error("BOLI did not confirm an active sign-in. Please try again.");
     }
 
     reviewSession = user;
@@ -1043,16 +955,17 @@ signinForm.addEventListener("submit", async event => {
     updateReviewAuthUI();
     authStatus.textContent = "";
     reviewStatus.textContent = "";
+    await loadReviews();
   } catch (error) {
     console.error("BOLI sign-in failed:", error);
     authStatus.textContent =
-      error.message || "Sign-in failed. Check your email and password. If you have not verified your email, check your inbox.";
+      error.message || "Sign-in failed. Check your BOLI email and password, and make sure your BOLI account is allowed to sign in.";
   } finally {
     button.disabled = false;
   }
 });
 
-/* Sign out */
+/* Sign out of BOLI */
 document.getElementById("review-signout").addEventListener("click", async () => {
   if (!boliClient) return;
 
@@ -1126,7 +1039,7 @@ async function loadReviews() {
   }
 }
 
-/* Members can submit reviews; new reviews are pending admin approval */
+/* Signed-in members can submit reviews; new reviews await admin approval */
 document.getElementById("review-form").addEventListener("submit", async event => {
   event.preventDefault();
 
