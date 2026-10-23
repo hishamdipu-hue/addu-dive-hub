@@ -290,14 +290,22 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
 <section id="about" class="section">
   <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
-    <div><img data-section-image="about" class="w-full h-72 object-cover rounded-2xl mb-8 gold-border" loading="lazy" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80" alt="The ocean around the Maldives"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">About us</p><h2 class="section-title mb-6">YOUR GATEWAY TO ADDU</h2><p class="text-gray-300 leading-7">Addu Dive Hub welcomes divers and ocean lovers to explore the underwater world of Addu Atoll in the southern Maldives. From reefs to historic wrecks, our aim is to help you plan an unforgettable ocean experience.</p><p class="text-gray-400 leading-7 mt-4">Ask us about dive conditions, suitable sites, courses and availability before booking.</p><a href="#contact" class="gold-btn inline-block rounded-full px-6 py-3 mt-7">Contact Our Team</a></div>
+    <div>
+      <img data-section-image="about" class="w-full h-72 object-cover rounded-2xl mb-8 gold-border" loading="lazy" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80" alt="The ocean around the Maldives">
+      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">About us</p>
+      <h2 class="section-title mb-6">YOUR GATEWAY TO ADDU</h2>
+      <p class="text-gray-300 leading-7">Addu Dive Hub welcomes divers and ocean lovers to explore the underwater world of Addu Atoll in the southern Maldives. From reefs to historic wrecks, our aim is to help you plan an unforgettable ocean experience.</p>
+      <p class="text-gray-400 leading-7 mt-4">Ask us about dive conditions, suitable sites, courses and availability before booking.</p>
+      <a href="#contact" class="gold-btn inline-block rounded-full px-6 py-3 mt-7">Contact Our Team</a>
+    </div>
     <img class="w-full h-80 object-cover rounded-2xl gold-border" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80" alt="Diving in the Maldives" loading="lazy">
   </div>
 </section>
 
 <section id="contact" class="section bg-ocean-dark border-t border-gold/10" data-section-background="contact">
   <div class="max-w-4xl mx-auto px-4 text-center">
-    <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Let's plan your adventure</p><h2 class="section-title">CONTACT ADDU DIVE HUB</h2>
+    <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Let's plan your adventure</p>
+    <h2 class="section-title">CONTACT ADDU DIVE HUB</h2>
     <p class="text-gray-400 mt-4 mb-8">Contact us directly to ask about bookings, courses and availability.</p>
     <div class="grid sm:grid-cols-3 gap-4 mb-8 text-sm">
       <a class="card p-5 hover:border-gold/70" href="https://wa.me/9609373383" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp text-2xl text-gold mb-3"></i><span class="block text-gold-light">WhatsApp</span><span class="block text-gray-400 mt-2">+960 9373383</span></a>
@@ -785,8 +793,6 @@ document.getElementById("review-form").addEventListener("submit", async function
   reviewStatus.textContent = "Submitting your review…";
 
   try {
-    /* user_id links this review to the authenticated member.
-       approved is explicitly false; admin approval is required. */
     const { error } = await supabaseClient.from("reviews").insert([{
       user_id: user.id,
       name,
@@ -802,8 +808,6 @@ document.getElementById("review-form").addEventListener("submit", async function
 
     document.getElementById("review-message").value = "";
     document.getElementById("review-rating").value = "5";
-
-    /* Do not add this review to the public list until it is approved. */
   } catch (error) {
     console.error("Review submission failed:", error);
     reviewStatus.textContent =
