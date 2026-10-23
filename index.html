@@ -41,6 +41,7 @@ body{background:#030b14;color:#e5e7eb;font-family:Inter,sans-serif}
 .gallery-img:hover{transform:scale(1.035)}
 input,textarea,select{color:#f3f4f6}
 a,button{touch-action:manipulation}
+button:disabled{opacity:.55;cursor:not-allowed}
 [hidden]{display:none!important}
 @media(max-width:640px){.section{padding:60px 0}.hero{background-position:60% center}}
 </style>
@@ -85,9 +86,7 @@ a,button{touch-action:manipulation}
     <h1 class="font-cinzel text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl">
       <span class="gold-gradient-text">BEYOND THE</span><br>BLUE HORIZON
     </h1>
-    <p class="max-w-xl text-gray-300 leading-7 mt-6">
-      Discover remarkable reefs, graceful manta rays and the historic British Loyalty wreck with Addu Dive Hub.
-    </p>
+    <p class="max-w-xl text-gray-300 leading-7 mt-6">Discover remarkable reefs, graceful manta rays and the historic British Loyalty wreck with Addu Dive Hub.</p>
     <div class="flex flex-wrap gap-3 mt-8">
       <button type="button" onclick="openBookingModal()" class="gold-btn rounded-full px-7 py-3 text-gold-light">Book Your Experience</button>
       <a href="#sites" class="rounded-full border border-white/30 px-7 py-3 hover:border-gold">Explore Dive Sites</a>
@@ -200,21 +199,92 @@ a,button{touch-action:manipulation}
   </div>
 </section>
 
+<!-- REVIEWS: members must sign in to submit; only approved reviews are public -->
 <section id="reviews" class="section bg-ocean-dark border-y border-gold/10" data-section-background="reviews">
   <div class="max-w-5xl mx-auto px-4">
-    <div class="text-center mb-10"><p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Guest experiences</p><h2 class="section-title">GUEST REVIEWS</h2></div>
-    <div id="reviews-list" class="grid md:grid-cols-2 gap-4 mb-10"><p class="text-gray-500 text-sm">Loading approved reviews…</p></div>
-    <form id="review-form" class="card p-6 max-w-2xl mx-auto">
-      <h3 class="font-cinzel text-xl text-gold-light mb-5">Share Your Experience</h3>
-      <label class="block text-sm text-gray-300 mb-2" for="review-name">Your name</label>
-      <input id="review-name" name="name" required maxlength="80" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3 mb-4" placeholder="Your name">
-      <label class="block text-sm text-gray-300 mb-2" for="review-rating">Rating</label>
-      <select id="review-rating" name="rating" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3 mb-4"><option value="5">★★★★★ — Excellent</option><option value="4">★★★★ — Very good</option><option value="3">★★★ — Good</option><option value="2">★★ — Fair</option><option value="1">★ — Poor</option></select>
-      <label class="block text-sm text-gray-300 mb-2" for="review-message">Your review</label>
-      <textarea id="review-message" name="message" required maxlength="1500" rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3 mb-4" placeholder="Tell us about your experience"></textarea>
-      <button type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Submit Review</button>
-      <p id="review-status" role="status" class="text-sm text-gray-400 mt-4"></p>
-    </form>
+    <div class="text-center mb-10">
+      <p class="text-gold uppercase tracking-[.25em] text-xs mb-3">Guest experiences</p>
+      <h2 class="section-title">GUEST REVIEWS</h2>
+      <p class="text-gray-400 mt-4">Create an account or sign in to share your experience.</p>
+    </div>
+
+    <div id="reviews-list" class="grid md:grid-cols-2 gap-4 mb-10">
+      <p class="text-gray-500 text-sm">Loading approved reviews…</p>
+    </div>
+
+    <div class="card p-6 max-w-2xl mx-auto">
+      <div id="review-auth-panel">
+        <h3 class="font-cinzel text-xl text-gold-light mb-5">Member Access</h3>
+
+        <div class="flex flex-wrap gap-3 mb-6">
+          <button type="button" id="show-signin" class="gold-btn rounded-full px-5 py-2 text-sm">Sign In</button>
+          <button type="button" id="show-signup" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Create Account</button>
+        </div>
+
+        <form id="review-signin-form" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="signin-email">Email address</label>
+            <input id="signin-email" type="email" autocomplete="email" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="signin-password">Password</label>
+            <input id="signin-password" type="password" autocomplete="current-password" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your password">
+          </div>
+          <button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In</button>
+        </form>
+
+        <form id="review-signup-form" class="space-y-4" hidden>
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="signup-name">Your name</label>
+            <input id="signup-name" type="text" autocomplete="name" maxlength="80" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="signup-email">Email address</label>
+            <input id="signup-email" type="email" autocomplete="email" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="signup-password">Create password</label>
+            <input id="signup-password" type="password" autocomplete="new-password" minlength="8" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="At least 8 characters">
+          </div>
+          <button id="signup-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Create Account</button>
+          <p class="text-xs text-gray-500">You may need to confirm your email before signing in.</p>
+        </form>
+
+        <p id="auth-status" role="status" aria-live="polite" class="text-sm text-gray-400 mt-4"></p>
+      </div>
+
+      <div id="review-member-panel" hidden>
+        <p class="text-gold-light mb-2">Signed in as <span id="member-name"></span></p>
+        <p class="text-sm text-gray-400 mb-4">You can now submit a review. It will remain private until the admin approves it.</p>
+        <button type="button" id="review-signout" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Sign Out</button>
+      </div>
+
+      <div id="review-write-panel" class="mt-8 pt-6 border-t border-gold/20" hidden>
+        <h3 class="font-cinzel text-xl text-gold-light mb-5">Share Your Experience</h3>
+        <form id="review-form" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="review-name">Your name</label>
+            <input id="review-name" name="name" required maxlength="80" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your name">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="review-rating">Rating</label>
+            <select id="review-rating" name="rating" required class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3">
+              <option value="5">★★★★★ — Excellent</option>
+              <option value="4">★★★★ — Very good</option>
+              <option value="3">★★★ — Good</option>
+              <option value="2">★★ — Fair</option>
+              <option value="1">★ — Poor</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300 mb-2" for="review-message">Your review</label>
+            <textarea id="review-message" name="message" required maxlength="1500" rows="4" class="w-full rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Tell us about your experience"></textarea>
+          </div>
+          <button id="review-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Submit Review</button>
+          <p id="review-status" role="status" aria-live="polite" class="text-sm text-gray-400 mt-4"></p>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -401,7 +471,7 @@ async function loadGallery() {
   }
 }
 
-/* Section photos: upload through Photo Admin; newest photo in each section folder is active. */
+/* Section photos: newest photo in each section folder is active. */
 async function loadSectionPhoto(slot) {
   if (!supabaseClient) return;
   try {
@@ -434,84 +504,317 @@ async function loadSectionPhoto(slot) {
     console.warn("Section photo could not load for " + slot + ":", error);
   }
 }
+
 [
   "home", "experience-diving", "experience-adventures", "experience-island",
   "site-wreck", "site-manta", "site-reef", "site-channel", "courses",
   "video", "reviews", "about", "contact"
 ].forEach(loadSectionPhoto);
 
-/* Guest reviews. Supabase policies control which reviews can be read or submitted. */
-async function loadReviews() {
-  const list = document.getElementById("reviews-list");
+/* Member authentication */
+let reviewSession = null;
+let authListenerRegistered = false;
+
+const authPanel = document.getElementById("review-auth-panel");
+const memberPanel = document.getElementById("review-member-panel");
+const writePanel = document.getElementById("review-write-panel");
+const signinForm = document.getElementById("review-signin-form");
+const signupForm = document.getElementById("review-signup-form");
+const authStatus = document.getElementById("auth-status");
+const reviewStatus = document.getElementById("review-status");
+
+document.getElementById("show-signin").addEventListener("click", () => {
+  signinForm.hidden = false;
+  signupForm.hidden = true;
+  authStatus.textContent = "";
+});
+
+document.getElementById("show-signup").addEventListener("click", () => {
+  signinForm.hidden = true;
+  signupForm.hidden = false;
+  authStatus.textContent = "";
+});
+
+function updateReviewAuthUI() {
+  const signedIn = Boolean(reviewSession && reviewSession.user);
+
+  authPanel.hidden = signedIn;
+  memberPanel.hidden = !signedIn;
+  writePanel.hidden = !signedIn;
+
+  if (signedIn) {
+    const user = reviewSession.user;
+    const profileName =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      user.email ||
+      "Member";
+
+    document.getElementById("member-name").textContent = profileName;
+
+    const reviewNameInput = document.getElementById("review-name");
+    if (!reviewNameInput.value.trim()) {
+      reviewNameInput.value =
+        user.user_metadata?.full_name ||
+        user.user_metadata?.name ||
+        "";
+    }
+  } else {
+    document.getElementById("review-name").value = "";
+  }
+}
+
+async function initReviewAuth() {
   if (!supabaseClient) {
-    list.innerHTML = '<p class="text-gray-400 text-sm">Reviews are temporarily unavailable.</p>';
+    authStatus.textContent = "Member access is unavailable. Please try again later.";
+    updateReviewAuthUI();
     return;
   }
+
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error) {
+    console.error("Could not retrieve session:", error);
+    authStatus.textContent = "Could not check your sign-in status. Please try again.";
+  } else {
+    reviewSession = data.session;
+  }
+
+  updateReviewAuthUI();
+
+  if (!authListenerRegistered) {
+    authListenerRegistered = true;
+
+    supabaseClient.auth.onAuthStateChange((_event, session) => {
+      reviewSession = session;
+      updateReviewAuthUI();
+    });
+  }
+}
+
+/* Create a member account */
+signupForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  if (!supabaseClient) {
+    authStatus.textContent = "Member access is temporarily unavailable.";
+    return;
+  }
+
+  const name = document.getElementById("signup-name").value.trim();
+  const email = document.getElementById("signup-email").value.trim();
+  const password = document.getElementById("signup-password").value;
+  const button = document.getElementById("signup-submit");
+
+  if (!name || password.length < 8) {
+    authStatus.textContent = "Enter your name and a password of at least 8 characters.";
+    return;
+  }
+
+  button.disabled = true;
+  authStatus.textContent = "Creating your account…";
+
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: name }
+      }
+    });
+
+    if (error) throw error;
+
+    signupForm.reset();
+
+    if (data.session) {
+      reviewSession = data.session;
+      updateReviewAuthUI();
+      authStatus.textContent = "";
+    } else {
+      authStatus.textContent =
+        "Account created. Check your email for a confirmation link, then sign in.";
+    }
+  } catch (error) {
+    console.error("Sign-up failed:", error);
+    authStatus.textContent = error.message || "Could not create your account. Please try again.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* Sign in existing members */
+signinForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  if (!supabaseClient) {
+    authStatus.textContent = "Member access is temporarily unavailable.";
+    return;
+  }
+
+  const email = document.getElementById("signin-email").value.trim();
+  const password = document.getElementById("signin-password").value;
+  const button = document.getElementById("signin-submit");
+
+  button.disabled = true;
+  authStatus.textContent = "Signing in…";
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    reviewSession = data.session;
+    signinForm.reset();
+    updateReviewAuthUI();
+    authStatus.textContent = "";
+    reviewStatus.textContent = "";
+  } catch (error) {
+    console.error("Sign-in failed:", error);
+    authStatus.textContent = error.message || "Sign-in failed. Check your email and password.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* Sign out */
+document.getElementById("review-signout").addEventListener("click", async () => {
+  if (!supabaseClient) return;
+
+  const button = document.getElementById("review-signout");
+  button.disabled = true;
+
+  try {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) throw error;
+
+    reviewSession = null;
+    updateReviewAuthUI();
+    reviewStatus.textContent = "";
+    authStatus.textContent = "You have signed out.";
+  } catch (error) {
+    console.error("Sign-out failed:", error);
+    authStatus.textContent = "Could not sign out. Please try again.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* Show only reviews approved by the administrator */
+async function loadReviews() {
+  const list = document.getElementById("reviews-list");
+
+  if (!supabaseClient) {
+    list.textContent = "Reviews are temporarily unavailable.";
+    return;
+  }
+
   try {
     const { data, error } = await supabaseClient
       .from("reviews")
-      .select("*")
+      .select("id,name,rating,message,created_at")
       .eq("approved", true)
       .order("created_at", { ascending: false })
       .limit(20);
+
     if (error) throw error;
+
     list.replaceChildren();
+
     if (!data || data.length === 0) {
-      list.innerHTML = '<p class="text-gray-400 text-sm">No approved reviews yet. Be the first to share your experience.</p>';
+      const empty = document.createElement("p");
+      empty.className = "text-gray-400 text-sm";
+      empty.textContent = "No approved reviews yet. Sign in to be the first to share your experience.";
+      list.appendChild(empty);
       return;
     }
+
     data.forEach(review => {
       const card = document.createElement("article");
       card.className = "card p-5";
+
       const name = document.createElement("h3");
       name.className = "font-cinzel text-gold-light mb-2";
-      name.textContent = review.name || review.author || "Guest";
+      name.textContent = review.name || "Guest";
+
       const rating = document.createElement("p");
       rating.className = "text-gold mb-3";
+
       const score = Math.max(1, Math.min(5, Number(review.rating) || 5));
-      rating.textContent = "★".repeat(score) + "☆".repeat(5-score);
+      rating.textContent = "★".repeat(score) + "☆".repeat(5 - score);
+
       const message = document.createElement("p");
       message.className = "text-sm text-gray-300 leading-6";
-      message.textContent = review.message || review.review || "";
+      message.textContent = review.message || "";
+
       card.append(name, rating, message);
       list.appendChild(card);
     });
   } catch (error) {
-    console.warn("Reviews could not be loaded:", error);
-    list.innerHTML = '<p class="text-gray-400 text-sm">Reviews could not be loaded. Check the Supabase reviews table and its read policy.</p>';
+    console.error("Reviews could not be loaded:", error);
+    list.textContent = "Reviews could not be loaded. Check the Supabase reviews table and its read policy.";
   }
 }
 
+/* Only signed-in users may submit. New reviews await admin approval. */
 document.getElementById("review-form").addEventListener("submit", async function(event) {
   event.preventDefault();
-  const status = document.getElementById("review-status");
-  const name = document.getElementById("review-name").value.trim();
-  const rating = Number(document.getElementById("review-rating").value);
-  const message = document.getElementById("review-message").value.trim();
 
-  if (!supabaseClient) {
-    status.textContent = "Review service is unavailable. Please contact us by WhatsApp.";
+  const user = reviewSession?.user;
+
+  if (!supabaseClient || !user) {
+    reviewStatus.textContent = "Please sign in before submitting a review.";
+    updateReviewAuthUI();
     return;
   }
 
-  status.textContent = "Submitting review…";
+  const name = document.getElementById("review-name").value.trim();
+  const rating = Number(document.getElementById("review-rating").value);
+  const message = document.getElementById("review-message").value.trim();
+  const button = document.getElementById("review-submit");
+
+  if (!name || !message || !Number.isInteger(rating) || rating < 1 || rating > 5) {
+    reviewStatus.textContent = "Please enter your name, rating and review.";
+    return;
+  }
+
+  button.disabled = true;
+  reviewStatus.textContent = "Submitting your review…";
+
   try {
-    /* New reviews are not automatically approved. Database policies must permit this insert. */
+    /* user_id links this review to the authenticated member.
+       approved is explicitly false; admin approval is required. */
     const { error } = await supabaseClient.from("reviews").insert([{
+      user_id: user.id,
       name,
       rating,
       message,
       approved: false
     }]);
+
     if (error) throw error;
-    status.textContent = "Thank you! Your review was submitted for approval.";
-    this.reset();
+
+    reviewStatus.textContent =
+      "Thank you! Your review has been submitted and is awaiting admin approval.";
+
+    document.getElementById("review-message").value = "";
+    document.getElementById("review-rating").value = "5";
+
+    /* Do not add this review to the public list until it is approved. */
   } catch (error) {
     console.error("Review submission failed:", error);
-    status.textContent = "Review could not be submitted. The Supabase table or security policy may need configuration.";
+    reviewStatus.textContent =
+      "Your review could not be submitted. Check the reviews table and its security policies.";
+  } finally {
+    button.disabled = false;
   }
 });
 
+/* Start the website features */
+initReviewAuth();
 loadGallery();
 loadReviews();
 </script>
