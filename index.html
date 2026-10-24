@@ -385,7 +385,34 @@ button:disabled { opacity: .55; cursor: not-allowed; }
               class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your BOLI password">
           </div>
           <button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In with BOLI</button>
-          <p class="text-sm text-gray-400">Forgot your password? <a href="https://boli-vessel.base44.app/login?from_url=https%3A%2F%2Fhishamdipu-hue.github.io%2Faddu-dive-hub%2F%23reviews" target="_blank" rel="noopener noreferrer" class="text-gold-light underline">Reset it on BOLI</a>.</p>
+          <p class="text-sm text-gray-400">Forgot your password? <button type="button" id="show-reset-password" class="text-gold-light underline">Reset it here</button>.</p>
+        </form>
+
+        <form id="review-reset-request-form" hidden class="space-y-4">
+          <p class="text-sm text-gray-300">Enter the email address for your BOLI account. We’ll send a password-reset email.</p>
+          <div>
+            <label for="reset-email" class="block text-sm text-gray-300 mb-2">Account email address</label>
+            <input id="reset-email" type="email" autocomplete="email" required maxlength="254"
+              class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="you@example.com">
+          </div>
+          <button id="reset-request-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Send Reset Email</button>
+          <button type="button" id="back-to-signin" class="text-sm text-gold-light underline">Back to sign in</button>
+        </form>
+
+        <form id="review-reset-confirm-form" hidden class="space-y-4">
+          <p class="text-sm text-gray-300">Choose a new password for your BOLI account.</p>
+          <div>
+            <label for="reset-new-password" class="block text-sm text-gray-300 mb-2">New password</label>
+            <input id="reset-new-password" type="password" autocomplete="new-password" required minlength="8"
+              class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="At least 8 characters">
+          </div>
+          <div>
+            <label for="reset-confirm-password" class="block text-sm text-gray-300 mb-2">Confirm new password</label>
+            <input id="reset-confirm-password" type="password" autocomplete="new-password" required minlength="8"
+              class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Repeat new password">
+          </div>
+          <button id="reset-confirm-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Update Password</button>
+          <button type="button" id="reset-back-signin-2" class="text-sm text-gold-light underline">Back to sign in</button>
         </form>
 
         <form id="review-signup-form" hidden class="space-y-4">
@@ -834,6 +861,31 @@ function updateReviewAuthUI() {
   }
 }
 
+/* Wire the website-hosted password recovery forms. */
+const resetRequestForm = document.getElementById("review-reset-request-form");
+const resetConfirmForm = document.getElementById("review-reset-confirm-form");
+const showResetPassword = document.getElementById("show-reset-password");
+const backToSignin = document.getElementById("back-to-signin");
+const resetBackSignin2 = document.getElementById("reset-back-signin-2");
+
+function showReviewAuthForm(formToShow) {
+  signinForm.hidden = formToShow !== signinForm;
+  signupForm.hidden = formToShow !== signupForm;
+  resetRequestForm.hidden = formToShow !== resetRequestForm;
+  resetConfirmForm.hidden = formToShow !== resetConfirmForm;
+  authStatus.textContent = "";
+}
+showResetPassword.addEventListener("click", () => showReviewAuthForm(resetRequestForm));
+backToSignin.addEventListener("click", () => showReviewAuthForm(signinForm));
+resetBackSignin2.addEventListener("click", () => showReviewAuthForm(signinForm));
+
+/* If a reset token is delivered to this website, allow setting the new password here. */
+const resetUrl = new URL(window.location.href);
+const resetToken = resetUrl.searchParams.get("resetToken") || resetUrl.searchParams.get("token");
+if (resetToken) {
+  showReviewAuthForm(resetConfirmForm);
+}
+
 /* Initialize BOLI authentication */
 async function initReviewAuth() {
   try {
@@ -923,6 +975,61 @@ signupForm.addEventListener("submit", async event => {
     console.error("BOLI sign-up failed:", error);
     authStatus.textContent =
       error.message || "BOLI could not create your account. If you already have a BOLI account, try signing in instead.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* Request a password reset without leaving the website. */
+resetRequestForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!boliClient) {
+    authStatus.textContent = "Password recovery is temporarily unavailable. Please try again.";
+    return;
+  }
+  const email = document.getElementById("reset-email").value.trim().toLowerCase();
+  const button = document.getElementById("reset-request-submit");
+  button.disabled = true;
+  authStatus.textContent = "Requesting password reset…";
+  try {
+    await boliClient.auth.resetPasswordRequest(email);
+    resetRequestForm.reset();
+    authStatus.textContent = "If this email belongs to a BOLI account, a password-reset email will be sent. Check your inbox and spam folder.";
+  } catch (error) {
+    console.error("Password reset request failed:", error);
+    authStatus.textContent = "Could not request a reset right now. Please wait a moment and try again.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* Complete password reset on this website when the email link supplies a reset token here. */
+resetConfirmForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!boliClient || !resetToken) {
+    authStatus.textContent = "The reset link is missing its token. Please request a new reset email.";
+    return;
+  }
+  const password = document.getElementById("reset-new-password").value;
+  const confirmation = document.getElementById("reset-confirm-password").value;
+  const button = document.getElementById("reset-confirm-submit");
+  if (password.length < 8 || password !== confirmation) {
+    authStatus.textContent = password !== confirmation ? "The passwords do not match." : "Use a password with at least 8 characters.";
+    return;
+  }
+  button.disabled = true;
+  authStatus.textContent = "Updating your password…";
+  try {
+    await boliClient.auth.resetPassword({ resetToken, newPassword: password });
+    resetConfirmForm.reset();
+    resetUrl.searchParams.delete("resetToken");
+    resetUrl.searchParams.delete("token");
+    window.history.replaceState({}, "", resetUrl.pathname + resetUrl.search + resetUrl.hash);
+    authStatus.textContent = "Your password has been updated. You can now sign in with your new password.";
+    showReviewAuthForm(signinForm);
+  } catch (error) {
+    console.error("Password reset confirmation failed:", error);
+    authStatus.textContent = "This reset link may be invalid or expired. Please request a new reset email.";
   } finally {
     button.disabled = false;
   }
