@@ -1148,7 +1148,7 @@ async function loadReviews() {
   }
 }
 
-/* Signed-in members can submit reviews; new reviews await admin approval */
+/* Signed-in members can submit reviews; approved reviews appear publicly immediately */
 document.getElementById("review-form").addEventListener("submit", async event => {
   event.preventDefault();
 
@@ -1180,12 +1180,12 @@ document.getElementById("review-form").addEventListener("submit", async event =>
       name,
       rating,
       message,
-      status: "pending",
+      status: "approved",
       member_email: reviewSession.email
     });
 
     reviewStatus.textContent =
-      "Thank you! Your review has been submitted and is awaiting admin approval.";
+      "Thank you! Your review is live and visible to everyone.";
 
     document.getElementById("review-message").value = "";
     document.getElementById("review-rating").value = "5";
