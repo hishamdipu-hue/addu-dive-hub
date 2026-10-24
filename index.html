@@ -1181,7 +1181,7 @@ document.getElementById("review-form").addEventListener("submit", async event =>
       rating,
       message,
       status: "pending",
-      member_email: reviewSession.email.toLowerCase()
+      member_email: reviewSession.email
     });
 
     reviewStatus.textContent =
