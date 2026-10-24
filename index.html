@@ -1193,8 +1193,14 @@ document.getElementById("review-form").addEventListener("submit", async event =>
     await loadReviews();
   } catch (error) {
     console.error("Review submission failed:", error);
-    reviewStatus.textContent =
-      "Your review could not be submitted. Please sign in again or try later.";
+    const detail = String(error?.message || error?.response?.data?.message || error || "");
+    if (/permission|forbidden|not authorized|unauthorized|\b403\b|\b401\b|rls|policy/i.test(detail)) {
+      reviewStatus.textContent =
+        "Your account is signed in, but BOLI rejected this review because of an account or permission restriction. Please contact the site administrator. (Details: " + detail.slice(0, 220) + ")";
+    } else {
+      reviewStatus.textContent =
+        "Your review could not be submitted. Please try again. (Details: " + (detail.slice(0, 220) || "No error details were returned.") + ")";
+    }
   } finally {
     button.disabled = false;
   }
