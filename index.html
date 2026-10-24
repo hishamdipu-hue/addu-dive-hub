@@ -367,10 +367,10 @@ button:disabled { opacity: .55; cursor: not-allowed; }
       <div id="review-auth-panel">
         <h3 class="font-cinzel text-xl text-gold-light mb-5">BOLI Member Access</h3>
 
-        <p class="text-sm text-gray-400 mb-5">Sign in or create your BOLI member account securely on BOLI.</p>
+        <p class="text-sm text-gray-400 mb-5">Use your existing BOLI member account here to sign in and write a review.</p>
         <div class="flex flex-wrap gap-3 mb-6">
-          <a id="show-signin" href="https://boli-vessel.base44.app/login?from_url=https%3A%2F%2Fhishamdipu-hue.github.io%2Faddu-dive-hub%2F%23reviews" class="gold-btn rounded-full px-5 py-2 text-sm inline-block">Sign In to BOLI</a>
-          <a id="show-signup" href="https://boli-vessel.base44.app/login?from_url=https%3A%2F%2Fhishamdipu-hue.github.io%2Faddu-dive-hub%2F%23reviews" class="rounded-full border border-gold/30 px-5 py-2 text-sm inline-block">Join BOLI / Create Account</a>
+          <button type="button" id="show-signin" class="gold-btn rounded-full px-5 py-2 text-sm">Sign In to BOLI</button>
+          <button type="button" id="show-signup" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Join BOLI / Create Account</button>
         </div>
 
         <form id="review-signin-form" hidden class="space-y-4">
@@ -385,6 +385,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
               class="rounded-lg bg-ocean-deep border border-gold/30 p-3" placeholder="Your BOLI password">
           </div>
           <button id="signin-submit" type="submit" class="gold-btn rounded-full px-6 py-3 text-gold-light">Sign In with BOLI</button>
+          <p class="text-sm text-gray-400">Forgot your password? <a href="https://boli-vessel.base44.app/login?from_url=https%3A%2F%2Fhishamdipu-hue.github.io%2Faddu-dive-hub%2F%23reviews" target="_blank" rel="noopener noreferrer" class="text-gold-light underline">Reset it on BOLI</a>.</p>
         </form>
 
         <form id="review-signup-form" hidden class="space-y-4">
