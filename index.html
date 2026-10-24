@@ -367,12 +367,13 @@ button:disabled { opacity: .55; cursor: not-allowed; }
       <div id="review-auth-panel">
         <h3 class="font-cinzel text-xl text-gold-light mb-5">BOLI Member Access</h3>
 
+        <p class="text-sm text-gray-400 mb-5">Sign in or create your BOLI member account securely on BOLI.</p>
         <div class="flex flex-wrap gap-3 mb-6">
-          <button type="button" id="show-signin" class="gold-btn rounded-full px-5 py-2 text-sm">Sign In</button>
-          <button type="button" id="show-signup" class="rounded-full border border-gold/30 px-5 py-2 text-sm">Create Account</button>
+          <a id="show-signin" href="https://boli-vessel.base44.app/login" class="gold-btn rounded-full px-5 py-2 text-sm inline-block">Sign In to BOLI</a>
+          <a id="show-signup" href="https://boli-vessel.base44.app/login" class="rounded-full border border-gold/30 px-5 py-2 text-sm inline-block">Join BOLI / Create Account</a>
         </div>
 
-        <form id="review-signin-form" class="space-y-4">
+        <form id="review-signin-form" hidden class="space-y-4">
           <div>
             <label for="signin-email" class="block text-sm text-gray-300 mb-2">BOLI email address</label>
             <input id="signin-email" type="email" autocomplete="email" required maxlength="254"
