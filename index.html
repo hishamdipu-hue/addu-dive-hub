@@ -442,6 +442,7 @@ button:disabled { opacity: .55; cursor: not-allowed; }
           <p class="text-sm text-gray-300">Signed in as <strong id="member-name" class="text-gold-light"></strong></p>
           <button type="button" id="review-signout" class="rounded-full border border-gold/30 px-4 py-2 text-sm">Sign Out</button>
         </div>
+        <p id="member-access-status" role="status" aria-live="polite" class="text-sm text-gray-300 mt-3"></p>
       </div>
 
       <div id="review-write-panel" hidden class="border-t border-gold/20 mt-5 pt-5">
@@ -845,6 +846,7 @@ const reviewStatus = document.getElementById("review-status");
 const resetRequestForm = document.getElementById("review-reset-request-form");
 const resetConfirmForm = document.getElementById("review-reset-confirm-form");
 let reviewMemberProfile = null;
+let isPasswordRecovery = false;
 
 function showReviewAuthForm(formToShow) {
   [signinForm, signupForm, resetRequestForm, resetConfirmForm].forEach(form => {
@@ -864,9 +866,10 @@ function updateReviewAuthUI() {
   const memberStatus = reviewMemberProfile && reviewMemberProfile.status;
   const memberApproved = memberStatus === "approved";
 
-  authPanel.hidden = signedIn;
-  memberPanel.hidden = !signedIn;
-  writePanel.hidden = !(signedIn && memberApproved);
+  authPanel.hidden = signedIn && !isPasswordRecovery;
+  memberPanel.hidden = !signedIn || isPasswordRecovery;
+  writePanel.hidden = !(signedIn && memberApproved && !isPasswordRecovery);
+  const memberAccessStatus = document.getElementById("member-access-status");
 
   if (signedIn) {
     const metadataName = reviewSession.user_metadata &&
@@ -878,17 +881,18 @@ function updateReviewAuthUI() {
     if (!nameInput.value.trim()) nameInput.value = metadataName || "";
 
     if (!reviewMemberProfile) {
-      authStatus.textContent = "Signed in, but BOLI membership status could not be verified. Please try again.";
+      memberAccessStatus.textContent = "Signed in, but BOLI membership status could not be verified. Please try again.";
     } else if (memberStatus === "pending") {
-      authStatus.textContent = "Your BOLI membership is pending approval. You can write a review once your membership is approved.";
+      memberAccessStatus.textContent = "Your BOLI membership is pending approval. You can write a review once your membership is approved.";
     } else if (memberStatus === "revoked") {
-      authStatus.textContent = "This BOLI membership is revoked, so review submission is unavailable.";
+      memberAccessStatus.textContent = "This BOLI membership is revoked, so review submission is unavailable.";
     } else if (memberApproved) {
-      authStatus.textContent = "Signed in with BOLI. You can write a review.";
+      memberAccessStatus.textContent = "Your BOLI membership is active. You can write a review.";
     } else {
-      authStatus.textContent = "Your BOLI membership is not active for review submission.";
+      memberAccessStatus.textContent = "Your BOLI membership is not active for review submission.";
     }
   } else {
+    memberAccessStatus.textContent = "";
     document.getElementById("review-name").value = "";
   }
 }
@@ -926,7 +930,11 @@ async function initReviewAuth() {
     reviewSession = session ? session.user : null;
     reviewMemberProfile = null;
     if (event === "PASSWORD_RECOVERY") {
+      isPasswordRecovery = true;
       showReviewAuthForm(resetConfirmForm);
+      authPanel.hidden = false;
+      memberPanel.hidden = true;
+      writePanel.hidden = true;
       authStatus.textContent = "Choose a new password for your BOLI account.";
     } else {
       updateReviewAuthUI();
@@ -1050,11 +1058,13 @@ resetConfirmForm.addEventListener("submit", async event => {
     const { error } = await boliAuthClient.auth.updateUser({ password });
     if (error) throw error;
     resetConfirmForm.reset();
+    isPasswordRecovery = false;
     showReviewAuthForm(signinForm);
     authStatus.textContent = "Your BOLI password has been updated. You can sign in with the new password.";
     await boliAuthClient.auth.signOut();
     reviewSession = null;
     reviewMemberProfile = null;
+    isPasswordRecovery = false;
     updateReviewAuthUI();
   } catch (error) {
     console.error("BOLI password update failed:", error);
