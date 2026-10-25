@@ -861,7 +861,7 @@ document.getElementById("show-signin").addEventListener("click", () => {
 });
 document.getElementById("show-signup").addEventListener("click", () => {
   const returnTo = "https://addu-dive-hub.com/";
-  window.location.href = "https://boli-master.hishamdipu.workers.dev/?returnTo=" + encodeURIComponent(returnTo);
+  window.location.href = "https://boli-master.hishamdipu.workers.dev/?signup=1&returnTo=" + encodeURIComponent(returnTo);
 });
 document.getElementById("show-reset-password").addEventListener("click", () => showReviewAuthForm(resetRequestForm));
 document.getElementById("back-to-signin").addEventListener("click", () => showReviewAuthForm(signinForm));
