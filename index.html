@@ -855,8 +855,14 @@ function showReviewAuthForm(formToShow) {
   authStatus.textContent = "";
 }
 
-document.getElementById("show-signin").addEventListener("click", () => showReviewAuthForm(signinForm));
-document.getElementById("show-signup").addEventListener("click", () => showReviewAuthForm(signupForm));
+document.getElementById("show-signin").addEventListener("click", () => {
+  const returnTo = "https://addu-dive-hub.com/";
+  window.location.href = "https://boli-master.hishamdipu.workers.dev/?returnTo=" + encodeURIComponent(returnTo);
+});
+document.getElementById("show-signup").addEventListener("click", () => {
+  const returnTo = "https://addu-dive-hub.com/";
+  window.location.href = "https://boli-master.hishamdipu.workers.dev/?returnTo=" + encodeURIComponent(returnTo);
+});
 document.getElementById("show-reset-password").addEventListener("click", () => showReviewAuthForm(resetRequestForm));
 document.getElementById("back-to-signin").addEventListener("click", () => showReviewAuthForm(signinForm));
 document.getElementById("reset-back-signin-2").addEventListener("click", () => showReviewAuthForm(signinForm));
@@ -951,6 +957,11 @@ async function initReviewAuth() {
     reviewSession = data.session ? data.session.user : null;
     await loadReviewMemberProfile();
     await loadReviews();
+    if (new URLSearchParams(window.location.search).get("boli_auth") === "1" && reviewSession) {
+      document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", window.location.pathname + "#reviews");
+      authStatus.textContent = "BOLI sign-in successful. You can now write a review.";
+    }
   } catch (error) {
     console.error("BOLI authentication initialization failed:", error);
     authStatus.textContent = "Could not connect to BOLI member access. Please try again later.";
@@ -1022,7 +1033,7 @@ resetRequestForm.addEventListener("submit", async event => {
   button.disabled = true;
   authStatus.textContent = "Requesting password reset…";
   try {
-    const redirectTo = window.location.origin + window.location.pathname + "#reviews";
+    const redirectTo = "https://boli-master.hishamdipu.workers.dev/";
     const { error } = await boliAuthClient.auth.resetPasswordForEmail(email, { redirectTo });
     if (error) throw error;
     resetRequestForm.reset();
