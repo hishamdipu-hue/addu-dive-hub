@@ -991,13 +991,13 @@ signupForm.addEventListener("submit", async event => {
       reviewSession = data.user;
       await loadReviewMemberProfile();
       updateReviewAuthUI();
-      authStatus.textContent = reviewMemberProfile && reviewMemberProfile.status === "approved"
+      authStatus.textContent = reviewMemberProfile && ["pending", "approved"].includes(reviewMemberProfile.status)
         ? "Your BOLI account is ready. You can now write a review."
-        : "Your BOLI account was created. Confirm your email if requested and wait for BOLI membership approval before writing a review.";
+        : "Your BOLI account was created. Confirm your email if requested, then sign in. Revoked memberships cannot submit reviews."
     } else {
       showReviewAuthForm(signinForm);
       document.getElementById("signin-email").value = email;
-      authStatus.textContent = "Registration started. Check your email for BOLI confirmation instructions, then sign in. Review writing becomes available after your BOLI membership is approved.";
+      authStatus.textContent = "Registration started. Check your email for BOLI confirmation instructions, then sign in. You can post a review while signed in; BOLI membership approval is separate."
     }
   } catch (error) {
     console.error("BOLI registration failed:", error);
