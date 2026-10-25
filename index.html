@@ -864,11 +864,11 @@ document.getElementById("reset-back-signin-2").addEventListener("click", () => s
 function updateReviewAuthUI() {
   const signedIn = Boolean(reviewSession && reviewSession.email);
   const memberStatus = reviewMemberProfile && reviewMemberProfile.status;
-  const memberApproved = memberStatus === "approved";
+  const memberCanReview = memberStatus === "approved" || memberStatus === "pending";
 
   authPanel.hidden = signedIn && !isPasswordRecovery;
   memberPanel.hidden = !signedIn || isPasswordRecovery;
-  writePanel.hidden = !(signedIn && memberApproved && !isPasswordRecovery);
+  writePanel.hidden = !(signedIn && memberCanReview && !isPasswordRecovery);
   const memberAccessStatus = document.getElementById("member-access-status");
 
   if (signedIn) {
@@ -883,10 +883,10 @@ function updateReviewAuthUI() {
     if (!reviewMemberProfile) {
       memberAccessStatus.textContent = "Signed in, but BOLI membership status could not be verified. Please try again.";
     } else if (memberStatus === "pending") {
-      memberAccessStatus.textContent = "Your BOLI membership is pending approval. You can write a review once your membership is approved.";
+      memberAccessStatus.textContent = "Your BOLI membership is pending approval. You can still post a dive review while signed in; BOLI member approval remains separate.";
     } else if (memberStatus === "revoked") {
       memberAccessStatus.textContent = "This BOLI membership is revoked, so review submission is unavailable.";
-    } else if (memberApproved) {
+    } else if (memberStatus === "approved") {
       memberAccessStatus.textContent = "Your BOLI membership is active. You can write a review.";
     } else {
       memberAccessStatus.textContent = "Your BOLI membership is not active for review submission.";
@@ -1184,8 +1184,8 @@ document.getElementById("review-form").addEventListener("submit", async event =>
     updateReviewAuthUI();
     return;
   }
-  if (!reviewMemberProfile || reviewMemberProfile.status !== "approved") {
-    reviewStatus.textContent = "Only approved BOLI members can submit reviews. Check your BOLI membership status.";
+  if (!reviewMemberProfile || !["pending", "approved"].includes(reviewMemberProfile.status)) {
+    reviewStatus.textContent = "Your BOLI membership is not eligible to submit reviews. Check your membership status.";
     return;
   }
 
