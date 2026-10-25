@@ -604,14 +604,16 @@ const WHATSAPP_NUMBER = "9609752006";
 const SUPABASE_URL = "https://thffrtfkrarbccmyplpe.supabase.co";
 const SUPABASE_KEY = "sb_publishable_dVy5sH2u34Rghm8uaJhm0Q_sDrwIObE";
 const STORAGE_BUCKET = "Dive-photo";
-const BOLI_APP_ID = "6a3d36bac1b3682f1ed1a2ce";
+const BOLI_SUPABASE_URL = "https://iefaujrbqsntgbwszzfy.supabase.co";
+const BOLI_SUPABASE_KEY = "sb_publishable_a4wuI9JTUhEeKyg-UOXBZQ_vR8qChwW";
 
 let supabaseClient = null;
-let boliClient = null;
+let boliAuthClient = null;
 let reviewSession = null;
 
 if (window.supabase) {
   supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  boliAuthClient = window.supabase.createClient(BOLI_SUPABASE_URL, BOLI_SUPABASE_KEY);
 }
 
 /* Navigation */
@@ -832,7 +834,7 @@ async function loadSectionPhoto(slot) {
   "contact"
 ].forEach(loadSectionPhoto);
 
-/* Review and authentication elements */
+/* Review and authentication: use the current BOLI Cloudflare members' Supabase project. */
 const authPanel = document.getElementById("review-auth-panel");
 const memberPanel = document.getElementById("review-member-panel");
 const writePanel = document.getElementById("review-write-panel");
@@ -840,97 +842,120 @@ const signinForm = document.getElementById("review-signin-form");
 const signupForm = document.getElementById("review-signup-form");
 const authStatus = document.getElementById("auth-status");
 const reviewStatus = document.getElementById("review-status");
+const resetRequestForm = document.getElementById("review-reset-request-form");
+const resetConfirmForm = document.getElementById("review-reset-confirm-form");
+let reviewMemberProfile = null;
 
-document.getElementById("show-signin").addEventListener("click", () => {
-  signinForm.hidden = false;
-  signupForm.hidden = true;
+function showReviewAuthForm(formToShow) {
+  [signinForm, signupForm, resetRequestForm, resetConfirmForm].forEach(form => {
+    form.hidden = form !== formToShow;
+  });
   authStatus.textContent = "";
-});
+}
 
-document.getElementById("show-signup").addEventListener("click", () => {
-  signinForm.hidden = true;
-  signupForm.hidden = false;
-  authStatus.textContent = "";
-});
+document.getElementById("show-signin").addEventListener("click", () => showReviewAuthForm(signinForm));
+document.getElementById("show-signup").addEventListener("click", () => showReviewAuthForm(signupForm));
+document.getElementById("show-reset-password").addEventListener("click", () => showReviewAuthForm(resetRequestForm));
+document.getElementById("back-to-signin").addEventListener("click", () => showReviewAuthForm(signinForm));
+document.getElementById("reset-back-signin-2").addEventListener("click", () => showReviewAuthForm(signinForm));
 
-/* Keep review-writing access hidden until BOLI confirms a signed-in member */
 function updateReviewAuthUI() {
   const signedIn = Boolean(reviewSession && reviewSession.email);
+  const memberStatus = reviewMemberProfile && reviewMemberProfile.status;
+  const memberApproved = memberStatus === "approved";
 
   authPanel.hidden = signedIn;
   memberPanel.hidden = !signedIn;
-  writePanel.hidden = !signedIn;
+  writePanel.hidden = !(signedIn && memberApproved);
 
   if (signedIn) {
+    const metadataName = reviewSession.user_metadata &&
+      (reviewSession.user_metadata.full_name || reviewSession.user_metadata.name);
     document.getElementById("member-name").textContent =
-      reviewSession.full_name || reviewSession.name || reviewSession.email;
+      metadataName || (reviewMemberProfile && reviewMemberProfile.vessel_name) || reviewSession.email;
 
     const nameInput = document.getElementById("review-name");
-    if (!nameInput.value.trim()) {
-      nameInput.value = reviewSession.full_name || reviewSession.name || "";
+    if (!nameInput.value.trim()) nameInput.value = metadataName || "";
+
+    if (!reviewMemberProfile) {
+      authStatus.textContent = "Signed in, but BOLI membership status could not be verified. Please try again.";
+    } else if (memberStatus === "pending") {
+      authStatus.textContent = "Your BOLI membership is pending approval. You can write a review once your membership is approved.";
+    } else if (memberStatus === "revoked") {
+      authStatus.textContent = "This BOLI membership is revoked, so review submission is unavailable.";
+    } else if (memberApproved) {
+      authStatus.textContent = "Signed in with BOLI. You can write a review.";
+    } else {
+      authStatus.textContent = "Your BOLI membership is not active for review submission.";
     }
   } else {
     document.getElementById("review-name").value = "";
   }
 }
 
-/* Wire the website-hosted password recovery forms. */
-const resetRequestForm = document.getElementById("review-reset-request-form");
-const resetConfirmForm = document.getElementById("review-reset-confirm-form");
-const showResetPassword = document.getElementById("show-reset-password");
-const backToSignin = document.getElementById("back-to-signin");
-const resetBackSignin2 = document.getElementById("reset-back-signin-2");
+async function loadReviewMemberProfile() {
+  if (!boliAuthClient || !reviewSession) {
+    reviewMemberProfile = null;
+    updateReviewAuthUI();
+    return;
+  }
 
-function showReviewAuthForm(formToShow) {
-  signinForm.hidden = formToShow !== signinForm;
-  signupForm.hidden = formToShow !== signupForm;
-  resetRequestForm.hidden = formToShow !== resetRequestForm;
-  resetConfirmForm.hidden = formToShow !== resetConfirmForm;
-  authStatus.textContent = "";
-}
-showResetPassword.addEventListener("click", () => showReviewAuthForm(resetRequestForm));
-backToSignin.addEventListener("click", () => showReviewAuthForm(signinForm));
-resetBackSignin2.addEventListener("click", () => showReviewAuthForm(signinForm));
-
-/* If a reset token is delivered to this website, allow setting the new password here. */
-const resetUrl = new URL(window.location.href);
-const resetToken = resetUrl.searchParams.get("resetToken") || resetUrl.searchParams.get("token");
-if (resetToken) {
-  showReviewAuthForm(resetConfirmForm);
-}
-
-/* Initialize BOLI authentication */
-async function initReviewAuth() {
   try {
-    const sdk = await import("https://esm.sh/@base44/sdk");
-    boliClient = sdk.createClient({ appId: BOLI_APP_ID });
-
-    try {
-      const user = await boliClient.auth.me();
-      if (user && user.email) reviewSession = user;
-    } catch (_) {
-      reviewSession = null;
-    }
-
-    updateReviewAuthUI();
+    const { data, error } = await boliAuthClient
+      .from("boli_profiles")
+      .select("status, role, vessel_name")
+      .eq("user_id", reviewSession.id)
+      .maybeSingle();
+    if (error) throw error;
+    reviewMemberProfile = data || null;
   } catch (error) {
-    console.error("BOLI init failed:", error);
-    authStatus.textContent = "BOLI member access is temporarily unavailable. Please try again later.";
+    console.error("Could not verify BOLI member profile:", error);
+    reviewMemberProfile = null;
+  }
+  updateReviewAuthUI();
+}
+
+async function initReviewAuth() {
+  if (!boliAuthClient) {
+    authStatus.textContent = "BOLI member access is temporarily unavailable.";
+    await loadReviews();
+    return;
+  }
+
+  boliAuthClient.auth.onAuthStateChange((event, session) => {
+    reviewSession = session ? session.user : null;
+    reviewMemberProfile = null;
+    if (event === "PASSWORD_RECOVERY") {
+      showReviewAuthForm(resetConfirmForm);
+      authStatus.textContent = "Choose a new password for your BOLI account.";
+    } else {
+      updateReviewAuthUI();
+    }
+    setTimeout(async () => {
+      await loadReviewMemberProfile();
+      await loadReviews();
+    }, 0);
+  });
+
+  try {
+    const { data, error } = await boliAuthClient.auth.getSession();
+    if (error) throw error;
+    reviewSession = data.session ? data.session.user : null;
+    await loadReviewMemberProfile();
+    await loadReviews();
+  } catch (error) {
+    console.error("BOLI authentication initialization failed:", error);
+    authStatus.textContent = "Could not connect to BOLI member access. Please try again later.";
     updateReviewAuthUI();
+    await loadReviews();
   }
 }
 
-/*
- * Sign up through BOLI.
- * No separate website email-verification form is used.
- * BOLI remains responsible for any verification or approval required
- * by its own account settings.
- */
+/* Register through BOLI's current Supabase Auth and profile bootstrap. */
 signupForm.addEventListener("submit", async event => {
   event.preventDefault();
-
-  if (!boliClient) {
-    authStatus.textContent = "BOLI member access is temporarily unavailable. Please try again later.";
+  if (!boliAuthClient) {
+    authStatus.textContent = "BOLI member access is temporarily unavailable.";
     return;
   }
 
@@ -938,7 +963,6 @@ signupForm.addEventListener("submit", async event => {
   const email = document.getElementById("signup-email").value.trim().toLowerCase();
   const password = document.getElementById("signup-password").value;
   const button = document.getElementById("signup-submit");
-
   if (!name || name.length > 80 || !email || password.length < 8) {
     authStatus.textContent = "Enter your name, a valid email, and a password of at least 8 characters.";
     return;
@@ -946,113 +970,104 @@ signupForm.addEventListener("submit", async event => {
 
   button.disabled = true;
   authStatus.textContent = "Creating your BOLI account…";
-
   try {
-    await boliClient.auth.register({
+    const { data, error } = await boliAuthClient.auth.signUp({
       email,
       password,
-      full_name: name
+      options: { data: { full_name: name } }
     });
-
+    if (error) throw error;
     signupForm.reset();
 
-    /*
-     * Some BOLI configurations sign a new member in immediately.
-     * Others require approval or verification within BOLI.
-     * Try the normal BOLI login and let BOLI decide.
-     */
-    try {
-      await boliClient.auth.loginViaEmailPassword(email, password);
-      const user = await boliClient.auth.me();
-
-      if (user && user.email) {
-        reviewSession = user;
-        updateReviewAuthUI();
-        authStatus.textContent = "";
-        reviewStatus.textContent = "Your BOLI account is ready. You can now write a review.";
-        await loadReviews();
-        return;
-      }
-    } catch (loginError) {
-      console.info("BOLI registration succeeded; immediate sign-in may require BOLI approval or verification.", loginError);
+    if (data.session && data.user) {
+      reviewSession = data.user;
+      await loadReviewMemberProfile();
+      updateReviewAuthUI();
+      authStatus.textContent = reviewMemberProfile && reviewMemberProfile.status === "approved"
+        ? "Your BOLI account is ready. You can now write a review."
+        : "Your BOLI account was created. Confirm your email if requested and wait for BOLI membership approval before writing a review.";
+    } else {
+      showReviewAuthForm(signinForm);
+      document.getElementById("signin-email").value = email;
+      authStatus.textContent = "Registration started. Check your email for BOLI confirmation instructions, then sign in. Review writing becomes available after your BOLI membership is approved.";
     }
-
-    signinForm.hidden = false;
-    signupForm.hidden = true;
-    document.getElementById("signin-email").value = email;
-    document.getElementById("signin-password").value = "";
-
-    authStatus.textContent =
-      "Your registration request was sent to BOLI. If BOLI requires account approval or verification, complete that process in BOLI, then sign in here using the same account.";
   } catch (error) {
-    console.error("BOLI sign-up failed:", error);
-    authStatus.textContent =
-      error.message || "BOLI could not create your account. If you already have a BOLI account, try signing in instead.";
+    console.error("BOLI registration failed:", error);
+    authStatus.textContent = /already registered|user already exists|already been registered/i.test(error.message || "")
+      ? "This email is already registered. Sign in with your existing BOLI account."
+      : (error.message || "Could not create your BOLI account. Please try again.");
   } finally {
     button.disabled = false;
   }
 });
 
-/* Request a password reset without leaving the website. */
+/* Supabase password recovery returns to this page; recovery sessions are handled above. */
 resetRequestForm.addEventListener("submit", async event => {
   event.preventDefault();
-  if (!boliClient) {
-    authStatus.textContent = "Password recovery is temporarily unavailable. Please try again.";
+  if (!boliAuthClient) {
+    authStatus.textContent = "Password recovery is temporarily unavailable.";
     return;
   }
+
   const email = document.getElementById("reset-email").value.trim().toLowerCase();
   const button = document.getElementById("reset-request-submit");
   button.disabled = true;
   authStatus.textContent = "Requesting password reset…";
   try {
-    await boliClient.auth.resetPasswordRequest(email);
+    const redirectTo = window.location.origin + window.location.pathname + "#reviews";
+    const { error } = await boliAuthClient.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) throw error;
     resetRequestForm.reset();
-    authStatus.textContent = "If this email belongs to a BOLI account, a password-reset email will be sent. Check your inbox and spam folder.";
+    authStatus.textContent = "If this email belongs to a BOLI account, a password-reset email has been requested. Check your inbox and spam folder.";
   } catch (error) {
-    console.error("Password reset request failed:", error);
-    authStatus.textContent = "Could not request a reset right now. Please wait a moment and try again.";
+    console.error("BOLI password reset request failed:", error);
+    authStatus.textContent = error.message || "Could not request a password reset. Please try again.";
   } finally {
     button.disabled = false;
   }
 });
 
-/* Complete password reset on this website when the email link supplies a reset token here. */
 resetConfirmForm.addEventListener("submit", async event => {
   event.preventDefault();
-  if (!boliClient || !resetToken) {
-    authStatus.textContent = "The reset link is missing its token. Please request a new reset email.";
+  if (!boliAuthClient || !reviewSession) {
+    authStatus.textContent = "Open the password-reset link from your BOLI email first, then choose a new password.";
     return;
   }
+
   const password = document.getElementById("reset-new-password").value;
   const confirmation = document.getElementById("reset-confirm-password").value;
   const button = document.getElementById("reset-confirm-submit");
   if (password.length < 8 || password !== confirmation) {
-    authStatus.textContent = password !== confirmation ? "The passwords do not match." : "Use a password with at least 8 characters.";
+    authStatus.textContent = password !== confirmation
+      ? "The passwords do not match."
+      : "Use a password with at least 8 characters.";
     return;
   }
+
   button.disabled = true;
-  authStatus.textContent = "Updating your password…";
+  authStatus.textContent = "Updating your BOLI password…";
   try {
-    await boliClient.auth.resetPassword({ resetToken, newPassword: password });
+    const { error } = await boliAuthClient.auth.updateUser({ password });
+    if (error) throw error;
     resetConfirmForm.reset();
-    resetUrl.searchParams.delete("resetToken");
-    resetUrl.searchParams.delete("token");
-    window.history.replaceState({}, "", resetUrl.pathname + resetUrl.search + resetUrl.hash);
-    authStatus.textContent = "Your password has been updated. You can now sign in with your new password.";
     showReviewAuthForm(signinForm);
+    authStatus.textContent = "Your BOLI password has been updated. You can sign in with the new password.";
+    await boliAuthClient.auth.signOut();
+    reviewSession = null;
+    reviewMemberProfile = null;
+    updateReviewAuthUI();
   } catch (error) {
-    console.error("Password reset confirmation failed:", error);
-    authStatus.textContent = "This reset link may be invalid or expired. Please request a new reset email.";
+    console.error("BOLI password update failed:", error);
+    authStatus.textContent = error.message || "Could not update the password. Request a fresh reset email and try again.";
   } finally {
     button.disabled = false;
   }
 });
 
-/* Sign in using the existing BOLI account */
+/* Sign in with the same Supabase Auth used by BOLI Cloudflare. */
 signinForm.addEventListener("submit", async event => {
   event.preventDefault();
-
-  if (!boliClient) {
+  if (!boliAuthClient) {
     authStatus.textContent = "BOLI member access is temporarily unavailable.";
     return;
   }
@@ -1060,77 +1075,71 @@ signinForm.addEventListener("submit", async event => {
   const email = document.getElementById("signin-email").value.trim().toLowerCase();
   const password = document.getElementById("signin-password").value;
   const button = document.getElementById("signin-submit");
-
   button.disabled = true;
   authStatus.textContent = "Signing in with BOLI…";
-
   try {
-    await boliClient.auth.loginViaEmailPassword(email, password);
-    const user = await boliClient.auth.me();
-
-    if (!user || !user.email) {
-      throw new Error("BOLI did not confirm an active sign-in. Please try again.");
-    }
-
-    reviewSession = user;
+    const { data, error } = await boliAuthClient.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    reviewSession = data.user || (data.session && data.session.user) || null;
     signinForm.reset();
+    await loadReviewMemberProfile();
     updateReviewAuthUI();
-    authStatus.textContent = "";
-    reviewStatus.textContent = "";
     await loadReviews();
+    reviewStatus.textContent = reviewMemberProfile && reviewMemberProfile.status === "approved"
+      ? "Signed in successfully. You can write a review."
+      : "Signed in, but your BOLI membership must be approved before you can submit a review.";
   } catch (error) {
     console.error("BOLI sign-in failed:", error);
-    authStatus.textContent =
-      error.message || "Sign-in failed. Check your BOLI email and password, and make sure your BOLI account is allowed to sign in.";
+    authStatus.textContent = error.message || "Sign-in failed. Check your BOLI email and password.";
   } finally {
     button.disabled = false;
   }
 });
 
-/* Sign out of BOLI */
 document.getElementById("review-signout").addEventListener("click", async () => {
-  if (!boliClient) return;
-
+  if (!boliAuthClient) return;
   const button = document.getElementById("review-signout");
   button.disabled = true;
-
   try {
-    await boliClient.auth.logout();
+    const { error } = await boliAuthClient.auth.signOut();
+    if (error) throw error;
     reviewSession = null;
+    reviewMemberProfile = null;
     updateReviewAuthUI();
     reviewStatus.textContent = "";
-    authStatus.textContent = "You have signed out.";
+    authStatus.textContent = "You have signed out of BOLI.";
+    await loadReviews();
   } catch (error) {
-    console.error("Sign-out failed:", error);
-    authStatus.textContent = "Could not sign out. Please try again.";
+    console.error("BOLI sign-out failed:", error);
+    authStatus.textContent = error.message || "Could not sign out. Please try again.";
   } finally {
     button.disabled = false;
   }
 });
 
-/* Only approved reviews are displayed publicly */
+/* Public reviews live in BOLI's Cloudflare-connected Supabase project. */
 async function loadReviews() {
   const list = document.getElementById("reviews-list");
-
-  if (!boliClient) {
+  if (!boliAuthClient) {
     list.textContent = "Reviews are temporarily unavailable.";
     return;
   }
 
   try {
-    const reviews = await boliClient.entities.AdduDiveReview.filter(
-      { status: "approved" },
-      "-created_date",
-      20,
-      0
-    );
+    const { data, error } = await boliAuthClient
+      .from("boli_addu_dive_reviews")
+      .select("id, name, rating, message, status, created_at")
+      .eq("status", "approved")
+      .order("created_at", { ascending: false })
+      .limit(20);
+    if (error) throw error;
 
     list.replaceChildren();
-
-    if (!Array.isArray(reviews) || reviews.length === 0) {
+    const reviews = data || [];
+    if (!reviews.length) {
       const paragraph = document.createElement("p");
       paragraph.className = "text-gray-400 text-sm";
-      paragraph.textContent = "No approved reviews yet. Sign in to be the first to share your experience.";
+      paragraph.textContent = "No approved reviews yet. Sign in with an approved BOLI member account to be the first to share your experience.";
       list.appendChild(paragraph);
       return;
     }
@@ -1138,20 +1147,16 @@ async function loadReviews() {
     reviews.forEach(review => {
       const card = document.createElement("article");
       card.className = "card p-5";
-
       const heading = document.createElement("h3");
       heading.className = "font-cinzel text-gold-light mb-2";
-      heading.textContent = review.name || "Guest";
-
+      heading.textContent = review.name || "BOLI Member";
       const ratingValue = Math.max(1, Math.min(5, Number(review.rating) || 5));
       const rating = document.createElement("p");
       rating.className = "text-gold mb-3";
       rating.textContent = "★".repeat(ratingValue) + "☆".repeat(5 - ratingValue);
-
       const message = document.createElement("p");
       message.className = "text-sm text-gray-300 leading-6";
       message.textContent = review.message || "";
-
       card.append(heading, rating, message);
       list.appendChild(card);
     });
@@ -1161,13 +1166,16 @@ async function loadReviews() {
   }
 }
 
-/* Signed-in members can submit reviews; approved reviews appear publicly immediately */
+/* Only an authenticated, approved BOLI member can submit; RLS enforces this server-side. */
 document.getElementById("review-form").addEventListener("submit", async event => {
   event.preventDefault();
-
-  if (!boliClient || !reviewSession || !reviewSession.email) {
-    reviewStatus.textContent = "Please sign in with your BOLI account before submitting a review.";
+  if (!boliAuthClient || !reviewSession || !reviewSession.email) {
+    reviewStatus.textContent = "Please sign in with your BOLI member account before submitting a review.";
     updateReviewAuthUI();
+    return;
+  }
+  if (!reviewMemberProfile || reviewMemberProfile.status !== "approved") {
+    reviewStatus.textContent = "Only approved BOLI members can submit reviews. Check your BOLI membership status.";
     return;
   }
 
@@ -1175,45 +1183,35 @@ document.getElementById("review-form").addEventListener("submit", async event =>
   const rating = Number(document.getElementById("review-rating").value);
   const message = document.getElementById("review-message").value.trim();
   const button = document.getElementById("review-submit");
-
-  if (
-    !name || name.length > 80 ||
-    !message || message.length > 1500 ||
-    !Number.isInteger(rating) || rating < 1 || rating > 5
-  ) {
+  if (!name || name.length > 80 || !message || message.length > 1500 ||
+      !Number.isInteger(rating) || rating < 1 || rating > 5) {
     reviewStatus.textContent = "Enter your name, a rating, and a review of no more than 1,500 characters.";
     return;
   }
 
   button.disabled = true;
   reviewStatus.textContent = "Submitting your review…";
-
   try {
-    await boliClient.entities.AdduDiveReview.create({
+    const { error } = await boliAuthClient.from("boli_addu_dive_reviews").insert({
+      member_id: reviewSession.id,
+      member_email: reviewSession.email,
       name,
       rating,
       message,
-      status: "approved",
-      member_email: reviewSession.email
+      status: "approved"
     });
+    if (error) throw error;
 
-    reviewStatus.textContent =
-      "Thank you! Your review is live and visible to everyone.";
-
+    reviewStatus.textContent = "Thank you! Your review is published and visible to everyone.";
     document.getElementById("review-message").value = "";
     document.getElementById("review-rating").value = "5";
-
     await loadReviews();
   } catch (error) {
-    console.error("Review submission failed:", error);
-    const detail = String(error?.message || error?.response?.data?.message || error || "");
-    if (/permission|forbidden|not authorized|unauthorized|\b403\b|\b401\b|rls|policy/i.test(detail)) {
-      reviewStatus.textContent =
-        "Your account is signed in, but BOLI rejected this review because of an account or permission restriction. Please contact the site administrator. (Details: " + detail.slice(0, 220) + ")";
-    } else {
-      reviewStatus.textContent =
-        "Your review could not be submitted. Please try again. (Details: " + (detail.slice(0, 220) || "No error details were returned.") + ")";
-    }
+    console.error("BOLI review submission failed:", error);
+    const detail = String(error && error.message || "Unknown error");
+    reviewStatus.textContent = /permission|forbidden|not authorized|unauthorized|\b403\b|\b401\b|rls|policy/i.test(detail)
+      ? "BOLI did not allow this review. Confirm your membership is approved and try again."
+      : "Your review could not be submitted. " + detail.slice(0, 180);
   } finally {
     button.disabled = false;
   }
