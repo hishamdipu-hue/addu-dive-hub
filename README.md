@@ -7,6 +7,7 @@ Static website for Addu Dive Hub in Addu Atoll, Maldives.
 - `index.html` — main public website. The page styles and most interactive behavior are included in this file.
 - `admin.html` — photo-management page. Access is controlled by Supabase Auth and Storage policies; the page being unlisted is not a security boundary.
 - `styles.css`, `script.js`, `logo.svg` — additional assets retained in the repository. The current `index.html` is self-contained and does not depend on the separate CSS/JS files.
+- `.nojekyll` — tells GitHub Pages not to run Jekyll processing over this static site.
 
 ## Features and service dependencies
 
@@ -18,14 +19,14 @@ Static website for Addu Dive Hub in Addu Atoll, Maldives.
 
 ## Free GitHub Pages deployment
 
-This repository is public, so GitHub Pages can host the static site on an eligible free plan.
+The repository already has a GitHub Actions workflow named **Deploy static content to Pages** that deploys on pushes to `main` and can be run manually from the Actions tab. The site is static, so no package install or build command is required.
+
+To enable/verify deployment:
 
 1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment**, choose **GitHub Actions** as the source.
-3. Push to `main` or manually run the **Deploy static site to GitHub Pages** workflow from the Actions tab.
-4. After the workflow succeeds, open the site URL shown in the deployment environment.
-
-The workflow publishes the repository's static files from the root; no package install or build command is required.
+2. Under **Build and deployment**, ensure **GitHub Actions** is selected as the source.
+3. Open **Actions → Deploy static content to Pages** and confirm the latest run succeeds.
+4. Open the site URL shown in the `github-pages` deployment environment.
 
 ### Custom domain
 
